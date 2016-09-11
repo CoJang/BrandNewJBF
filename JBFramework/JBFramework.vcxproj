@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}</ProjectGuid>
+    <RootNamespace>JBFramework</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../PublicInclude;./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>USE_INTRINSIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CallingConvention>Cdecl</CallingConvention>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../PublicInclude;./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <PreprocessorDefinitions>USE_INTRINSIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CallingConvention>Cdecl</CallingConvention>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)$(Platform)\$(Configuration)\Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="JBF\Base\DXResource.cpp" />
+    <ClCompile Include="JBF\Base\Stage_base.cpp" />
+    <ClCompile Include="JBF\Core\Graphic\Graphic.cpp" />
+    <ClCompile Include="JBF\Core\Input.cpp" />
+    <ClCompile Include="JBF\Core\SystemTimer.cpp" />
+    <ClCompile Include="JBF\Debug\Dump.cpp" />
+    <ClCompile Include="JBF\Debug\Logger.cpp" />
+    <ClCompile Include="JBF\Definitions.cpp" />
+    <ClCompile Include="JBF\Global\Alloc.cpp" />
+    <ClCompile Include="JBF\Global\Archive.cpp" />
+    <ClCompile Include="JBF\Global\Global.cpp" />
+    <ClCompile Include="JBF\Global\Hash.cpp" />
+    <ClCompile Include="JBF\Global\Math\Common.cpp" />
+    <ClCompile Include="JBF\Global\Math\Function.cpp" />
+    <ClCompile Include="JBF\Global\Math\FunctionBasic.cpp" />
+    <ClCompile Include="JBF\Global\Math\FunctionIntrinsic.cpp" />
+    <ClCompile Include="JBF\Global\Math\Geometry.cpp" />
+    <ClCompile Include="JBF\Global\Math\GeometryBasic.cpp" />
+    <ClCompile Include="JBF\Global\Math\GeometryInstrinsic.cpp" />
+    <ClCompile Include="JBF\Global\Math\InnerUtility.cpp" />
+    <ClCompile Include="JBF\JBFramework.cpp" />
+    <ClCompile Include="JBF\Manager\Stage_mgr.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\PublicInclude\JBF\Base\Base.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Base\DXResource.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Base\Stage.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Core\Core.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Core\Graphic\Graphic.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Core\Input.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Core\SystemTimer.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Debug.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Dump.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Logger.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Definitions.h" />
+    <ClInclude Include="..\PublicInclude\JBF\DXHeaders.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Alloc.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Archive.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Global.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Hash.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Common.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Function.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Geometry.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Math.h" />
+    <ClInclude Include="..\PublicInclude\JBF\JBFramework.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Manager\Manager.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Manager\Stage.h" />
+    <ClInclude Include="JBF\Global\Math\InnerUtility.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

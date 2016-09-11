@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{7a7da123-b6b2-47cc-ab3b-b8e072037464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{ec435a88-bd0b-4a1b-b26c-c97a26e2df28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{d50c7bc3-d08b-407e-bbbf-9fe6394e8ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{31e4732f-b6ef-4f7e-96ab-890fe64f17b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{7ee4164e-92c2-4db3-9591-3024ecbfcb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Math">
+      <UniqueIdentifier>{1b2ae242-1670-4e98-8735-11ea982da978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Graphic">
+      <UniqueIdentifier>{1351884c-0fbd-4ad1-8a92-a4440f7ddab9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="JBF\Core\Input.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Core\SystemTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Debug\Dump.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Debug\Logger.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="JBF\Global\Hash.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\Common.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\JBFramework.cpp" />
+    <ClCompile Include="JBF\Global\Math\Geometry.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\GeometryBasic.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\GeometryInstrinsic.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\InnerUtility.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Base\Stage_base.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Manager\Stage_mgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Global.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Core\Graphic\Graphic.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Definitions.cpp" />
+    <ClCompile Include="JBF\Base\DXResource.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\Function.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\FunctionBasic.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Math\FunctionIntrinsic.cpp">
+      <Filter>Global\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Alloc.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Global\Archive.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\PublicInclude\JBF\Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Core\Input.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Core\SystemTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Base\Base.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Debug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Dump.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Debug\Logger.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Global.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Hash.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Math.h">
+      <Filter>Global\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Manager\Manager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Common.h">
+      <Filter>Global\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Definitions.h" />
+    <ClInclude Include="..\PublicInclude\JBF\DXHeaders.h" />
+    <ClInclude Include="..\PublicInclude\JBF\JBFramework.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Geometry.h">
+      <Filter>Global\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="JBF\Global\Math\InnerUtility.h">
+      <Filter>Global\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Manager\Stage.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Base\Stage.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Core\Graphic\Graphic.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Base\DXResource.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Math\Function.h">
+      <Filter>Global\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Alloc.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Global\Archive.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

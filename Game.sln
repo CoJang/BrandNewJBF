@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TriWorld", "TriWorld\TriWorld.vcxproj", "{C856B780-F8A6-4EFC-B8B2-3689A582F998}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9} = {7F21CB29-CD55-4E4A-B906-6D5A369B65F9}
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C} = {F1B2A464-F17C-4081-9737-09B649ED9B3C}
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1} = {E9FFA070-001F-40C5-9AA2-02A2C2979AF1}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JBFramework", "JBFramework\JBFramework.vcxproj", "{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9} = {7F21CB29-CD55-4E4A-B906-6D5A369B65F9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "Box2D\Box2D.vcxproj", "{7F21CB29-CD55-4E4A-B906-6D5A369B65F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JBArchiveBuilder", "JBArchiveBuilder\JBArchiveBuilder.vcxproj", "{F1B2A464-F17C-4081-9737-09B649ED9B3C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1} = {E9FFA070-001F-40C5-9AA2-02A2C2979AF1}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EU", "EU\EU.vcxproj", "{FD0BEB07-AF98-4FD1-AF91-06C7B96B2227}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9} = {7F21CB29-CD55-4E4A-B906-6D5A369B65F9}
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C} = {F1B2A464-F17C-4081-9737-09B649ED9B3C}
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1} = {E9FFA070-001F-40C5-9AA2-02A2C2979AF1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C856B780-F8A6-4EFC-B8B2-3689A582F998}.Debug|x86.ActiveCfg = Debug|Win32
+		{C856B780-F8A6-4EFC-B8B2-3689A582F998}.Debug|x86.Build.0 = Debug|Win32
+		{C856B780-F8A6-4EFC-B8B2-3689A582F998}.Release|x86.ActiveCfg = Release|Win32
+		{C856B780-F8A6-4EFC-B8B2-3689A582F998}.Release|x86.Build.0 = Release|Win32
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}.Debug|x86.ActiveCfg = Debug|Win32
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}.Debug|x86.Build.0 = Debug|Win32
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}.Release|x86.ActiveCfg = Release|Win32
+		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1}.Release|x86.Build.0 = Release|Win32
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9}.Debug|x86.ActiveCfg = Debug|Win32
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9}.Debug|x86.Build.0 = Debug|Win32
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9}.Release|x86.ActiveCfg = Release|Win32
+		{7F21CB29-CD55-4E4A-B906-6D5A369B65F9}.Release|x86.Build.0 = Release|Win32
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C}.Debug|x86.ActiveCfg = Debug|Win32
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C}.Debug|x86.Build.0 = Debug|Win32
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C}.Release|x86.ActiveCfg = Release|Win32
+		{F1B2A464-F17C-4081-9737-09B649ED9B3C}.Release|x86.Build.0 = Release|Win32
+		{FD0BEB07-AF98-4FD1-AF91-06C7B96B2227}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD0BEB07-AF98-4FD1-AF91-06C7B96B2227}.Debug|x86.Build.0 = Debug|Win32
+		{FD0BEB07-AF98-4FD1-AF91-06C7B96B2227}.Release|x86.ActiveCfg = Release|Win32
+		{FD0BEB07-AF98-4FD1-AF91-06C7B96B2227}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
