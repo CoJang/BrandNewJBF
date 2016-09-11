@@ -13,6 +13,7 @@ namespace JBF{
 
                 ASSERT(_new != nullptr, _T("Failed to allocate on memory."));
                 if (_new)new (_new)T(std::forward<ARGS>(args)...);
+                else throw std::bad_alloc();
 
                 return _new;
             }
