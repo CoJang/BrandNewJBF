@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ArchiveTable.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Object\ObjAxis.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjCamera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjFont.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjGrid.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\StageTest.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\BaseMesh.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArchiveTable.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Object\ObjAxis.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjCamera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjFont.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjGrid.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StageTest.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\BaseMesh.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Object">
+      <UniqueIdentifier>{d54e170a-0bcb-404d-a2fa-c62e6c603bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{80578552-2ec8-4e70-b386-4c9ae8f2b13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{54b9f179-7a80-46e8-a696-2bcee845b92f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

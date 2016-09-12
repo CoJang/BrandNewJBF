@@ -105,8 +105,12 @@ namespace JBF{
                 return true;
             }
 
-            Decrypter::DATA_TABLE::const_iterator Decrypter::GetSize(ARCHIVE_HASHSIZE key, DWORD* size){
-                return ins_dataTable.find(key);
+            bool Decrypter::GetSize(const DATA_TABLE::const_iterator& itr, DWORD* size){
+                if (itr == ins_dataTable.end())return false;
+
+                *size = itr->second.size;
+
+                return true;
             }
             bool Decrypter::GetData(const DATA_TABLE::const_iterator& itr, void* buffer){
                 byte* bufByte = (decltype(bufByte))buffer;

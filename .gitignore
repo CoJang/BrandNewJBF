@@ -69,10 +69,6 @@ artifacts/
 *.svclog
 *.scc
 
-# JBArchive
-*.jba_cache
-*.jba
-
 # Chutzpah Test files
 _Chutzpah*
 
@@ -247,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+*.jba
+*.jba_cache

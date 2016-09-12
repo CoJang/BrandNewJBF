@@ -38,7 +38,8 @@ namespace JBF{
                 void CloseFile();
 
             public:
-                DATA_TABLE::const_iterator GetSize(ARCHIVE_HASHSIZE key, DWORD* size);
+                INLINE DATA_TABLE::const_iterator GetIterator(ARCHIVE_HASHSIZE key){ return ins_dataTable.find(key); }
+                bool GetSize(const DATA_TABLE::const_iterator& itr, DWORD* size);
                 bool GetData(const DATA_TABLE::const_iterator& itr, void* buffer);
 
             private:
