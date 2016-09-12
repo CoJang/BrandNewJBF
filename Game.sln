@@ -29,6 +29,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EU", "EU\EU.vcxproj", "{FD0
 		{E9FFA070-001F-40C5-9AA2-02A2C2979AF1} = {E9FFA070-001F-40C5-9AA2-02A2C2979AF1}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawContent", "RawContent", "{BE28E37E-05E5-4E4D-B72F-91ADB8FCF644}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TRI_Models", "TRI_Models", "{F4399F44-1BC9-4A5F-9880-F740108BAD73}"
+	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Models\JN-4.x = RawContent\TRI_Models\JN-4.x
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TRI_Textures", "TRI_Textures", "{3A69451F-40F4-4080-9DA0-CD6A3519215F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JN-4", "JN-4", "{A4315EC1-91BC-47BA-80C5-988725AF14F2}"
+	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Textures\JN-4\bihull.bmp = RawContent\TRI_Textures\JN-4\bihull.bmp
+		RawContent\TRI_Textures\JN-4\wings.bmp = RawContent\TRI_Textures\JN-4\wings.bmp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -58,5 +73,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F4399F44-1BC9-4A5F-9880-F740108BAD73} = {BE28E37E-05E5-4E4D-B72F-91ADB8FCF644}
+		{3A69451F-40F4-4080-9DA0-CD6A3519215F} = {BE28E37E-05E5-4E4D-B72F-91ADB8FCF644}
+		{A4315EC1-91BC-47BA-80C5-988725AF14F2} = {3A69451F-40F4-4080-9DA0-CD6A3519215F}
 	EndGlobalSection
 EndGlobal

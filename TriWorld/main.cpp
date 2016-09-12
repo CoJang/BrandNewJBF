@@ -9,8 +9,8 @@ extern StageTest stgTest;
 
 static const Global::Math::Point<USHORT> clientSize = { 1366, 768 };
 static void GameBegin(){
-    arcModels.OpenFile(_T(".\\Content\\Models.jba"));
-    arcTextures.OpenFile(_T(".\\Content\\Textures.jba"));
+    arcModels.OpenFile(_T(".\\Content\\TRI_Models.jba"));
+    arcTextures.OpenFile(_T(".\\Content\\TRI_Textures.jba"));
 
     Manager::Stage::ChangeStage(&stgTest);
 }
