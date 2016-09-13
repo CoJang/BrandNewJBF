@@ -3,7 +3,7 @@
 #include"ObjFont.h"
 #include"ObjAxis.h"
 
-ObjAxis::ObjAxis() : DXResource(RESTYPE_VRAM){}
+ObjAxis::ObjAxis() : DXResource(RESTYPE_MANAGE){}
 
 HRESULT ObjAxis::Validate(){
     FORMAT_VERTEX* buf;
@@ -13,7 +13,7 @@ HRESULT ObjAxis::Validate(){
         sizeof ins_vertices,
         D3DUSAGE_WRITEONLY,
         FORMAT_VERTEX::FVF,
-        D3DPOOL_DEFAULT,
+        D3DPOOL_MANAGED,
         &ins_vBuf,
         nullptr
     );

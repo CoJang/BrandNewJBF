@@ -46,5 +46,13 @@
     <Filter Include="Stage">
       <UniqueIdentifier>{a4657fac-3cc2-4daf-b69e-7db292a70750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{821684ee-3786-480c-ac7b-2a5726a82f7d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\basic.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -2,5 +2,5 @@
 
 class JBF::Global::Archive::Decrypter;
 
-extern JBF::Global::Archive::Decrypter arcModels;
-extern JBF::Global::Archive::Decrypter arcTextures;
+extern JBF::Global::Archive::Decrypter arcSprites;
+extern JBF::Global::Archive::Decrypter arcShaders;

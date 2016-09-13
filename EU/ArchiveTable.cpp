@@ -3,5 +3,5 @@
 #include"JBF/Global/Archive.h"
 #include"ArchiveTable.h"
 
-JBF::Global::Archive::Decrypter arcModels;
-JBF::Global::Archive::Decrypter arcTextures;
+JBF::Global::Archive::Decrypter arcSprites;
+JBF::Global::Archive::Decrypter arcShaders;

@@ -1,7 +1,7 @@
 ﻿#include"pch.h"
 #include"ObjGrid.h"
 
-ObjGrid::ObjGrid() : DXResource(RESTYPE_VRAM){}
+ObjGrid::ObjGrid() : DXResource(RESTYPE_MANAGE){}
 
 HRESULT ObjGrid::Validate(){
     size_t assignSize = ins_lineCount * 2 * sizeof FORMAT_VERTEX;
@@ -12,7 +12,7 @@ HRESULT ObjGrid::Validate(){
         assignSize,
         D3DUSAGE_WRITEONLY,
         FORMAT_VERTEX::FVF,
-        D3DPOOL_DEFAULT,
+        D3DPOOL_MANAGED,
         &ins_vBuf,
         nullptr
     );

@@ -5,8 +5,8 @@
 namespace JBF{
     namespace Global{
         namespace Hash{
-            template<typename T> extern INLINE T X65599Generator(const TCHAR* str, size_t len){
-                T h = 0;
+            template<typename HASHSIZE, typename CHARSIZE> extern INLINE HASHSIZE X65599Generator(const CHARSIZE* str, size_t len){
+                HASHSIZE h = 0;
 
                 for (auto i = decltype(len){0}; i < len; ++i){
                     h *= 65599;
