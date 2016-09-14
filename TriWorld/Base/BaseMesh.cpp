@@ -1,4 +1,6 @@
-﻿#include"BaseMesh.h"
+﻿#include"pch.h"
+
+#include"BaseMesh.h"
 #include"ArchiveTable.h"
 
 BaseMesh::BaseMesh() : Base::DXResource(RESTYPE_MANAGE){
@@ -53,4 +55,6 @@ HRESULT BaseMesh::ins_fillMeshByXFormat(BaseMesh* obj){
 
         obj->ins_mtrlTable[i] = curMtrl->MatD3D;
     }
+
+    return S_OK;
 }
