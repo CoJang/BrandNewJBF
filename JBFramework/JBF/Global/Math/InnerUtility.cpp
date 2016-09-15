@@ -49,6 +49,15 @@ namespace JBF{
                 v = _mm_add_ps(v, _mm_set1_ps(PIf / 2.f));
                 return xmm_sin(v);
             }
+
+            __m128 MATH_CALL xmm_tan(__m128 v){
+                __m128 b = xmm_cos(v);
+
+                v = xmm_sin(v);
+                v = _mm_div_ps(v, b);
+
+                return v;
+            }
 #endif
         };
     };

@@ -38,7 +38,7 @@ namespace JBF{
                 return pOut;
             }
             Matrix* MatrixPerspectiveFovLH(Matrix* pOut, float fovy, float Aspect, float zn, float zf){
-                float h = 1.f / tan(fovy * 0.5f);
+                float h = 1.f / Tan(fovy * 0.5f);
                 float w = h / Aspect;
 
                 pOut->_11 = w;

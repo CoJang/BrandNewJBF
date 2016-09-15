@@ -14,6 +14,7 @@ namespace JBF{
 
             extern __m128 MATH_CALL xmm_sin(__m128 v);
             extern __m128 MATH_CALL xmm_cos(__m128 v);
+            extern __m128 MATH_CALL xmm_tan(__m128 v);
 #endif
         };
     };

@@ -14,6 +14,7 @@ namespace JBF{
 
             extern INLINE float MATH_CALL Sin(float v);
             extern INLINE float MATH_CALL Cos(float v);
+            extern INLINE float MATH_CALL Tan(float v);
 
             extern Vector3* MATH_CALL Vec3TransformCoord(Vector3* pOut, const Vector3* pV, const Matrix* pM);
             extern Vector4* MATH_CALL Vec4TransformCoord(Vector4* pOut, const Vector4* pV, const Matrix* pM);

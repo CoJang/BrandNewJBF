@@ -10,6 +10,7 @@ namespace JBF{
         namespace Math{
             INLINE float MATH_CALL Sin(float v){ return sin(v); }
             INLINE float MATH_CALL Cos(float v){ return cos(v); }
+            INLINE float MATH_CALL Tan(float v){ return tan(v); }
 
             Vector3* MATH_CALL Vec3TransformCoord(Vector3* pOut, const Vector3* pV, const Matrix* pM){
                 Vector3 i = *pV;
