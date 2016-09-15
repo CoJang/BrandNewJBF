@@ -7,9 +7,7 @@ using namespace JBF;
 
 class BaseMesh : Base::DXResource{
 private:
-    std::vector<byte> ins_rawData;
-
-private:
+    ARCHIVE_HASHSIZE ins_fileName;
     ID3DXMesh* ins_mesh;
     std::vector<D3DMATERIAL9> ins_mtrlTable;
 

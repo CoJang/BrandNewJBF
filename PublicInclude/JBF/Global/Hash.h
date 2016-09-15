@@ -10,7 +10,7 @@ namespace JBF{
 
                 for (auto i = decltype(len){0}; i < len; ++i){
                     h *= 65599;
-                    h += ((*str == _T('\\')) ? _T('/') : ((*str >= _T('a') && *str <= _T('z')) ? (*str - 32) : (*str)));
+                    h += ((*str == (CHARSIZE)('\\')) ? (CHARSIZE)('/') : ((*str >= (CHARSIZE)('a') && *str <= (CHARSIZE)('z')) ? (*str - 32) : (*str)));
                     ++str;
                 }
 

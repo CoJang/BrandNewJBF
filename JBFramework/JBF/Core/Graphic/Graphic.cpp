@@ -79,7 +79,7 @@ namespace JBF{
             }
             ///////////////////////////////////////////
 
-            void Init(const Global::Math::Point<USHORT>* size){
+            void Init(const Global::Math::Point<WORD>* size){
                 {
                     ins_resTableManaged.rehash(SIZE_RESTABLE_BUCKET);
                     ins_resTableVRAM.rehash(SIZE_RESTABLE_BUCKET);

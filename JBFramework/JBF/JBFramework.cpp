@@ -15,15 +15,20 @@ namespace JBF{
 
     // Inner function(s) definition
     ///////////////////////////////////////////
-    static void ins_initApp(const Global::Math::Point<USHORT>* size){
+    static void ins_initApp(const Global::Math::Point<WORD>* size){
         Core::Input::Init();
         Core::Graphic::Init(size);
+
+        Object::ExternalTexture::InitTable();
+
         Core::SystemTimer::Init();
 
         Manager::Stage::Init();
     }
     static void ins_cleanupApp(){
         Manager::Stage::Release();
+
+        Object::ExternalTexture::ReleaseTable();
 
         Core::Graphic::Release();
         Core::Input::Release();
@@ -77,7 +82,7 @@ namespace JBF{
         void(*appEndup)(void),
         LPCTSTR lpszClassName,
         LPCTSTR lpIconName,
-        const Global::Math::Point<USHORT>* size
+        const Global::Math::Point<WORD>* size
     ){
         ins_mainInstance = GetModuleHandle(nullptr);
 

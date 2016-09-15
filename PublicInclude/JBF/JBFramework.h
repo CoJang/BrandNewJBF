@@ -8,6 +8,7 @@
 #include"JBF/Core/Core.h"
 #include"Base/Base.h"
 #include"Manager/Manager.h"
+#include"Object/Object.h"
 
 namespace JBF{
     extern INLINE HINSTANCE GetInstance();
@@ -18,7 +19,7 @@ namespace JBF{
         void(*appEndup)(void),
         LPCTSTR lpszClassName,
         LPCTSTR lpIconName,
-        const Global::Math::Point<USHORT>* size
+        const Global::Math::Point<WORD>* size
     );
 };
 

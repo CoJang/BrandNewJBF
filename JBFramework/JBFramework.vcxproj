@@ -183,6 +183,7 @@
   <ItemGroup>
     <ClCompile Include="JBF\Base\DXResource.cpp" />
     <ClCompile Include="JBF\Base\Stage_base.cpp" />
+    <ClCompile Include="JBF\Base\Texture.cpp" />
     <ClCompile Include="JBF\Core\Graphic\Graphic.cpp" />
     <ClCompile Include="JBF\Core\Input.cpp" />
     <ClCompile Include="JBF\Core\SystemTimer.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="JBF\Global\Math\InnerUtility.cpp" />
     <ClCompile Include="JBF\JBFramework.cpp" />
     <ClCompile Include="JBF\Manager\Stage_mgr.cpp" />
+    <ClCompile Include="JBF\Object\ExternalTexture.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -214,6 +216,7 @@
     <ClInclude Include="..\PublicInclude\JBF\Base\Base.h" />
     <ClInclude Include="..\PublicInclude\JBF\Base\DXResource.h" />
     <ClInclude Include="..\PublicInclude\JBF\Base\Stage.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Base\Texture.h" />
     <ClInclude Include="..\PublicInclude\JBF\Core\Core.h" />
     <ClInclude Include="..\PublicInclude\JBF\Core\Graphic\Graphic.h" />
     <ClInclude Include="..\PublicInclude\JBF\Core\Input.h" />
@@ -234,6 +237,8 @@
     <ClInclude Include="..\PublicInclude\JBF\JBFramework.h" />
     <ClInclude Include="..\PublicInclude\JBF\Manager\Manager.h" />
     <ClInclude Include="..\PublicInclude\JBF\Manager\Stage.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Object\ExternalTexture.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Object\Object.h" />
     <ClInclude Include="JBF\Global\Math\InnerUtility.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

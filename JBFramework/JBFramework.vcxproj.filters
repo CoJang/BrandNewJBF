@@ -22,6 +22,9 @@
     <Filter Include="Core\Graphic">
       <UniqueIdentifier>{1351884c-0fbd-4ad1-8a92-a4440f7ddab9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{7075cb6e-4e75-434e-83f3-7dda2df48a86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JBF\Core\Input.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="JBF\Global\Archive.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Base\Texture.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Object\ExternalTexture.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +164,15 @@
     </ClInclude>
     <ClInclude Include="..\PublicInclude\JBF\Global\Archive.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Base\Texture.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Object\ExternalTexture.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

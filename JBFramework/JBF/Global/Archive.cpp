@@ -19,7 +19,7 @@ namespace JBF{
                 byte* p = (decltype(p))src;
 
                 if (!shiftSize)shiftSize = 97;
-                for (auto i = p; i - p < len; ++i){
+                for (auto i = p; (i - p) < len; ++i){
                     *i ^= xor;
                     xor = Math::BitRotateLeft(xor, shiftSize);
                 }
@@ -36,13 +36,16 @@ namespace JBF{
 
                     Concurrency::parallel_for<DWORD>(0u, sideCount, [=](DWORD i){
                         decltype(pSrc) cur = pSrc + i;
-                        for (size_t n = 0; n < posMid; ++n)std::swap(cur[n], cur[sideCount - n - 1]);
+                        for (DWORD n = 0; n < posMid; ++n)std::swap(cur[n], cur[sideCount - n - 1]);
                     });
 
                     len -= sideCount * sideCount;
                 } while (sideCount > 1);
             }
 
+
+            std::vector<byte> Decrypter::ins_rawBuffer(10 << 20);
+            std::mutex Decrypter::ins_readMutex;
 
             Decrypter::Decrypter(){
                 ins_file = nullptr;
@@ -105,23 +108,25 @@ namespace JBF{
                 return true;
             }
 
-            bool Decrypter::GetSize(const DATA_TABLE::const_iterator& itr, DWORD* size){
+            bool Decrypter::GetDataLock(ARCHIVE_HASHSIZE key, void** buffer, DWORD* size){
+                decltype(&ins_rawBuffer[0]) buf;
+                auto itr = ins_dataTable.find(key);
                 if (itr == ins_dataTable.end())return false;
 
-                *size = itr->second.size;
+                ins_readMutex.lock();
+                {
+                    ins_rawBuffer.clear();
+                    ins_rawBuffer.resize(itr->second.size);
+                    buf = &ins_rawBuffer[0];
 
-                return true;
-            }
-            bool Decrypter::GetData(const DATA_TABLE::const_iterator& itr, void* buffer){
-                byte* bufByte = (decltype(bufByte))buffer;
+                    if (_fseeki64(ins_file, itr->second.pos, SEEK_SET))return false;
+                    if (fread(buf, sizeof(decltype(*buf)), itr->second.size, ins_file) != itr->second.size)return false;
+                    MakeXORValue(buf, itr->second.size, ARCHIVE_XORBYTE);
+                    ObfuscateData(buf, itr->second.size);
+                }
 
-                if (itr == ins_dataTable.end())return false;
-                
-                if (_fseeki64(ins_file, itr->second.pos, SEEK_SET))return false;
-
-                if (fread(bufByte, sizeof(decltype(bufByte)), itr->second.size, ins_file) != itr->second.size)return false;
-                MakeXORValue(bufByte, itr->second.size, ARCHIVE_XORBYTE);
-                ObfuscateData(bufByte, itr->second.size);
+                *buffer = buf;
+                if (size)*size = itr->second.size;
 
                 return true;
             }

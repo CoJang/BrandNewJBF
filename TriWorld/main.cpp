@@ -7,7 +7,7 @@ using namespace JBF;
 #include"Stage/StageTest.h"
 extern StageTest stgTest;
 
-static const Global::Math::Point<USHORT> clientSize = { 1366, 768 };
+static const Global::Math::Point<WORD> clientSize = { 1366, 768 };
 static void GameBegin(){
     arcModels.OpenFile(_T("./Content/TRI_Models.jba"));
     arcTextures.OpenFile(_T("./Content/TRI_Textures.jba"));

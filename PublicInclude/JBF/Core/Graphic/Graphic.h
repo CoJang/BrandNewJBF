@@ -6,7 +6,7 @@
 namespace JBF{
     namespace Core{
         namespace Graphic{
-            extern void Init(const Global::Math::Point<USHORT>* size);
+            extern void Init(const Global::Math::Point<WORD>* size);
             extern void Release();
 
             extern HRESULT CheckState();

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include<iostream>
+#include<mutex>
+#include<vector>
 #include<unordered_map>
 
 #include"JBF/Definitions.h"
@@ -19,15 +21,17 @@ namespace JBF{
                     QWORD pos;
                     DWORD size;
                 };
-            public:
-                typedef std::unordered_map<ARCHIVE_HASHSIZE, Data, Hash::HashedKeyHasher<ARCHIVE_HASHSIZE>> DATA_TABLE;
+
+            private:
+                static std::vector<byte> ins_rawBuffer;
+                static std::mutex ins_readMutex;
 
             private:
                 TCHAR ins_filePath[1024];
                 FILE* ins_file;
 
             private:
-                DATA_TABLE ins_dataTable;
+                std::unordered_map<ARCHIVE_HASHSIZE, Data, Hash::HashedKeyHasher<ARCHIVE_HASHSIZE>> ins_dataTable;
 
             public:
                 Decrypter();
@@ -38,9 +42,8 @@ namespace JBF{
                 void CloseFile();
 
             public:
-                INLINE DATA_TABLE::const_iterator GetIterator(ARCHIVE_HASHSIZE key){ return ins_dataTable.find(key); }
-                bool GetSize(const DATA_TABLE::const_iterator& itr, DWORD* size);
-                bool GetData(const DATA_TABLE::const_iterator& itr, void* buffer);
+                bool GetDataLock(ARCHIVE_HASHSIZE key, void** buffer, DWORD* size);
+                INLINE void Unlock(){ ins_readMutex.unlock(); }
 
             private:
                 bool ins_loadInfo();
