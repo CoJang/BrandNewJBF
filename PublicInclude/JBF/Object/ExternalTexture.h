@@ -4,20 +4,28 @@
 
 #include"JBF/Definitions.h"
 #include"JBF/Base/Base.h"
-#include"JBF/Global/Global.h"
+#include"JBF/Global/Archive.h"
 
 namespace JBF{
     namespace Object{
         class ExternalTexture : public Base::Texture{
         private:
-            static std::unordered_map<size_t, std::pair<ExternalTexture*, DWORD>, Global::Hash::HashedKeyHasher<size_t>> ins_table;
-            static INLINE size_t ins_makeTableKey(Global::Archive::Decrypter* arc, ARCHIVE_HASHSIZE file){
-                return reinterpret_cast<size_t>(arc) ^ file;
-            }
+            struct DATA_KEY{
+                Global::Archive::Decrypter* arc;
+                ARCHIVE_HASHSIZE file;
+
+                DATA_KEY& operator=(const DATA_KEY& rhs);
+                bool operator==(const DATA_KEY& rhs)const;
+            };
+            struct DATA_HASHER{
+                size_t operator()(const DATA_KEY& key)const;
+            };
 
         private:
-            Global::Archive::Decrypter* ins_archive;
-            ARCHIVE_HASHSIZE ins_file;
+            static std::unordered_map<DATA_KEY, std::pair<ExternalTexture*, DWORD>, DATA_HASHER> ins_table;
+
+        private:
+            DATA_KEY ins_file;
 
         public:
             static void InitTable();

@@ -5,7 +5,18 @@
 
 namespace JBF{
     namespace Object{
-        std::unordered_map<size_t, std::pair<ExternalTexture*, DWORD>, Global::Hash::HashedKeyHasher<size_t>> ExternalTexture::ins_table;
+        std::unordered_map<ExternalTexture::DATA_KEY, std::pair<ExternalTexture*, DWORD>, ExternalTexture::DATA_HASHER> ExternalTexture::ins_table;
+
+        ExternalTexture::DATA_KEY& ExternalTexture::DATA_KEY::operator=(const DATA_KEY& rhs){
+            memcpy_s(this, sizeof(decltype(*this)), &rhs, sizeof(decltype(*this)));
+            return *this;
+        }
+        bool ExternalTexture::DATA_KEY::operator==(const DATA_KEY& rhs)const{
+            return (arc == rhs.arc) && (file == rhs.file);
+        }
+        size_t ExternalTexture::DATA_HASHER::operator()(const DATA_KEY& key)const{
+            return (reinterpret_cast<size_t>(key.arc) ^ key.file);
+        }
 
         void ExternalTexture::InitTable(){
             ins_table.rehash(1 << 20);
@@ -20,16 +31,13 @@ namespace JBF{
         ExternalTexture::~ExternalTexture(){ Invalidate(); }
 
         ExternalTexture* ExternalTexture::Read(Global::Archive::Decrypter* arc, ARCHIVE_HASHSIZE file){
-            size_t key = ins_makeTableKey(arc, file);
+            DATA_KEY key = { arc, file };
             auto itr = ins_table.find(key);
             ExternalTexture* _new;
 
             if (itr == ins_table.end()){
                 _new = new ExternalTexture();
-
-                _new->ins_archive = arc;
-                _new->ins_file = file;
-
+                _new->ins_file = key;
                 if (!_new->Validate()){
                     delete _new;
                     return nullptr;
@@ -45,7 +53,7 @@ namespace JBF{
             return _new;
         }
         void ExternalTexture::Release(ExternalTexture* obj){
-            auto itr = ins_table.find(ins_makeTableKey(obj->ins_archive, obj->ins_file));
+            auto itr = ins_table.find(obj->ins_file);
 
             if (itr == ins_table.end())return;
 
@@ -62,7 +70,7 @@ namespace JBF{
             void* bufData;
             DWORD sizeData;
 
-            if (ins_archive->GetDataLock(ins_file, &bufData, &sizeData)){
+            if (ins_file.arc->GetDataLock(ins_file.file, &bufData, &sizeData)){
                 hr = D3DXCreateTextureFromFileInMemoryEx(
                     Core::Graphic::GetDevice(),
                     bufData,
@@ -79,7 +87,7 @@ namespace JBF{
                     nullptr,
                     &ins_texture
                 );
-                ins_archive->Unlock();
+                ins_file.arc->Unlock();
                 ASSERT_HRESULT(hr, _T("Failed to load texture."));
             }
             else return E_FAIL;
