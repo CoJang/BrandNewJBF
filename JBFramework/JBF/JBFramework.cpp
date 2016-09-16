@@ -19,6 +19,7 @@ namespace JBF{
         Core::Input::Init();
         Core::Graphic::Init(size);
 
+        Object::Shader::InitTable();
         Object::ExternalTexture::InitTable();
 
         Core::SystemTimer::Init();
@@ -29,6 +30,7 @@ namespace JBF{
         Manager::Stage::Release();
 
         Object::ExternalTexture::ReleaseTable();
+        Object::Shader::ReleaseTable();
 
         Core::Graphic::Release();
         Core::Input::Release();
