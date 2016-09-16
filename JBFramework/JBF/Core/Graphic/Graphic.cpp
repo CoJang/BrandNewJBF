@@ -33,7 +33,7 @@ namespace JBF{
                     &ins_d3dpp,
                     &ins_device
                 );
-                ASSERT_HRESULT(hr, DXGetErrorString(hr));
+                ASSERT_HRESULT(hr, _T("%s"), DXGetErrorString(hr));
                 return hr;
             }
             static INLINE HRESULT ins_resetDevice(){
@@ -51,7 +51,7 @@ namespace JBF{
                 if (res == D3DERR_DEVICENOTRESET){ // need reset
                     hr = ins_createDevice();
                     if (FAILED(hr)){
-                        ASSERT_HRESULT(E_FAIL, _T("Failed to creaet device."));
+                        ASSERT_HRESULT(hr, _T("Failed to creaet device."));
                         return E_FAIL;
                     }
 

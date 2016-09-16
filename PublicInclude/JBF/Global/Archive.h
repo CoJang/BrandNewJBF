@@ -45,6 +45,9 @@ namespace JBF{
                 bool GetDataLock(ARCHIVE_HASHSIZE key, void** buffer, DWORD* size);
                 INLINE void Unlock(){ ins_readMutex.unlock(); }
 
+            public:
+                INLINE const TCHAR* GetFilePath()const{ return ins_filePath; }
+
             private:
                 bool ins_loadInfo();
             };

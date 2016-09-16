@@ -28,7 +28,7 @@ namespace JBF{
 #define STRINGIFY(x) #x
 #define STRINGIFY_BUILTIN(x) STRINGIFY(x)
 
-#define ASSERTW(isFalse, ...) \
+#define ASSERTW(isFalse, str, ...) \
     if(!(bool)(isFalse)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
@@ -40,12 +40,12 @@ namespace JBF{
             nullptr, \
             L"Assertion failed", \
             MB_ICONERROR | MB_OK, \
-            L"Assertion failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(isFalse) L"\n\n%s", \
+            L"Assertion failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(isFalse) L"\n\n" str, \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \
     }
-#define ASSERTA(isFalse, ...) \
+#define ASSERTA(isFalse, str, ...) \
     if(!(bool)(isFalse)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
@@ -57,13 +57,13 @@ namespace JBF{
             nullptr, \
             "Assertion failed", \
             MB_ICONERROR | MB_OK, \
-            "Assertion failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(isFalse) "\n\n%s" \
+            "Assertion failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(isFalse) "\n\n" str \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \
     }
 
-#define ASSERT_HRESULTW(hr, ...) \
+#define ASSERT_HRESULTW(hr, str, ...) \
     if(FAILED(hr)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
@@ -76,12 +76,12 @@ namespace JBF{
             nullptr, \
             L"HRESULT failed", \
             MB_ICONERROR | MB_OK, \
-            L"HRESULT failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(hr) L"\n\n%s", \
+            L"HRESULT failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(hr) L"\n\n" str, \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \
     }
-#define ASSERT_HRESULTA(hr, ...) \
+#define ASSERT_HRESULTA(hr, str, ...) \
     if(FAILED(hr)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
@@ -94,18 +94,18 @@ namespace JBF{
             nullptr, \
             "HRESULT failed", \
             MB_ICONERROR | MB_OK, \
-            "HRESULT failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(hr) "\n\n%s", \
+            "HRESULT failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(hr) "\n\n" str, \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \
     }
 
 #ifdef UNICODE
-#define ASSERT(isFalse, ...) ASSERTW(isFalse, __VA_ARGS__)
-#define ASSERT_HRESULT(hr, ...) ASSERT_HRESULTW(hr, __VA_ARGS__)
+#define ASSERT(isFalse, str, ...) ASSERTW(isFalse, str, __VA_ARGS__)
+#define ASSERT_HRESULT(hr, str, ...) ASSERT_HRESULTW(hr, str, __VA_ARGS__)
 #else
-#define ASSERT(isFalse, ...) ASSERTA(isFalse, __VA_ARGS__)
-#define ASSERT_HRESULT(hr, ...) ASSERT_HRESULTA(hr, __VA_ARGS__)
+#define ASSERT(isFalse, str, ...) ASSERTA(isFalse, str, __VA_ARGS__)
+#define ASSERT_HRESULT(hr, str, ...) ASSERT_HRESULTA(hr, str, __VA_ARGS__)
 #endif
 
 #define LOGGING(attribute, str, ...) \

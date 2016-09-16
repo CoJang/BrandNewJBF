@@ -88,9 +88,12 @@ namespace JBF{
                     &ins_texture
                 );
                 ins_file.arc->Unlock();
-                ASSERT_HRESULT(hr, _T("Failed to load texture."));
+                ASSERT_HRESULT(hr, _T("Failed to load texture.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
             }
-            else return E_FAIL;
+            else{
+                ASSERT(false, _T("Failed to read data from archive.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
+                return E_FAIL;
+            }
 
             return S_OK;
         }
