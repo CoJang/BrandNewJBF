@@ -4,6 +4,7 @@
 #include"Base/Base.h"
 
 using namespace JBF;
+using namespace JBF::Global::Math;
 
 class ObjHuman{
 private:
@@ -11,5 +12,9 @@ private:
     Object::ExternalTexture* ins_texture;
 
 public:
-    
+    ObjHuman();
+    virtual ~ObjHuman();
+
+public:
+    bool Draw();
 };
