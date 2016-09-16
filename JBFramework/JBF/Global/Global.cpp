@@ -5,21 +5,39 @@ namespace JBF{
     namespace Global{
         int MsgBox(
             HWND hWnd,
-            LPCTSTR lpCaption,
+            LPCSTR lpCaption,
             UINT uType,
-            LPCTSTR lpText,
+            LPCSTR lpText,
             ...
         ){
-            TCHAR buf[1024];
+            CHAR buf[1024];
             va_list iterat;
 
             va_start(iterat, lpText);
-            vstprintf_s(buf, lpText, iterat);
+            vsprintf_s(buf, lpText, iterat);
             va_end(iterat);
 
             buf[_countof(buf) - 1] = 0;
 
-            return MessageBox(hWnd, buf, lpCaption, uType);
+            return MessageBoxA(hWnd, buf, lpCaption, uType);
+        }
+        int MsgBox(
+            HWND hWnd,
+            LPCWSTR lpCaption,
+            UINT uType,
+            LPCWSTR lpText,
+            ...
+        ){
+            WCHAR buf[1024];
+            va_list iterat;
+
+            va_start(iterat, lpText);
+            vswprintf_s(buf, lpText, iterat);
+            va_end(iterat);
+
+            buf[_countof(buf) - 1] = 0;
+
+            return MessageBoxW(hWnd, buf, lpCaption, uType);
         }
     };
 };

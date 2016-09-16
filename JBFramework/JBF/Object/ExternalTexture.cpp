@@ -5,15 +5,6 @@
 
 namespace JBF{
     namespace Object{
-        void ExternalTexture::InitTable(){
-            ins_table.rehash(1 << 20);
-        }
-        void ExternalTexture::ReleaseTable(){
-            for (auto i = ins_table.begin(), e = ins_table.end(); i != e; ++i){
-                delete i->second.first;
-            }
-        }
-
         ExternalTexture::ExternalTexture() : Base::Texture(RESTYPE_MANAGE){}
         ExternalTexture::~ExternalTexture(){ Invalidate(); }
 

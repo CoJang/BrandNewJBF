@@ -20,73 +20,61 @@ namespace JBF{
 
             extern void Create(HINSTANCE hInst);
             extern void Release();
-            extern void Push(LOGGER_COLOR attribute, LPCTSTR str, ...);
+            extern void Push(LOGGER_COLOR attribute, LPCSTR str, ...);
+            extern void Push(LOGGER_COLOR attribute, LPCWSTR str, ...);
         };
     };
 };
 
+#define __W(x) L##x
+#define __A(x) x
+#define _W(x) __W(x)
+#define _A(x) __A(x)
+
 #define STRINGIFY(x) #x
 #define STRINGIFY_BUILTIN(x) STRINGIFY(x)
 
-#define ASSERTW(isFalse, str, ...) \
-    if(!(bool)(isFalse)){ \
-        if(JBF::Debug::Logger::GetHandle()){ \
-            JBF::Debug::Logger::Push( \
-                JBF::Debug::Logger::LC_FAILED, \
-                L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) \
-                ); \
-        } \
-        JBF::Global::MsgBox( \
-            nullptr, \
-            L"Assertion failed", \
-            MB_ICONERROR | MB_OK, \
-            L"Assertion failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(isFalse) L"\n\n" str, \
-            __VA_ARGS__ \
-            ); \
-        __debugbreak(); \
-    }
 #define ASSERTA(isFalse, str, ...) \
     if(!(bool)(isFalse)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
                 JBF::Debug::Logger::LC_FAILED, \
-                "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) \
+                "File: " _A(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) \
                 ); \
         } \
         JBF::Global::MsgBox( \
             nullptr, \
             "Assertion failed", \
             MB_ICONERROR | MB_OK, \
-            "Assertion failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(isFalse) "\n\n" str \
+            "Assertion failed!\n\n" "File: " _A(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(isFalse) "\n\n" str \
+            __VA_ARGS__ \
+            ); \
+        __debugbreak(); \
+    }
+#define ASSERTW(isFalse, str, ...) \
+    if(!(bool)(isFalse)){ \
+        if(JBF::Debug::Logger::GetHandle()){ \
+            JBF::Debug::Logger::Push( \
+                JBF::Debug::Logger::LC_FAILED, \
+                L"File: " _W(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) \
+                ); \
+        } \
+        JBF::Global::MsgBox( \
+            nullptr, \
+            L"Assertion failed", \
+            MB_ICONERROR | MB_OK, \
+            L"Assertion failed!\n\n" L"File: " _W(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(isFalse) L"\n\n" str, \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \
     }
 
-#define ASSERT_HRESULTW(hr, str, ...) \
-    if(FAILED(hr)){ \
-        if(JBF::Debug::Logger::GetHandle()){ \
-            JBF::Debug::Logger::Push( \
-                JBF::Debug::Logger::LC_FAILED, \
-                L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n" L"Value: %X", \
-                hr \
-                ); \
-        } \
-        JBF::Global::MsgBox( \
-            nullptr, \
-            L"HRESULT failed", \
-            MB_ICONERROR | MB_OK, \
-            L"HRESULT failed!\n\n" L"File: " _T(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(hr) L"\n\n" str, \
-            __VA_ARGS__ \
-            ); \
-        __debugbreak(); \
-    }
 #define ASSERT_HRESULTA(hr, str, ...) \
     if(FAILED(hr)){ \
         if(JBF::Debug::Logger::GetHandle()){ \
             JBF::Debug::Logger::Push( \
                 JBF::Debug::Logger::LC_FAILED, \
-                "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n" "Value: %X", \
+                "File: " _A(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n" "Value: %X", \
                 hr \
                 ); \
         } \
@@ -94,7 +82,25 @@ namespace JBF{
             nullptr, \
             "HRESULT failed", \
             MB_ICONERROR | MB_OK, \
-            "HRESULT failed!\n\n" "File: " _T(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(hr) "\n\n" str, \
+            "HRESULT failed!\n\n" "File: " _A(__FILE__) "\n" "Line: " STRINGIFY_BUILTIN(__LINE__) "\n\n" "Expression: " STRINGIFY_BUILTIN(hr) "\n\n" str, \
+            __VA_ARGS__ \
+            ); \
+        __debugbreak(); \
+    }
+#define ASSERT_HRESULTW(hr, str, ...) \
+    if(FAILED(hr)){ \
+        if(JBF::Debug::Logger::GetHandle()){ \
+            JBF::Debug::Logger::Push( \
+                JBF::Debug::Logger::LC_FAILED, \
+                L"File: " _W(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n" L"Value: %X", \
+                hr \
+                ); \
+        } \
+        JBF::Global::MsgBox( \
+            nullptr, \
+            L"HRESULT failed", \
+            MB_ICONERROR | MB_OK, \
+            L"HRESULT failed!\n\n" L"File: " _W(__FILE__) L"\n" L"Line: " STRINGIFY_BUILTIN(__LINE__) L"\n\n" L"Expression: " STRINGIFY_BUILTIN(hr) L"\n\n" str, \
             __VA_ARGS__ \
             ); \
         __debugbreak(); \

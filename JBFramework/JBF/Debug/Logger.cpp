@@ -5,6 +5,7 @@
 #include<mutex>
 #include<vector>
 #include<list>
+#include<string>
 #include"JBF/Debug/Debug.h"
 
 #pragma comment(lib,"comctl32.lib")
@@ -97,7 +98,7 @@ namespace JBF{
 
             struct LIST_ITEM{
                 TCHAR num[8];
-                TCHAR str[512];
+                TCHAR str[1024];
                 LOGGER_COLOR attribute;
                 WORD hig;
             };
@@ -381,7 +382,7 @@ namespace JBF{
                 ins_listNumHwnd = nullptr;
             }
 
-            void Push(LOGGER_COLOR attribute, LPCTSTR str, ...){
+            void ins_push(LIST_ITEM& add){
                 std::lock_guard<decltype(ins_pushMutex)> scopedLock(ins_pushMutex);
 
                 auto pos = ins_stringTable.size();
@@ -392,24 +393,6 @@ namespace JBF{
                     --pos;
                 }
 
-                LIST_ITEM add;
-                {
-                    add.attribute = attribute;
-
-#ifdef _WIN64
-                    _ui64tot_s(++ins_totalCount, add.num, _countof(add.num), 10);
-#else
-                    _ultot_s(++ins_totalCount, add.num, _countof(add.num), 10);
-#endif
-
-                    va_list iterat;
-
-                    va_start(iterat, str);
-                    vstprintf_s(add.str, str, iterat);
-                    va_end(iterat);
-
-                    add.str[_countof(add.str) - 1] = 0;
-                }
                 {
                     RECT listRT;
                     GetClientRect(ins_listStringHwnd, &listRT);
@@ -423,7 +406,7 @@ namespace JBF{
                     DrawTextEx(
                         dc, add.str, (int)(tstrlen(add.str)), &rt,
                         DT_CALCRECT | DT_LEFT | DT_NOPREFIX | DT_TOP | DT_WORDBREAK, nullptr
-                        );
+                    );
                     rt.left -= BOX_PADDING_X; rt.top -= BOX_PADDING_Y;
                     rt.right += BOX_PADDING_X; rt.bottom += BOX_PADDING_Y;
                     SelectObject(dc, fntOld);
@@ -433,12 +416,84 @@ namespace JBF{
                     add.hig = decltype(add.hig)(rt.bottom);
                 }
 
-                ins_stringTable.push_back(add);
+                ins_stringTable.emplace_back(add);
                 SNDMSG(ins_listNumHwnd, LB_ADDSTRING, 0, (LPARAM)ins_stringTable.back().num);
                 SNDMSG(ins_listStringHwnd, LB_ADDSTRING, 0, (LPARAM)ins_stringTable.back().str);
 
                 SNDMSG(ins_listNumHwnd, LB_SETCURSEL, pos, 0);
                 SNDMSG(ins_listStringHwnd, LB_SETCURSEL, pos, 0);
+            }
+            void Push(LOGGER_COLOR attribute, LPCSTR str, ...){
+                va_list iterat;
+                LIST_ITEM add;
+
+                add.attribute = attribute;
+
+#ifdef UNICODE
+#ifdef _WIN64
+                _ui64tow_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#else
+                _ultow_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#endif
+
+                size_t orgLen = strlen(str);
+                size_t convLen = MultiByteToWideChar(CP_ACP, 0, str, orgLen, nullptr, NULL);
+                std::wstring tmpStr(convLen, 0);
+                MultiByteToWideChar(CP_ACP, 0, str, orgLen, &tmpStr[0], convLen);
+
+                va_start(iterat, tmpStr);
+                vswprintf_s(add.str, tmpStr.c_str(), iterat);
+                va_end(iterat);
+#else
+#ifdef _WIN64
+                _ui64toa_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#else
+                _ultoa_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#endif
+
+                va_start(iterat, str);
+                vsprintf_s(add.str, str, iterat);
+                va_end(iterat);
+#endif
+
+                add.str[_countof(add.str) - 1] = 0;
+                ins_push(add);
+            }
+            void Push(LOGGER_COLOR attribute, LPCWSTR str, ...){
+                va_list iterat;
+                LIST_ITEM add;
+
+                add.attribute = attribute;
+
+#ifdef UNICODE
+#ifdef _WIN64
+                _ui64tow_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#else
+                _ultow_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#endif
+
+                va_start(iterat, str);
+                vswprintf_s(add.str, str, iterat);
+                va_end(iterat);
+#else
+#ifdef _WIN64
+                _ui64toa_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#else
+                _ultoa_s(++ins_totalCount, add.num, _countof(add.num), 10);
+#endif
+
+                size_t orgLen = wcslen(str);
+                size_t convLen = WideCharToMultiByte(CP_UTF8, 0, str, orgLen, nullptr, 0, nullptr, nullptr);
+                std::string tmpStr(convLen, 0);
+                WideCharToMultiByte(CP_UTF8, 0, str, orgLen, &tmpStr[0], convLen, nullptr, nullptr);
+
+                va_start(iterat, tmpStr);
+                vsprintf_s(add.str, tmpStr.c_str(), iterat);
+                va_end(iterat);
+#endif
+
+                add.str[_countof(add.str) - 1] = 0;
+                ins_push(add);
             }
         };
     };

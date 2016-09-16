@@ -1,18 +1,11 @@
 ﻿#pragma once
 
-#include<unordered_map>
-
 #include"JBF/Definitions.h"
 #include"JBF/Base/Base.h"
-#include"JBF/Global/Archive.h"
 
 namespace JBF{
     namespace Object{
         class ExternalTexture : public Base::Texture, public Base::ArchiveResource<ExternalTexture>{
-        public:
-            static void InitTable();
-            static void ReleaseTable();
-
         private:
             ExternalTexture();
             virtual ~ExternalTexture();

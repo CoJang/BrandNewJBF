@@ -59,6 +59,16 @@ namespace JBF{
                     ins_table.erase(itr);
                 }
             }
+
+        public:
+            static void InitTable(){
+                ins_table.rehash(1 << 20);
+            }
+            static void ReleaseTable(){
+                for (auto i = ins_table.begin(), e = ins_table.end(); i != e; ++i){
+                    delete i->second.first;
+                }
+            }
         };
 
         template<typename T> std::unordered_map<ArchiveResourceKey, std::pair<T*, DWORD>, ArchiveResourceKey::Hasher> ArchiveResource<T>::ins_table;

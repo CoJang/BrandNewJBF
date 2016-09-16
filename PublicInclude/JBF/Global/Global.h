@@ -9,9 +9,16 @@ namespace JBF{
     namespace Global{
         extern int MsgBox(
             HWND hWnd,
-            LPCTSTR lpCaption,
+            LPCSTR lpCaption,
             UINT uType,
-            LPCTSTR lpText,
+            LPCSTR lpText,
+            ...
+        );
+        extern int MsgBox(
+            HWND hWnd,
+            LPCWSTR lpCaption,
+            UINT uType,
+            LPCWSTR lpText,
             ...
         );
     };
