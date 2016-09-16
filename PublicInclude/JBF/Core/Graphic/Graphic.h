@@ -18,6 +18,8 @@ namespace JBF{
             extern INLINE HRESULT CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle);
             extern INLINE HRESULT CreateIndexBuffer(UINT Length, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DIndexBuffer9** ppIndexBuffer, HANDLE* pSharedHandle);
 
+            extern INLINE HRESULT CreateVertexDeclaration(const D3DVERTEXELEMENT9* pVertexElements, IDirect3DVertexDeclaration9** ppDecl);
+
             extern INLINE HRESULT GetViewport(D3DVIEWPORT9* pViewport);
             extern INLINE HRESULT SetViewport(const D3DVIEWPORT9* pViewport);
 
@@ -32,6 +34,12 @@ namespace JBF{
 
             extern INLINE HRESULT GetFVF(DWORD* pFVF);
             extern INLINE HRESULT SetFVF(DWORD FVF);
+
+            extern INLINE HRESULT GetVertexDeclaration(IDirect3DVertexDeclaration9** ppDecl);
+            extern INLINE HRESULT SetVertexDeclaration(IDirect3DVertexDeclaration9* pDecl);
+
+            extern INLINE HRESULT GetIndices(IDirect3DIndexBuffer9** ppIndexData);
+            extern INLINE HRESULT SetIndices(IDirect3DIndexBuffer9* pIndexData);
 
             extern INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture);
             extern INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture);

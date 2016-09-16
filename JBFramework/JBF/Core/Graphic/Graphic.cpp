@@ -177,6 +177,8 @@ namespace JBF{
             INLINE HRESULT CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle){ return ins_device->CreateVertexBuffer(Length, Usage, FVF, Pool, ppVertexBuffer, pSharedHandle); }
             INLINE HRESULT CreateIndexBuffer(UINT Length, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DIndexBuffer9** ppIndexBuffer, HANDLE* pSharedHandle){ return ins_device->CreateIndexBuffer(Length, Usage, Format, Pool, ppIndexBuffer, pSharedHandle); }
 
+            INLINE HRESULT CreateVertexDeclaration(const D3DVERTEXELEMENT9* pVertexElements, IDirect3DVertexDeclaration9** ppDecl){ return ins_device->CreateVertexDeclaration(pVertexElements, ppDecl); }
+
             INLINE HRESULT GetViewport(D3DVIEWPORT9* pViewport){ return ins_device->GetViewport(pViewport); }
             INLINE HRESULT SetViewport(const D3DVIEWPORT9* pViewport){ return ins_device->SetViewport(pViewport); }
 
@@ -191,6 +193,12 @@ namespace JBF{
 
             INLINE HRESULT GetFVF(DWORD* pFVF){ return ins_device->GetFVF(pFVF); }
             INLINE HRESULT SetFVF(DWORD FVF){ return ins_device->SetFVF(FVF); }
+
+            INLINE HRESULT GetVertexDeclaration(IDirect3DVertexDeclaration9** ppDecl){ return ins_device->GetVertexDeclaration(ppDecl); }
+            INLINE HRESULT SetVertexDeclaration(IDirect3DVertexDeclaration9* pDecl){ return ins_device->SetVertexDeclaration(pDecl); }
+
+            INLINE HRESULT GetIndices(IDirect3DIndexBuffer9** ppIndexData){ return ins_device->GetIndices(ppIndexData); }
+            INLINE HRESULT SetIndices(IDirect3DIndexBuffer9* pIndexData){ return ins_device->SetIndices(pIndexData); }
 
             INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture){ return ins_device->GetTexture(Stage, ppTexture); }
             INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture){ return ins_device->SetTexture(Stage, pTexture); }

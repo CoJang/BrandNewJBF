@@ -68,7 +68,7 @@ namespace JBF{
 
             FAILED_FUNC:
                 CloseFile();
-                LOGGING_FAILED(_T("Failed to load archive.\n%s"), ins_filePath);
+                LOGGING_FAILED(_T("Failed to load archive.\n\"%s\""), ins_filePath);
                 return false;
             }
             void Decrypter::CloseFile(){

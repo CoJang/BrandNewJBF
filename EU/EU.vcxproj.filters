@@ -19,6 +19,12 @@
     <ClCompile Include="Stage\StageTest.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Base\BasePlane.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjHuman.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
@@ -38,6 +44,18 @@
     <ClInclude Include="Stage\StageTest.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Base.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\BasePlane.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjHuman.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -48,6 +66,9 @@
     </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{821684ee-3786-480c-ac7b-2a5726a82f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{1340b1a7-9953-43b4-9937-f4b88192c9f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

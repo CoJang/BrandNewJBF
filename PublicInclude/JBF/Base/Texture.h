@@ -18,6 +18,7 @@ namespace JBF{
 
         public:
             INLINE IDirect3DTexture9* GetTexture()const{ return ins_texture; }
+            INLINE const D3DXIMAGE_INFO* GetInfo()const{ return &ins_info; }
         };
     };
 };
