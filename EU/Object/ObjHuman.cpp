@@ -14,12 +14,12 @@ ObjHuman::ObjHuman(){
     ins_sprite = BasePlane::Create(&planSize);
 }
 ObjHuman::~ObjHuman(){
-    Object::ExternalTexture::Release(ins_texture);
-    BasePlane::Release(ins_sprite);
+    RELEASE(ins_texture);
+    RELEASE(ins_sprite);
 }
 
 bool ObjHuman::Draw(){
     Core::Graphic::SetTransform(D3DTS_WORLD, &Matrix::constIdentity);
 
-
+    return true;
 }

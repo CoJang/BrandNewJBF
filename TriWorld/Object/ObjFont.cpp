@@ -51,7 +51,7 @@ ObjFont* ObjFont::GetInstance(){
     if (!ins_instance)ins_instance = new ObjFont();
     return ins_instance;
 }
-void ObjFont::Release(ObjFont* inst){
+void ObjFont::Release(){
     delete ins_instance;
     ins_instance = nullptr;
 }

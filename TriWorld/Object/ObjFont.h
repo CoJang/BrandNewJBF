@@ -28,5 +28,5 @@ public:
 
 public:
     static ObjFont* GetInstance();
-    static void Release(ObjFont* inst);
+    static void Release();
 };

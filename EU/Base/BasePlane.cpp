@@ -35,7 +35,7 @@ BasePlane* BasePlane::Create(const D3DXVECTOR2* size){
 
     return _new;
 }
-void BasePlane::Release(BasePlane* obj){ delete obj; }
+void BasePlane::Release(){ delete this; }
 
 HRESULT BasePlane::Validate(){
     void* buf;

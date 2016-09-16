@@ -181,6 +181,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\PublicInclude\JBF\Object\Shader.cpp" />
+    <ClCompile Include="JBF\Base\ArchiveResource.cpp" />
     <ClCompile Include="JBF\Base\DXResource.cpp" />
     <ClCompile Include="JBF\Base\Stage_base.cpp" />
     <ClCompile Include="JBF\Base\Texture.cpp" />
@@ -214,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PublicInclude\JBF\Base\Base.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Base\ArchiveResource.h" />
     <ClInclude Include="..\PublicInclude\JBF\Base\DXResource.h" />
     <ClInclude Include="..\PublicInclude\JBF\Base\Stage.h" />
     <ClInclude Include="..\PublicInclude\JBF\Base\Texture.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="..\PublicInclude\JBF\Manager\Stage.h" />
     <ClInclude Include="..\PublicInclude\JBF\Object\ExternalTexture.h" />
     <ClInclude Include="..\PublicInclude\JBF\Object\Object.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Object\Shader.h" />
     <ClInclude Include="JBF\Global\Math\InnerUtility.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

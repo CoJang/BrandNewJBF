@@ -5,19 +5,6 @@
 
 namespace JBF{
     namespace Object{
-        std::unordered_map<ExternalTexture::DATA_KEY, std::pair<ExternalTexture*, DWORD>, ExternalTexture::DATA_HASHER> ExternalTexture::ins_table;
-
-        ExternalTexture::DATA_KEY& ExternalTexture::DATA_KEY::operator=(const DATA_KEY& rhs){
-            memcpy_s(this, sizeof(decltype(*this)), &rhs, sizeof(decltype(*this)));
-            return *this;
-        }
-        bool ExternalTexture::DATA_KEY::operator==(const DATA_KEY& rhs)const{
-            return (arc == rhs.arc) && (file == rhs.file);
-        }
-        size_t ExternalTexture::DATA_HASHER::operator()(const DATA_KEY& key)const{
-            return (reinterpret_cast<size_t>(key.arc) ^ key.file);
-        }
-
         void ExternalTexture::InitTable(){
             ins_table.rehash(1 << 20);
         }
@@ -31,37 +18,7 @@ namespace JBF{
         ExternalTexture::~ExternalTexture(){ Invalidate(); }
 
         ExternalTexture* ExternalTexture::Read(Global::Archive::Decrypter* arc, ARCHIVE_HASHSIZE file){
-            DATA_KEY key = { arc, file };
-            auto itr = ins_table.find(key);
-            ExternalTexture* _new;
-
-            if (itr == ins_table.end()){
-                _new = new ExternalTexture();
-                _new->ins_file = key;
-                if (!_new->Validate()){
-                    delete _new;
-                    return nullptr;
-                }
-
-                ins_table.emplace(key, std::make_pair(_new, (DWORD)0));
-            }
-            else{
-                _new = itr->second.first;
-                ++itr->second.second;
-            }
-
-            return _new;
-        }
-        void ExternalTexture::Release(ExternalTexture* obj){
-            auto itr = ins_table.find(obj->ins_file);
-
-            if (itr == ins_table.end())return;
-
-            if (itr->second.second)--itr->second.second;
-            else{
-                delete itr->second.first;
-                ins_table.erase(itr);
-            }
+            return ins_read<ExternalTexture>(arc, file, [](ExternalTexture* obj)->bool{ return SUCCEEDED(obj->Validate()); });
         }
 
         HRESULT ExternalTexture::Validate(){

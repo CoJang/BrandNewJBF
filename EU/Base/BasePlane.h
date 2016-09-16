@@ -34,7 +34,7 @@ private:
 
 public:
     static BasePlane* Create(const D3DXVECTOR2* size);
-    static void Release(BasePlane* obj);
+    void Release();
 
 public:
     virtual HRESULT Validate();

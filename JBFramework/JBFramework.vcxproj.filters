@@ -96,6 +96,12 @@
     <ClCompile Include="JBF\Object\ExternalTexture.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="..\PublicInclude\JBF\Object\Shader.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Base\ArchiveResource.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PublicInclude\JBF\Core\Core.h">
@@ -173,6 +179,12 @@
     </ClInclude>
     <ClInclude Include="..\PublicInclude\JBF\Object\ExternalTexture.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Object\Shader.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Base\ArchiveResource.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

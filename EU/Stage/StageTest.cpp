@@ -36,7 +36,7 @@ void StageTest::Init(){
 }
 void StageTest::Cleanup(){
     DeleteCustomAligned(objCamera);
-    ObjFont::Release(objFont);
+    ObjFont::Release();
 
     delete objGrid;
     DeleteCustomAligned(objAxis);
