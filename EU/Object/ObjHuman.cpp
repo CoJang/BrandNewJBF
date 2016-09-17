@@ -3,7 +3,7 @@
 
 #include"ArchiveTable.h"
 #define SHADER_NAME _T("Basic.fxo")
-#define FILE_NAME _T("dummyHuman.bmp")
+#define FILE_NAME _T("dummyHuman.png")
 
 ObjHuman::ObjHuman(){
     ins_shader = Object::Shader::Read(&arcShaders, Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(SHADER_NAME, tstrlen(SHADER_NAME)));
@@ -38,6 +38,14 @@ bool ObjHuman::Draw(){
     Core::Graphic::GetTransform(D3DTS_PROJECTION, &matWVP);
     matTmp *= matWVP;
     matWVP = ins_world * matTmp;
+
+    Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
+    Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);
+
+    Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
     ins_shader->SetMatrix("matWVP", &matWVP);
     ins_shader->SetTexture("texMain", ins_texture->GetTexture());
