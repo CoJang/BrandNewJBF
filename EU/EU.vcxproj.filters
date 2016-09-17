@@ -4,16 +4,7 @@
     <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Object\ObjAxis.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\ObjCamera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ObjFont.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ObjGrid.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Stage\StageTest.cpp">
@@ -29,16 +20,7 @@
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Object\ObjAxis.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\ObjCamera.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ObjFont.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ObjGrid.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Stage\StageTest.h">

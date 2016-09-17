@@ -22,5 +22,5 @@ public:
     virtual ~ObjHuman();
 
 public:
-    bool Draw();
+    bool Draw(const Matrix* matVP);
 };

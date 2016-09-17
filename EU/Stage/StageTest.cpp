@@ -16,41 +16,24 @@ void StageTest::Init(){
     }
 
     {
-        bGridSwitch = true;
-        bAxisSwitch = true;
-    }
-
-    {
         objCamera = NewCustomAligned<ObjCamera>(32);
-        objFont = ObjFont::GetInstance();
-
-        objGrid = new ObjGrid();
-        objAxis = NewCustomAligned<ObjAxis>(32);
 
         objHuman = NewCustomAligned<ObjHuman>(32);
     }
 
     {
         objCamera->Init();
-        objFont->Init();
-
-        objGrid->Init(100, 5.f);
-        objAxis->Init(5.f);
     }
 }
 void StageTest::Cleanup(){
     DeleteCustomAligned(objCamera);
-    ObjFont::Release();
-
-    delete objGrid;
-    DeleteCustomAligned(objAxis);
 
     DeleteCustomAligned(objHuman);
 }
 
 void StageTest::Update(float delta){
-    static const float speed = 10.f;
-    static Vector3 vCamTarget(0.f, 0.f, 0.f);
+    static const float speed = 100.f;
+    Vector3 vCamDir(0.f, 0.f, 0.f);
 
 #ifdef _DEBUG
     {
@@ -64,18 +47,16 @@ void StageTest::Update(float delta){
     }
 #endif
 
-    if (Core::Input::KeyPressed(Core::Input::DK_F2))bGridSwitch ^= true;
-    if (Core::Input::KeyPressed(Core::Input::DK_F3))bAxisSwitch ^= true;
+    if (Core::Input::KeyDown(Core::Input::DK_W))vCamDir.y += speed * delta;
+    else if (Core::Input::KeyDown(Core::Input::DK_S))vCamDir.y -= speed * delta;
+    if (Core::Input::KeyDown(Core::Input::DK_A))vCamDir.x -= speed * delta;
+    else if (Core::Input::KeyDown(Core::Input::DK_D))vCamDir.x += speed * delta;
 
-    if (Core::Input::KeyDown(Core::Input::DK_W))vCamTarget.z += speed * delta;
-    else if (Core::Input::KeyDown(Core::Input::DK_S))vCamTarget.z -= speed * delta;
-    if (Core::Input::KeyDown(Core::Input::DK_A))vCamTarget.x -= speed * delta;
-    else if (Core::Input::KeyDown(Core::Input::DK_D))vCamTarget.x += speed * delta;
-
-    objCamera->Update(&vCamTarget);
-    if(bAxisSwitch)objAxis->Update(&Vector3(0.f, 0.f, 0.f));
+    objCamera->MoveDirection(&vCamDir);
 }
 void StageTest::Draw(){
+    const Matrix* matVP = objCamera->GetVPMatrix();
+
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
     Graphic::GetDevice()->Clear(
         0,
@@ -86,12 +67,7 @@ void StageTest::Draw(){
         0
     );
 
-    {
-        if(bGridSwitch)objGrid->Draw();
-        if(bAxisSwitch)objAxis->Draw();
-    }
-
-    objHuman->Draw();
+    objHuman->Draw(matVP);
 
     Graphic::GetDevice()->EndScene();
 }

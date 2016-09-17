@@ -31,13 +31,10 @@ static HRESULT _draw_callback(void* rawObj){
 
     return obj->Draw();
 }
-bool ObjHuman::Draw(){
-    Matrix matWVP, matTmp;
+bool ObjHuman::Draw(const Matrix* matVP){
+    Matrix matWVP;
 
-    Core::Graphic::GetTransform(D3DTS_VIEW, &matTmp);
-    Core::Graphic::GetTransform(D3DTS_PROJECTION, &matWVP);
-    matTmp *= matWVP;
-    matWVP = ins_world * matTmp;
+    matWVP = ins_world * (*matVP);
 
     Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
     Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);

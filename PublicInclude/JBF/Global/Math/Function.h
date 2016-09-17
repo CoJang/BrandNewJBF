@@ -20,7 +20,9 @@ namespace JBF{
             extern Vector4* MATH_CALL Vec4TransformCoord(Vector4* pOut, const Vector4* pV, const Matrix* pM);
 
             extern Matrix* MatrixLookAtLH(Matrix* pOut, const Vector3* pEye, const Vector3* pAt, const Vector3* pUp);
+
             extern Matrix* MatrixPerspectiveFovLH(Matrix* pOut, float fovy, float Aspect, float zn, float zf);
+            extern Matrix* MatrixOrthoLH(Matrix* pOut, float w, float h, float zn, float zf);
         };
     };
 };

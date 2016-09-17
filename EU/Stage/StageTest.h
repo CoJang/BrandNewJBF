@@ -4,11 +4,6 @@
 
 #include"Object/Object.h"
 
-#include"Object/ObjCamera.h"
-#include"Object/ObjFont.h"
-#include"Object/ObjGrid.h"
-#include"Object/ObjAxis.h"
-
 using namespace JBF;
 
 class StageTest : public Base::Stage{
@@ -25,15 +20,8 @@ public:
     void Draw();
 
 private:
-    bool bGridSwitch;
-    bool bAxisSwitch;
-
-private:
     ObjCamera* objCamera;
-    ObjFont* objFont;
 
-    ObjGrid* objGrid;
-    ObjAxis* objAxis;
 private:
     ObjHuman* objHuman;
 };
