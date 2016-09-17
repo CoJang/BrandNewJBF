@@ -90,6 +90,8 @@ HRESULT BasePlane::Validate(){
         );
         if (FAILED(hr))return hr;
     }
+
+    return S_OK;
 }
 void BasePlane::Invalidate(){
     if (ins_vertBuf)RELEASE(ins_vertBuf);

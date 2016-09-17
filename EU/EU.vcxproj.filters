@@ -72,7 +72,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\basic.fx">
+    <FxCompile Include="Shader\Basic.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
