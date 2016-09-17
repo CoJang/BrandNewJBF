@@ -1,6 +1,8 @@
 ﻿#include"pch.h"
 #include"StageTest.h"
 
+#include"ArchiveTable.h"
+
 using namespace JBF;
 using namespace JBF::Global::Alloc;
 using namespace JBF::Core;
@@ -24,6 +26,8 @@ void StageTest::Init(){
 
         objGrid = new ObjGrid();
         objAxis = NewCustomAligned<ObjAxis>(32);
+
+        objHuman = NewCustomAligned<ObjHuman>(32);
     }
 
     {
@@ -40,6 +44,8 @@ void StageTest::Cleanup(){
 
     delete objGrid;
     DeleteCustomAligned(objAxis);
+
+    DeleteCustomAligned(objHuman);
 }
 
 void StageTest::Update(float delta){
@@ -84,6 +90,8 @@ void StageTest::Draw(){
         if(bGridSwitch)objGrid->Draw();
         if(bAxisSwitch)objAxis->Draw();
     }
+
+    objHuman->Draw();
 
     Graphic::GetDevice()->EndScene();
 }

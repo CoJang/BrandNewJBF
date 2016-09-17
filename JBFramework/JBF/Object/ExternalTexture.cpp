@@ -9,7 +9,7 @@ namespace JBF{
         ExternalTexture::~ExternalTexture(){ Invalidate(); }
 
         ExternalTexture* ExternalTexture::Read(Global::Archive::Decrypter* arc, ARCHIVE_HASHSIZE file){
-            return ins_read<ExternalTexture>(arc, file, [](ExternalTexture* obj)->bool{ return SUCCEEDED(obj->Validate()); });
+            return ins_read<ExternalTexture>(arc, file, [](ExternalTexture* obj)->bool{return SUCCEEDED(obj->Validate()); });
         }
 
         HRESULT ExternalTexture::Validate(){
@@ -25,7 +25,7 @@ namespace JBF{
                     sizeData,
                     D3DX_DEFAULT, D3DX_DEFAULT,
                     D3DX_DEFAULT,
-                    D3DUSAGE_DYNAMIC,
+                    0,
                     D3DFMT_UNKNOWN,
                     D3DPOOL_MANAGED,
                     D3DX_DEFAULT,
@@ -36,10 +36,10 @@ namespace JBF{
                     &ins_texture
                 );
                 ins_file.arc->Unlock();
-                ASSERT_HRESULT(hr, _T("Failed to load texture.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
+                ASSERT_HRESULT(hr, _T("Failed to load texture.\nArchive: %s\nHash key: %u\nError code: %x"), ins_file.arc->GetFilePath(), ins_file.file, hr);
             }
             else{
-                ASSERT(false, _T("Failed to read data from archive.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
+                ASSERT(false, _T("Failed to read data from archive.\nArchive: %s\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
                 return E_FAIL;
             }
 

@@ -44,7 +44,7 @@ HRESULT BaseMesh::ins_fillMeshByXFormat(BaseMesh* obj){
             &obj->ins_mesh
         );
         arcModels.Unlock();
-        ASSERT_HRESULT(hr, _T("Failed to load XFile mesh.\nArchive: \"%s\"\nHash key: %u"), arcModels.GetFilePath(), obj->ins_fileName);
+        ASSERT_HRESULT(hr, _T("Failed to load XFile mesh.\nArchive: %s\nHash key: %u\nError code: %x"), arcModels.GetFilePath(), obj->ins_fileName, hr);
 
         obj->ins_mtrlTable.resize(sizeMtrl);
         for (auto i = decltype(sizeMtrl){0}; i < sizeMtrl; ++i){
@@ -55,7 +55,7 @@ HRESULT BaseMesh::ins_fillMeshByXFormat(BaseMesh* obj){
         }
     }
     else{
-        ASSERT(false, _T("Failed to read data from archive.\nArchive: \"%s\"\nHash key: %u"), arcModels.GetFilePath(), obj->ins_fileName);
+        ASSERT(false, _T("Failed to read data from archive.\nArchive: %s\nHash key: %u"), arcModels.GetFilePath(), obj->ins_fileName);
         return E_FAIL;
     }
 

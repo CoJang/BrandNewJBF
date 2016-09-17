@@ -2,6 +2,8 @@
 
 #include"JBF/JBFramework.h"
 
+#include"Object/Object.h"
+
 #include"Object/ObjCamera.h"
 #include"Object/ObjFont.h"
 #include"Object/ObjGrid.h"
@@ -32,4 +34,6 @@ private:
 
     ObjGrid* objGrid;
     ObjAxis* objAxis;
+private:
+    ObjHuman* objHuman;
 };

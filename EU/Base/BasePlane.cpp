@@ -3,7 +3,7 @@
 
 const D3DVERTEXELEMENT9 BasePlane::ins_vertElememt[] = {
     { 0, 0, D3DDECLTYPE_FLOAT3, 0, D3DDECLUSAGE_POSITION, 0 },
-    { 0, 20, D3DDECLTYPE_FLOAT2, 0, D3DDECLUSAGE_TEXCOORD, 0 },
+    { 0, 12, D3DDECLTYPE_FLOAT2, 0, D3DDECLUSAGE_TEXCOORD, 0 },
     D3DDECL_END()
 };
 const BasePlane::INDEX BasePlane::ins_indRaw[] = {
@@ -101,8 +101,8 @@ void BasePlane::Invalidate(){
 
 void BasePlane::SendFaceInfo(){
     Core::Graphic::SetStreamSource(0, ins_vertBuf, 0, sizeof(decltype(*ins_vertRaw)));
-    Core::Graphic::SetVertexDeclaration(ins_vertDecl);
     Core::Graphic::SetIndices(ins_indBuf);
+    Core::Graphic::SetVertexDeclaration(ins_vertDecl);
 }
 HRESULT BasePlane::Draw(){
     return Core::Graphic::DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _countof(ins_vertRaw), 0, _countof(ins_indRaw));

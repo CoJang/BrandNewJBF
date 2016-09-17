@@ -39,11 +39,11 @@ namespace JBF{
                     Global::MsgBox(nullptr, "Shader load faiied", MB_ICONERROR | MB_OK, (char*)errMsg->GetBufferPointer());
                     RELEASE(errMsg);
 
-                    ASSERT_HRESULT(hr, _T("Failed to load effect.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
+                    ASSERT_HRESULT(hr, _T("Failed to load effect.\nArchive: %s\nHash key: %u\nError code: %x"), ins_file.arc->GetFilePath(), ins_file.file, hr);
                 }
             }
             else{
-                ASSERT(false, _T("Failed to read data from archive.\nArchive: \"%s\"\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
+                ASSERT(false, _T("Failed to read data from archive.\nArchive: %s\nHash key: %u"), ins_file.arc->GetFilePath(), ins_file.file);
                 return E_FAIL;
             }
 

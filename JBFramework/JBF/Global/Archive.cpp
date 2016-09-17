@@ -26,21 +26,24 @@ namespace JBF{
             }
 
             void ObfuscateData(void* src, size_t len){
-                byte* pSrc = (decltype(pSrc))src;
-                size_t sideCount;
-                size_t posMid;
+                //byte* pSrc = (decltype(pSrc))src;
+                //size_t sideCount;
+                //size_t posMid;
+                //size_t sideCountPow;
 
-                do{
-                    sideCount = sqrt((float)len);
-                    posMid = sideCount / 2;
+                //do{
+                //    sideCount = sqrt((float)len);
+                //    posMid = sideCount / 2;
 
-                    Concurrency::parallel_for<DWORD>(0u, sideCount, [=](DWORD i){
-                        decltype(pSrc) cur = pSrc + i;
-                        for (DWORD n = 0; n < posMid; ++n)std::swap(cur[n], cur[sideCount - n - 1]);
-                    });
+                //    Concurrency::parallel_for<DWORD>(0u, sideCount, [=](DWORD i){
+                //        decltype(pSrc) cur = pSrc + i;
+                //        for (DWORD n = 0; n < posMid; ++n)std::swap(cur[n], cur[sideCount - n - 1]);
+                //    });
 
-                    len -= sideCount * sideCount;
-                } while (sideCount > 1);
+                //    sideCountPow = sideCount * sideCount;
+                //    pSrc += sideCountPow;
+                //    len -= sideCountPow;
+                //} while (sideCount > 1);
             }
 
 
@@ -68,7 +71,7 @@ namespace JBF{
 
             FAILED_FUNC:
                 CloseFile();
-                LOGGING_FAILED(_T("Failed to load archive.\n\"%s\""), ins_filePath);
+                LOGGING_FAILED(_T("Failed to load archive.\n%s"), ins_filePath);
                 return false;
             }
             void Decrypter::CloseFile(){

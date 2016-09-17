@@ -11,6 +11,12 @@ private:
     BasePlane* ins_sprite;
     Object::ExternalTexture* ins_texture;
 
+private:
+    Object::Shader* ins_shader;
+
+private:
+    Matrix ins_world;
+
 public:
     ObjHuman();
     virtual ~ObjHuman();
