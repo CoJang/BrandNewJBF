@@ -96,11 +96,11 @@
     <ClCompile Include="JBF\Object\ExternalTexture.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\PublicInclude\JBF\Object\Shader.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="JBF\Base\ArchiveResource.cpp">
       <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="JBF\Object\Shader.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

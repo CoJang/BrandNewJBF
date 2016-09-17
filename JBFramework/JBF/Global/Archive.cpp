@@ -89,7 +89,7 @@ namespace JBF{
                 if (fread(&count, sizeof(decltype(count)), 1, ins_file) != 1)return false;
                 MakeXORValue(&count, sizeof count, ARCHIVE_XORBYTE);
 
-                ins_dataTable.rehash(count + ((log2(count) * ARCHIVE_ARERAGE_FILE_COUNT) / (sizeof(ARCHIVE_HASHSIZE) * 8)));
+                ins_dataTable.rehash(count + ((log2(count) * ARCHIVE_AVERAGE_FILE_COUNT) / (sizeof(ARCHIVE_HASHSIZE) * 8)));
 
                 for (auto i = decltype(count){0}; i < count; ++i){
                     ARCHIVE_HASHSIZE key;

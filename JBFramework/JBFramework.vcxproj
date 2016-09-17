@@ -181,7 +181,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\PublicInclude\JBF\Object\Shader.cpp" />
     <ClCompile Include="JBF\Base\ArchiveResource.cpp" />
     <ClCompile Include="JBF\Base\DXResource.cpp" />
     <ClCompile Include="JBF\Base\Stage_base.cpp" />
@@ -207,6 +206,7 @@
     <ClCompile Include="JBF\JBFramework.cpp" />
     <ClCompile Include="JBF\Manager\Stage_mgr.cpp" />
     <ClCompile Include="JBF\Object\ExternalTexture.cpp" />
+    <ClCompile Include="JBF\Object\Shader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

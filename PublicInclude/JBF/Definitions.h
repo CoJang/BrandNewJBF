@@ -14,7 +14,7 @@
 #define INLINE __forceinline
 
 #define ARCHIVE_XORBYTE 71
-#define ARCHIVE_ARERAGE_FILE_COUNT 4096
+#define ARCHIVE_AVERAGE_FILE_COUNT 4096
 #define ARCHIVE_HASHSIZE unsigned long
 
 typedef unsigned __int64 QWORD;
