@@ -18,7 +18,7 @@ ObjHuman::ObjHuman(){
         ins_sprite = BasePlane::Create(&planSize);
     }
 
-    ins_world = Matrix::constIdentity;
+    ins_matWorld = Matrix::constIdentity;
 }
 ObjHuman::~ObjHuman(){
     RELEASE(ins_shader);
@@ -34,7 +34,7 @@ static HRESULT _draw_callback(void* rawObj){
 bool ObjHuman::Draw(const Matrix* matVP){
     Matrix matWVP;
 
-    matWVP = ins_world * (*matVP);
+    matWVP = ins_matWorld * (*matVP);
 
     Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
     Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);

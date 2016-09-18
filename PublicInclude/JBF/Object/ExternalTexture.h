@@ -7,6 +7,9 @@ namespace JBF{
     namespace Object{
         class ExternalTexture : public Base::Texture, public Base::ArchiveResource<ExternalTexture>{
         private:
+            D3DXIMAGE_INFO ins_info;
+
+        private:
             ExternalTexture();
             virtual ~ExternalTexture();
 
@@ -16,6 +19,9 @@ namespace JBF{
         public:
             virtual HRESULT Validate();
             virtual void Invalidate();
+
+        public:
+            INLINE const D3DXIMAGE_INFO* GetInfo()const{ return &ins_info; }
 
         public:
             friend class Base::ArchiveResource<ExternalTexture>;

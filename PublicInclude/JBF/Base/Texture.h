@@ -10,7 +10,6 @@ namespace JBF{
         class Texture : public DXResource{
         protected:
             IDirect3DTexture9* ins_texture;
-            D3DXIMAGE_INFO ins_info;
 
         protected:
             Texture(RES_TYPE type);
@@ -18,7 +17,6 @@ namespace JBF{
 
         public:
             INLINE IDirect3DTexture9* GetTexture()const{ return ins_texture; }
-            INLINE const D3DXIMAGE_INFO* GetInfo()const{ return &ins_info; }
         };
     };
 };

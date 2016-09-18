@@ -15,7 +15,7 @@ private:
     Object::Shader* ins_shader;
 
 private:
-    Matrix ins_world;
+    Matrix ins_matWorld;
 
 public:
     ObjHuman();

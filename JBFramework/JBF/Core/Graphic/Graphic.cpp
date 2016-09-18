@@ -206,6 +206,9 @@ namespace JBF{
             INLINE HRESULT GetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD* pValue){ return ins_device->GetTextureStageState(Stage, Type, pValue); }
             INLINE HRESULT SetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD Value){ return ins_device->SetTextureStageState(Stage, Type, Value); }
 
+            INLINE HRESULT GetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9** ppRenderTarget){ return ins_device->GetRenderTarget(RenderTargetIndex, ppRenderTarget); }
+            INLINE HRESULT SetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9* pRenderTarget){ return ins_device->SetRenderTarget(RenderTargetIndex, pRenderTarget); }
+
             INLINE HRESULT DrawPrimitive(D3DPRIMITIVETYPE PrimitiveType, UINT StartVertex, UINT PrimitiveCount){ return ins_device->DrawPrimitive(PrimitiveType, StartVertex, PrimitiveCount); }
             INLINE HRESULT DrawIndexedPrimitive(D3DPRIMITIVETYPE PrimitiveType, INT BaseVertexIndex, UINT MinVertexIndex, UINT NumVertices, UINT startIndex, UINT primCount){ return ins_device->DrawIndexedPrimitive(PrimitiveType, BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primCount); }
             INLINE HRESULT DrawPrimitiveUP(D3DPRIMITIVETYPE PrimitiveType, UINT PrimitiveCount, const void* pVertexStreamZeroData, UINT VertexStreamZeroStride){ return ins_device->DrawPrimitiveUP(PrimitiveType, PrimitiveCount, pVertexStreamZeroData, VertexStreamZeroStride); }

@@ -16,6 +16,17 @@ void StageTest::Init(){
     }
 
     {
+        Object::EmptyTexture::INFO inf;
+        inf.pool = D3DPOOL_MANAGED;
+        inf.usage = D3DUSAGE_RENDERTARGET;
+        inf.format = Core::Graphic::GetDisplayInfo()->Format;
+        inf.mipLevels = 1;
+        inf.width = Core::Graphic::GetDisplayInfo()->Width;
+        inf.height = Core::Graphic::GetDisplayInfo()->Height;
+        faceGame = Object::EmptyTexture::Create(&inf);
+    }
+
+    {
         objCamera = NewCustomAligned<ObjCamera>(32);
 
         objHuman = NewCustomAligned<ObjHuman>(32);
@@ -26,6 +37,8 @@ void StageTest::Init(){
     }
 }
 void StageTest::Cleanup(){
+    RELEASE(faceGame);
+
     DeleteCustomAligned(objCamera);
 
     DeleteCustomAligned(objHuman);
@@ -54,14 +67,24 @@ void StageTest::Update(float delta){
 
     objCamera->MoveDirection(&vCamDir);
 }
+
 void StageTest::Draw(){
     const Matrix* matVP = objCamera->GetVPMatrix();
+    IDirect3DSurface9* surfOrg;
 
+    Core::Graphic::GetRenderTarget(0, &surfOrg);
+    Core::Graphic::SetRenderTarget(0, faceGame->GetSurface(0));
+    ins_drawGame(matVP);
+
+
+    Core::Graphic::SetRenderTarget(0, surfOrg);
+}
+void StageTest::ins_drawGame(const Matrix* matVP){
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
     Graphic::GetDevice()->Clear(
         0,
         nullptr,
-        D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+        D3DCLEAR_TARGET,
         D3DXCOLOR(0.25f, 0.25f, 0.25f, 1.f),
         1.f,
         0

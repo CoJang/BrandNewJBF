@@ -102,6 +102,9 @@
     <ClCompile Include="JBF\Object\Shader.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="JBF\Object\EmptyTexture.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PublicInclude\JBF\Core\Core.h">
@@ -185,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="..\PublicInclude\JBF\Base\ArchiveResource.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PublicInclude\JBF\Object\EmptyTexture.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,6 +20,12 @@ public:
     void Draw();
 
 private:
+    void ins_drawGame(const Matrix* matVP);
+
+private:
+    Object::EmptyTexture* faceGame;
+
+private:
     ObjCamera* objCamera;
 
 private:

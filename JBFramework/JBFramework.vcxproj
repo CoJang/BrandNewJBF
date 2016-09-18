@@ -205,6 +205,7 @@
     <ClCompile Include="JBF\Global\Math\InnerUtility.cpp" />
     <ClCompile Include="JBF\JBFramework.cpp" />
     <ClCompile Include="JBF\Manager\Stage_mgr.cpp" />
+    <ClCompile Include="JBF\Object\EmptyTexture.cpp" />
     <ClCompile Include="JBF\Object\ExternalTexture.cpp" />
     <ClCompile Include="JBF\Object\Shader.cpp" />
     <ClCompile Include="pch.cpp">
@@ -240,6 +241,7 @@
     <ClInclude Include="..\PublicInclude\JBF\JBFramework.h" />
     <ClInclude Include="..\PublicInclude\JBF\Manager\Manager.h" />
     <ClInclude Include="..\PublicInclude\JBF\Manager\Stage.h" />
+    <ClInclude Include="..\PublicInclude\JBF\Object\EmptyTexture.h" />
     <ClInclude Include="..\PublicInclude\JBF\Object\ExternalTexture.h" />
     <ClInclude Include="..\PublicInclude\JBF\Object\Object.h" />
     <ClInclude Include="..\PublicInclude\JBF\Object\Shader.h" />
