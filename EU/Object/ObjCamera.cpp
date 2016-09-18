@@ -13,10 +13,19 @@ ObjCamera* ObjCamera::Create(){
 void ObjCamera::Release(){ Global::Alloc::DeleteCustomAligned(this); }
 
 void ObjCamera::Init(){
-    MatrixOrthoLH(
+    //MatrixOrthoLH(
+    //    &ins_matProj,
+    //    Core::Graphic::GetDisplayInfo()->Width,
+    //    Core::Graphic::GetDisplayInfo()->Height,
+    //    0.f,
+    //    1000.f
+    //);
+    MatrixOrthoOffCenterLH(
         &ins_matProj,
+        0.f,
         Core::Graphic::GetDisplayInfo()->Width,
-        Core::Graphic::GetDisplayInfo()->Height,
+        -1.f * Core::Graphic::GetDisplayInfo()->Height,
+        0.f,
         0.f,
         1000.f
     );

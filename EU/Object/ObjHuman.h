@@ -18,15 +18,18 @@ private:
     Matrix ins_matWorld;
 
 private:
-    ObjHuman();
+    ObjHuman(ARCHIVE_HASHSIZE sprite);
     virtual ~ObjHuman();
 
 public:
-    static ObjHuman* Create();
+    static ObjHuman* Create(ARCHIVE_HASHSIZE sprite);
     void Release();
 
 public:
     bool Draw(const Matrix* matVP);
+
+public:
+    void SetPosition(Vector3* pos);
 
 public:
     template<class T, typename... ARGS> friend T* Global::Alloc::NewCustomAligned(size_t, ARGS&&...);

@@ -2,16 +2,17 @@
 #include"Object.h"
 
 #include"ArchiveTable.h"
-#define SHADER_NAME _T("Basic_wrap.fxo")
-#define FILE_NAME _T("dummyHuman.png")
 
-ObjHuman::ObjHuman(){
-    ins_shader = Object::Shader::Read(&arcShaders, Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(SHADER_NAME, tstrlen(SHADER_NAME)));
+#define _SHADER_NAME _T("Basic_wrap.fxo")
+#define SHADER_NAME Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_NAME, tstrlen(_SHADER_NAME)
+
+ObjHuman::ObjHuman(ARCHIVE_HASHSIZE sprite){
+    ins_shader = Object::Shader::Read(&arcShaders, SHADER_NAME));
 
     {
         Vector2 planSize;
 
-        ins_texture = Object::ExternalTexture::Read(&arcSprites, Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(FILE_NAME, tstrlen(FILE_NAME)));
+        ins_texture = Object::ExternalTexture::Read(&arcSprites, sprite);
         planSize.x = ins_texture->GetInfo()->Width;
         planSize.y = ins_texture->GetInfo()->Height;
 
@@ -26,8 +27,8 @@ ObjHuman::~ObjHuman(){
     RELEASE(ins_sprite);
 }
 
-ObjHuman* ObjHuman::Create(){
-    auto _new = Global::Alloc::NewCustomAligned<ObjHuman>(32);
+ObjHuman* ObjHuman::Create(ARCHIVE_HASHSIZE sprite){
+    auto _new = Global::Alloc::NewCustomAligned<ObjHuman>(32, sprite);
     return _new;
 }
 void ObjHuman::Release(){ Global::Alloc::DeleteCustomAligned(this); }
@@ -54,4 +55,10 @@ bool ObjHuman::Draw(const Matrix* matVP){
     ins_shader->IteratePass(0, _draw_callback, this->ins_sprite);
 
     return true;
+}
+
+void ObjHuman::SetPosition(Vector3* pos){
+    Vector3* _pos = (decltype(pos))&ins_matWorld._41;
+    *_pos += *pos;
+    ins_matWorld._44 = 1.f;
 }

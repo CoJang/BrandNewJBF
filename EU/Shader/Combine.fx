@@ -1,17 +1,24 @@
-// Predefinition(s)
-///////////////////////////////////////////
-#define DOWN_FILTER_COUNT 16
-///////////////////////////////////////////
-
 // Binded object(s) definition
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
 extern float fLevel;
 
-extern texture texMain;
-sampler sampMain = sampler_state{
-    Texture = (texMain);
+extern texture texFirst;
+sampler sampFirst = sampler_state{
+    Texture = (texFirst);
+
+    MipFilter = point;
+    MinFilter = linear;
+    MagFilter = linear;
+
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
+extern texture texSecond;
+sampler sampSecond = sampler_state{
+    Texture = (texSecond);
 
     MipFilter = point;
     MinFilter = linear;
@@ -38,32 +45,6 @@ struct PS_INPUT{
 };
 ///////////////////////////////////////////
 
-// Inner variable(s) definition
-///////////////////////////////////////////
-static const float2 vPixelDownFilter[DOWN_FILTER_COUNT] = {
-    { 1.5,  -1.5 },
-    { 1.5,  -0.5 },
-    { 1.5,   0.5 },
-    { 1.5,   1.5 },
-
-    { 0.5,  -1.5 },
-    { 0.5,  -0.5 },
-    { 0.5,   0.5 },
-    { 0.5,   1.5 },
-
-    { -0.5,  -1.5 },
-    { -0.5,  -0.5 },
-    { -0.5,   0.5 },
-    { -0.5,   1.5 },
-
-    { -1.5,  -1.5 },
-    { -1.5,  -0.5 },
-    { -1.5,   0.5 },
-    { -1.5,   1.5 },
-};
-static const float2 vTexelDownFilter[DOWN_FILTER_COUNT]< string ConvertPixelsToTexels = "vPixelDownFilter"; >;
-///////////////////////////////////////////
-
 // Shader function(s) definition
 ///////////////////////////////////////////
 VS_OUTPUT vert(VS_INPUT _in){
@@ -75,11 +56,10 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(PS_INPUT _in) : COLOR{
-    float4 col = 0;
-
-    for (int i = 0; i < DOWN_FILTER_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelDownFilter[i].xy);
-
-    return col / DOWN_FILTER_COUNT;
+    float4 col = tex2D(sampFirst, _in.uv);
+    col += tex2D(sampSecond, _in.uv) * fLevel;
+    col = saturate(col);
+    return col;
 }
 ///////////////////////////////////////////
 

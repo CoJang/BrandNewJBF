@@ -87,6 +87,29 @@ namespace JBF{
 
                 return pOut;
             }
+            Matrix* MatrixOrthoOffCenterLH(Matrix* pOut, float l, float r, float b, float t, float zn, float zf){
+                pOut->_11 = 2.f / (r - l);
+                pOut->_12 = 0.f;
+                pOut->_13 = 0.f;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = 0.f;
+                pOut->_22 = 2.f / (t - b);
+                pOut->_23 = 0.f;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = 0.f;
+                pOut->_32 = 0.f;
+                pOut->_33 = 1.f / (zf - zn);
+                pOut->_34 = 1.f;
+
+                pOut->_41 = (l + r) / (l - r);
+                pOut->_42 = (t + b) / (b - t);
+                pOut->_43 = zn / (zn - zf);
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
         };
     };
 };

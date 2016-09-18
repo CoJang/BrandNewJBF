@@ -23,6 +23,7 @@ namespace JBF{
 
             extern Matrix* MatrixPerspectiveFovLH(Matrix* pOut, float fovy, float Aspect, float zn, float zf);
             extern Matrix* MatrixOrthoLH(Matrix* pOut, float w, float h, float zn, float zf);
+            extern Matrix* MatrixOrthoOffCenterLH(Matrix* pOut, float l, float r, float b, float t, float zn, float zf);
         };
     };
 };

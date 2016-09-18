@@ -10,8 +10,8 @@ sampler sampMain = sampler_state{
     MinFilter = linear;
     MagFilter = linear;
 
-    AddressU = clamp;
-    AddressV = clamp;
+    AddressU = wrap;
+    AddressV = wrap;
 };
 ///////////////////////////////////////////
 
