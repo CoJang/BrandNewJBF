@@ -13,7 +13,7 @@
     <ClCompile Include="Base\BasePlane.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Object\ObjHuman.cpp">
+    <ClCompile Include="Object\ObjTest.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\ObjHuman.h">
+    <ClInclude Include="Object\ObjTest.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,7 +72,10 @@
     <FxCompile Include="Shader\Blur_vert.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Combine.fx">
+    <FxCompile Include="Shader\Combine4X.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Upcast4X.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

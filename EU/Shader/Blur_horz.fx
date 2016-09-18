@@ -87,9 +87,10 @@ VS_OUTPUT vert(VS_INPUT _in){
 float4 frag(PS_INPUT _in) : COLOR{
     float4 col = 0;
 
-    for (int i = 0; i < BLUR_KERNAL_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelKernel[i].xy) * fBlurWeights[i];
+    for (int i = 0; i < BLUR_KERNAL_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelKernel[i].xy * fLevel) * fBlurWeights[i];
+    col *= 1.5f;
 
-    return col * fLevel;
+    return col;
 }
 ///////////////////////////////////////////
 

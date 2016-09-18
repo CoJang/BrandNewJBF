@@ -6,7 +6,7 @@
 #define _SHADER_NAME _T("Basic_wrap.fxo")
 #define SHADER_NAME Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_NAME, tstrlen(_SHADER_NAME)
 
-ObjHuman::ObjHuman(ARCHIVE_HASHSIZE sprite){
+ObjTest::ObjTest(ARCHIVE_HASHSIZE sprite){
     ins_shader = Object::Shader::Read(&arcShaders, SHADER_NAME));
 
     {
@@ -21,24 +21,24 @@ ObjHuman::ObjHuman(ARCHIVE_HASHSIZE sprite){
 
     ins_matWorld = Matrix::constIdentity;
 }
-ObjHuman::~ObjHuman(){
+ObjTest::~ObjTest(){
     RELEASE(ins_shader);
     RELEASE(ins_texture);
     RELEASE(ins_sprite);
 }
 
-ObjHuman* ObjHuman::Create(ARCHIVE_HASHSIZE sprite){
-    auto _new = Global::Alloc::NewCustomAligned<ObjHuman>(32, sprite);
+ObjTest* ObjTest::Create(ARCHIVE_HASHSIZE sprite){
+    auto _new = Global::Alloc::NewCustomAligned<ObjTest>(32, sprite);
     return _new;
 }
-void ObjHuman::Release(){ Global::Alloc::DeleteCustomAligned(this); }
+void ObjTest::Release(){ Global::Alloc::DeleteCustomAligned(this); }
 
 static HRESULT _draw_callback(void* rawObj){
     auto obj = (BasePlane*)rawObj;
 
     return obj->Draw();
 }
-bool ObjHuman::Draw(const Matrix* matVP){
+bool ObjTest::Draw(const Matrix* matVP){
     Matrix matWVP;
 
     matWVP = ins_matWorld * (*matVP);
@@ -57,7 +57,7 @@ bool ObjHuman::Draw(const Matrix* matVP){
     return true;
 }
 
-void ObjHuman::SetPosition(Vector3* pos){
+void ObjTest::SetPosition(Vector3* pos){
     Vector3* _pos = (decltype(pos))&ins_matWorld._41;
     *_pos += *pos;
     ins_matWorld._44 = 1.f;

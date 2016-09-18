@@ -6,7 +6,7 @@
 using namespace JBF;
 using namespace JBF::Global::Math;
 
-class ObjHuman{
+class ObjTest{
 private:
     BasePlane* ins_sprite;
     Object::ExternalTexture* ins_texture;
@@ -18,11 +18,11 @@ private:
     Matrix ins_matWorld;
 
 private:
-    ObjHuman(ARCHIVE_HASHSIZE sprite);
-    virtual ~ObjHuman();
+    ObjTest(ARCHIVE_HASHSIZE sprite);
+    virtual ~ObjTest();
 
 public:
-    static ObjHuman* Create(ARCHIVE_HASHSIZE sprite);
+    static ObjTest* Create(ARCHIVE_HASHSIZE sprite);
     void Release();
 
 public:

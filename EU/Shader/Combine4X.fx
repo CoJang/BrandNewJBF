@@ -64,7 +64,12 @@ float4 frag(PS_INPUT _in) : COLOR{
 ///////////////////////////////////////////
 
 technique main{
-    pass P0{
+    pass P0
+    <
+        float fScaleX = 4.f;
+        float fScaleY = 4.f;
+    >
+    {
         VertexShader = compile vs_2_0 vert();
         PixelShader = compile ps_2_0 frag();
     }

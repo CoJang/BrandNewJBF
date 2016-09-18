@@ -39,7 +39,8 @@ private:
     void ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture);
     void ins_drawTextureBlurHorz(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture);
     void ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture);
-    void ins_drawTextureCombine(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB);
+    void ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureCombine4X(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB);
 
 private:
     float cfgBrightPassLevel;
@@ -56,17 +57,16 @@ private:
     Object::Shader* shadBright;
     Object::Shader* shadBlurHorz;
     Object::Shader* shadBlurVert;
-    Object::Shader* shadCombine;
+    Object::Shader* shadUpcast4X;
+    Object::Shader* shadCombine4X;
 
     Matrix matFrame;
-    Matrix matFrameDown4X;
-    Matrix matFrameUp4X;
     BasePlane* sprFrame;
 
 private:
     ObjCamera* objCamera;
 
 private:
-    ObjHuman* objBackground;
-    ObjHuman* objHuman;
+    ObjTest* objBackground;
+    ObjTest* objHuman;
 };

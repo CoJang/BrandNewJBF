@@ -24,8 +24,11 @@
 #define _SHADER_BLUR_VERT _T("Blur_vert.fxo")
 #define SHADER_BLUR_VERT JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BLUR_VERT, tstrlen(_SHADER_BLUR_VERT))
 
-#define _SHADER_COMBINE _T("Combine.fxo")
-#define SHADER_COMBINE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE, tstrlen(_SHADER_COMBINE))
+#define _SHADER_UPCAST4X _T("Upcast4X.fxo")
+#define SHADER_UPCAST4X JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_DOWNCAST4X, tstrlen(_SHADER_DOWNCAST4X))
+
+#define _SHADER_COMBINE4X _T("Combine4X.fxo")
+#define SHADER_COMBINE4X JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE4X, tstrlen(_SHADER_COMBINE4X))
 
 using namespace JBF;
 using namespace JBF::Global::Alloc;
@@ -41,7 +44,7 @@ void StageTest::Init(){
 
     cfgBrightPassLevel = 0.04f;
     cfgBloomLevel = 1.5f;
-    cfgBloomAlpha = 0.8f;
+    cfgBloomAlpha = 1.f;
 
     Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -77,7 +80,8 @@ void StageTest::ins_initShader(){
     shadBright = Object::Shader::Read(&arcShaders, SHADER_BRIGHT);
     shadBlurHorz = Object::Shader::Read(&arcShaders, SHADER_BLUR_HORZ);
     shadBlurVert = Object::Shader::Read(&arcShaders, SHADER_BLUR_VERT);
-    shadCombine = Object::Shader::Read(&arcShaders, SHADER_COMBINE);
+    shadUpcast4X = Object::Shader::Read(&arcShaders, SHADER_UPCAST4X);
+    shadCombine4X = Object::Shader::Read(&arcShaders, SHADER_COMBINE4X);
 }
 void StageTest::ins_initFrame(){
     Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
@@ -88,26 +92,14 @@ void StageTest::ins_initFrame(){
         0, 0, 1, 0,
         -1, 1, 0, 1
     );
-    matFrameDown4X = Matrix(
-        0.5f / size.x, 0, 0, 0,
-        0, 0.5f / size.y, 0, 0,
-        0, 0, 1, 0,
-        -1, 1, 0, 1
-    );
-    matFrameUp4X = Matrix(
-        8 / size.x, 0, 0, 0,
-        0, 8 / size.y, 0, 0,
-        0, 0, 1, 0,
-        -1, 1, 0, 1
-    );
 
     sprFrame = BasePlane::Create(&size);
 }
 void StageTest::ins_initObject(){
     objCamera = ObjCamera::Create();
 
-    objBackground = ObjHuman::Create(SPRITE_BACKGROUND);
-    objHuman = ObjHuman::Create(SPRITE_OBJECT);
+    objBackground = ObjTest::Create(SPRITE_BACKGROUND);
+    objHuman = ObjTest::Create(SPRITE_OBJECT);
 }
 
 void StageTest::Cleanup(){
@@ -127,7 +119,8 @@ void StageTest::ins_releaseShader(){
     RELEASE(shadBright);
     RELEASE(shadBlurHorz);
     RELEASE(shadBlurVert);
-    RELEASE(shadCombine);
+    RELEASE(shadUpcast4X);
+    RELEASE(shadCombine4X);
 }
 void StageTest::ins_releaseFrame(){
     RELEASE(sprFrame);
@@ -155,6 +148,12 @@ void StageTest::Update(float delta){
     }
 #endif
 
+    if (Core::Input::KeyDown(Core::Input::DK_2))cfgBrightPassLevel += delta * 0.1f;
+    else if (Core::Input::KeyDown(Core::Input::DK_1))cfgBrightPassLevel -= delta * 0.1f;
+
+    if (Core::Input::KeyDown(Core::Input::DK_4))cfgBloomLevel += delta * 10.f;
+    else if (Core::Input::KeyDown(Core::Input::DK_3))cfgBloomLevel -= delta * 10.f;
+
     if (Core::Input::KeyDown(Core::Input::DK_W))vCamDir.y += speed * delta;
     else if (Core::Input::KeyDown(Core::Input::DK_S))vCamDir.y -= speed * delta;
     if (Core::Input::KeyDown(Core::Input::DK_A))vCamDir.x -= speed * delta;
@@ -176,20 +175,71 @@ void StageTest::Draw(){
 
     Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-    ins_drawTextureDownCast4X(&matFrameDown4X, faceGame);
-    ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceDowncast4X);
+    { // Down scale 4X twice
+        Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
+        ins_drawTextureDownCast4X(&matFrame, faceGame);
+        ins_drawTextureDownCast4X(&matFrame, faceDowncast4X);
+    }
 
-    Core::Graphic::SetRenderTarget(0, faceBrigh->GetSurface(0));
-    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceDowncast4X);
-
-    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-    ins_drawTextureBlurVert(&matFrameUp4X, &cfgBloomLevel, faceBrigh);
+    { // Extrace bright region
+        ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceDowncast4X);
+    }
 
     Core::Graphic::SetRenderTarget(0, surfOrg);
-    ins_drawTextureCombine(&matFrame, &cfgBloomAlpha, faceGame, faceDowncast4X);
-    //ins_drawTextureOriginal(&matFrame, faceDowncast4X);
-    
+    ins_drawTextureOriginal(&matFrame, faceDowncast4X);
+
+    //{ // Make blur
+    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceDowncast4X);
+
+    //    Core::Graphic::SetRenderTarget(0, faceBrigh->GetSurface(0));
+    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
+    //}
+
+    //{ // Make blur
+    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceBrigh);
+
+    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
+    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
+    //}
+
+    //{ // Up scale 4X twice then combine with back surface
+    //    ins_drawTextureUpCast4X(&matFrame, faceDowncast4X);
+
+    //    Core::Graphic::SetRenderTarget(0, surfOrg);
+    //    ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceDowncast4X);
+    //}
+
+    //{ // Down scale 4X twice
+    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
+    //    ins_drawTextureDownCast4X(&matFrame, faceGame);
+    //    ins_drawTextureDownCast4X(&matFrame, faceDowncast4X);
+    //}
+
+    //{ // Extrace bright region
+    //    ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceDowncast4X);
+    //}
+
+    //{ // Make blur
+    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceDowncast4X);
+
+    //    Core::Graphic::SetRenderTarget(0, faceBrigh->GetSurface(0));
+    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
+    //}
+
+    //{ // Make blur
+    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceBrigh);
+
+    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
+    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
+    //}
+
+    //{ // Up scale 4X twice then combine with back surface
+    //    ins_drawTextureUpCast4X(&matFrame, faceDowncast4X);
+
+    //    Core::Graphic::SetRenderTarget(0, surfOrg);
+    //    ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceDowncast4X);
+    //}
+
     Graphic::GetDevice()->EndScene();
 }
 
@@ -256,13 +306,21 @@ void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrig
 
     shadBlurVert->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureCombine(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB){
-    shadCombine->SetMatrix("matWVP", matWMP);
-    shadCombine->SetFloat("fLevel", *fSecondAlpha);
-    shadCombine->SetTexture("texFirst", textureA->GetTexture());
-    shadCombine->SetTexture("texSecond", textureB->GetTexture());
+void StageTest::ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture){
+    shadUpcast4X->SetMatrix("matWVP", matWMP);
+    shadUpcast4X->SetTexture("texMain", texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadCombine->IteratePass(0, _drawCallback, sprFrame);
+    shadUpcast4X->IteratePass(0, _drawCallback, sprFrame);
+}
+void StageTest::ins_drawTextureCombine4X(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB){
+    shadCombine4X->SetMatrix("matWVP", matWMP);
+    shadCombine4X->SetFloat("fLevel", *fSecondAlpha);
+    shadCombine4X->SetTexture("texFirst", textureA->GetTexture());
+    shadCombine4X->SetTexture("texSecond", textureB->GetTexture());
+
+    sprFrame->SendFaceInfo();
+
+    shadCombine4X->IteratePass(0, _drawCallback, sprFrame);
 }

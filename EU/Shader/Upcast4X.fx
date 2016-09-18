@@ -1,8 +1,3 @@
-// Predefinition(s)
-///////////////////////////////////////////
-#define DOWN_FILTER_COUNT 16
-///////////////////////////////////////////
-
 // Binded object(s) definition
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
@@ -38,32 +33,6 @@ struct PS_INPUT{
 };
 ///////////////////////////////////////////
 
-// Inner variable(s) definition
-///////////////////////////////////////////
-static const float2 vPixelDownFilter[DOWN_FILTER_COUNT] = {
-    { 1.5,  -1.5 },
-    { 1.5,  -0.5 },
-    { 1.5,   0.5 },
-    { 1.5,   1.5 },
-
-    { 0.5,  -1.5 },
-    { 0.5,  -0.5 },
-    { 0.5,   0.5 },
-    { 0.5,   1.5 },
-
-    { -0.5,  -1.5 },
-    { -0.5,  -0.5 },
-    { -0.5,   0.5 },
-    { -0.5,   1.5 },
-
-    { -1.5,  -1.5 },
-    { -1.5,  -0.5 },
-    { -1.5,   0.5 },
-    { -1.5,   1.5 },
-};
-static const float2 vTexelDownFilter[DOWN_FILTER_COUNT]< string ConvertPixelsToTexels = "vPixelDownFilter"; >;
-///////////////////////////////////////////
-
 // Shader function(s) definition
 ///////////////////////////////////////////
 VS_OUTPUT vert(VS_INPUT _in){
@@ -75,19 +44,15 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(PS_INPUT _in) : COLOR{
-    float4 col = 0;
-
-    for (int i = 0; i < DOWN_FILTER_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelDownFilter[i].xy);
-
-    return col / DOWN_FILTER_COUNT;
+    return tex2D(sampMain, _in.uv);
 }
 ///////////////////////////////////////////
 
 technique main{
     pass P0
     <
-        float fScaleX = 0.25f;
-        float fScaleY = 0.25f;
+        float fScaleX = 4.f;
+        float fScaleY = 4.f;
     >
     {
         VertexShader = compile vs_2_0 vert();
