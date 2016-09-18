@@ -60,5 +60,11 @@
     <FxCompile Include="Shader\Basic_clamp.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="Shader\Bright.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Downcast4X.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -50,10 +50,10 @@ namespace JBF{
             INLINE HRESULT GetVectorArray(D3DXHANDLE hParameter, Global::Math::Vector4* pVector, UINT Count){ return ins_effect->GetVectorArray(hParameter, (D3DXVECTOR4*)pVector, Count); }
             INLINE HRESULT SetVectorArray(D3DXHANDLE hParameter, const Global::Math::Vector4* pVector, UINT Count){ return ins_effect->SetVectorArray(hParameter, (const D3DXVECTOR4*)pVector, Count); }
 
-            INLINE HRESULT GetMatrix(D3DXHANDLE hParameter, Global::Math::Matrix* pVector){ return ins_effect->GetMatrix(hParameter, (D3DXMATRIXA16*)pVector); }
-            INLINE HRESULT SetMatrix(D3DXHANDLE hParameter, const Global::Math::Matrix* pVector){ return ins_effect->SetMatrix(hParameter, (const D3DXMATRIXA16*)pVector); }
-            INLINE HRESULT GetMatrixArray(D3DXHANDLE hParameter, Global::Math::Matrix* pVector, UINT Count){ return ins_effect->GetMatrixArray(hParameter, (D3DXMATRIXA16*)pVector, Count); }
-            INLINE HRESULT SetMatrixArray(D3DXHANDLE hParameter, const Global::Math::Matrix* pVector, UINT Count){ return ins_effect->SetMatrixArray(hParameter, (const D3DXMATRIXA16*)pVector, Count); }
+            INLINE HRESULT GetMatrix(D3DXHANDLE hParameter, Global::Math::Matrix* pMatrix){ return ins_effect->GetMatrix(hParameter, (D3DXMATRIXA16*)pMatrix); }
+            INLINE HRESULT SetMatrix(D3DXHANDLE hParameter, const Global::Math::Matrix* pMatrix){ return ins_effect->SetMatrix(hParameter, (const D3DXMATRIXA16*)pMatrix); }
+            INLINE HRESULT GetMatrixArray(D3DXHANDLE hParameter, Global::Math::Matrix* pMatrix, UINT Count){ return ins_effect->GetMatrixArray(hParameter, (D3DXMATRIXA16*)pMatrix, Count); }
+            INLINE HRESULT SetMatrixArray(D3DXHANDLE hParameter, const Global::Math::Matrix* pMatrix, UINT Count){ return ins_effect->SetMatrixArray(hParameter, (const D3DXMATRIXA16*)pMatrix, Count); }
 
         public:
             friend class Base::ArchiveResource<Shader>;

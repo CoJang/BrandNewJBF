@@ -60,5 +60,15 @@ namespace JBF{
         void EmptyTexture::Invalidate(){
             if (ins_texture)RELEASE(ins_texture);
         }
+
+        HRESULT EmptyTexture::CopySurface(UINT level, EmptyTexture* src){
+            return Core::Graphic::GetDevice()->StretchRect(
+                src->ins_surfaceTable[level],
+                nullptr,
+                ins_surfaceTable[level],
+                nullptr,
+                D3DTEXF_LINEAR
+            );
+        }
     };
 };

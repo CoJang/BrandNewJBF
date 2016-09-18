@@ -6,9 +6,9 @@ extern texture texMain;
 sampler sampMain = sampler_state{
     Texture = (texMain);
 
-    MipFilter = LINEAR;
-    MinFilter = LINEAR;
-    MagFilter = LINEAR;
+    MipFilter = point;
+    MinFilter = linear;
+    MagFilter = linear;
 
     AddressU = wrap;
     AddressV = wrap;

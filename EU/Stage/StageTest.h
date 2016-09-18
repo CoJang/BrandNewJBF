@@ -17,11 +17,13 @@ public:
 
 private:
     void ins_initFace();
+    void ins_initShader();
     void ins_initFrame();
     void ins_initObject();
 
 private:
     void ins_releaseFace();
+    void ins_releaseShader();
     void ins_releaseFrame();
     void ins_releaseObject();
 
@@ -31,13 +33,24 @@ public:
 
 private:
     void ins_drawGame(const Matrix* matVP);
-    void ins_drawScene(const Matrix* matP);
+
+    void ins_drawTextureOriginal(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureDownCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureBrighRegion(const Matrix* matWMP, const Object::EmptyTexture* texture);
+
+private:
+    float cfgBrightPassLevel;
 
 private:
     Object::EmptyTexture* faceGame;
+    Object::EmptyTexture* faceBrigh;
+
+    Object::Shader* shadBasic;
+    Object::Shader* shadDowncast4X;
+    Object::Shader* shadBright;
 
     Matrix matFrame;
-    Object::Shader* sprShader;
+    Matrix matFrameDown4X;
     BasePlane* sprFrame;
 
 private:

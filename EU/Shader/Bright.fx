@@ -1,6 +1,17 @@
+// Predefinition(s)
+///////////////////////////////////////////
+#define BRIGHT_PASS_THRESHOLD 5.f
+#define BRIGHT_PASS_OFFSET 10.f
+
+#define BRIGHT_PASS_MIDDLE_GRAY 0.18f
+#define BRIGHT_PASS_WHITE_CUTOFF 0.8f
+///////////////////////////////////////////
+
 // Binded object(s) definition
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
+
+extern float fLevel;
 
 extern texture texMain;
 sampler sampMain = sampler_state{
@@ -42,7 +53,16 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(PS_INPUT _in) : COLOR{
-    return tex2D(sampMain, _in.uv);
+    float3 col = tex2D(sampMain, _in.uv);
+
+    col *= BRIGHT_PASS_MIDDLE_GRAY / (fLevel + 0.001f);
+    col *= (1.f + (col / (BRIGHT_PASS_WHITE_CUTOFF * BRIGHT_PASS_WHITE_CUTOFF)));
+    col -= BRIGHT_PASS_THRESHOLD;
+
+    col = max(col, 0.f);
+    col.rgb /= (BRIGHT_PASS_OFFSET + col);
+
+    return float4(col, 1.f);
 }
 ///////////////////////////////////////////
 

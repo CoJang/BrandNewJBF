@@ -33,9 +33,10 @@ namespace JBF{
             virtual void Invalidate();
 
         public:
-            INLINE IDirect3DSurface9* GetSurface(UINT Level){ return ins_surfaceTable[Level]; }
+            HRESULT CopySurface(UINT level, EmptyTexture* src);
 
         public:
+            INLINE IDirect3DSurface9* GetSurface(UINT level){ return ins_surfaceTable[level]; }
             INLINE const INFO* GetInfo()const{ return &ins_info; }
         };
     };
