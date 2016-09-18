@@ -1,6 +1,17 @@
 ﻿#include"pch.h"
 #include"ObjCamera.h"
 
+ObjCamera::ObjCamera(){}
+ObjCamera::~ObjCamera(){}
+
+ObjCamera* ObjCamera::Create(){
+    auto _new = Global::Alloc::NewCustomAligned<ObjCamera>(32);
+    _new->Init();
+
+    return _new;
+}
+void ObjCamera::Release(){ Global::Alloc::DeleteCustomAligned(this); }
+
 void ObjCamera::Init(){
     MatrixOrthoLH(
         &ins_matProj,

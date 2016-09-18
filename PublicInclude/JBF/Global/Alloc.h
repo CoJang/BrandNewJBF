@@ -19,7 +19,8 @@ namespace JBF{
             }
 
             template<class T> extern void DeleteCustomAligned(T* obj){
-                if(obj)_aligned_free(obj);
+                obj->~T();
+                _aligned_free(obj);
             }
         };
     };

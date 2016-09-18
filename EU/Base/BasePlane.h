@@ -33,7 +33,7 @@ private:
     virtual ~BasePlane();
 
 public:
-    static BasePlane* Create(const D3DXVECTOR2* size);
+    static BasePlane* Create(const Global::Math::Vector2* size);
     void Release();
 
 public:

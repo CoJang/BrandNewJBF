@@ -14,7 +14,7 @@ const BasePlane::INDEX BasePlane::ins_indRaw[] = {
 BasePlane::BasePlane() : Base::DXResource(RESTYPE_MANAGE), ins_vertBuf(nullptr), ins_indBuf(nullptr), ins_vertDecl(nullptr){}
 BasePlane::~BasePlane(){ Invalidate(); }
 
-BasePlane* BasePlane::Create(const D3DXVECTOR2* size){
+BasePlane* BasePlane::Create(const Global::Math::Vector2* size){
     auto _new = new BasePlane();
 
     /*

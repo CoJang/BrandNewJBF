@@ -3,6 +3,9 @@
 
 #include"ArchiveTable.h"
 
+#define _SHADER_FRAME _T("Basic_clamp.fxo")
+#define SHADER_FRAME JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_FRAME, tstrlen(_SHADER_FRAME))
+
 using namespace JBF;
 using namespace JBF::Global::Alloc;
 using namespace JBF::Core;
@@ -10,38 +13,64 @@ using namespace JBF::Core;
 StageTest stgTest;
 
 void StageTest::Init(){
-    {
-        Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-    }
+    ins_initFace();
+    ins_initFrame();
+    ins_initObject();
 
-    {
-        Object::EmptyTexture::INFO inf;
-        inf.pool = D3DPOOL_MANAGED;
-        inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = Core::Graphic::GetDisplayInfo()->Format;
-        inf.mipLevels = 1;
-        inf.width = Core::Graphic::GetDisplayInfo()->Width;
-        inf.height = Core::Graphic::GetDisplayInfo()->Height;
-        faceGame = Object::EmptyTexture::Create(&inf);
-    }
+    Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-    {
-        objCamera = NewCustomAligned<ObjCamera>(32);
-
-        objHuman = NewCustomAligned<ObjHuman>(32);
-    }
-
-    {
-        objCamera->Init();
-    }
+    Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);
 }
+void StageTest::ins_initFace(){
+    Object::EmptyTexture::INFO inf;
+
+    inf.pool = D3DPOOL_DEFAULT;
+    inf.usage = D3DUSAGE_RENDERTARGET;
+    inf.format = Core::Graphic::GetDisplayInfo()->Format;
+    inf.mipLevels = 1;
+    inf.width = Core::Graphic::GetDisplayInfo()->Width;
+    inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+    faceGame = Object::EmptyTexture::Create(&inf);
+}
+void StageTest::ins_initFrame(){
+    Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
+
+    sprShader = Object::Shader::Read(&arcShaders, SHADER_FRAME);
+
+    matFrame = Matrix(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        -size.x * 0.5f, size.y * 0.5f, 0, 1
+    );
+    sprFrame = BasePlane::Create(&size);
+}
+void StageTest::ins_initObject(){
+    objCamera = ObjCamera::Create();
+
+    objHuman = ObjHuman::Create();
+}
+
 void StageTest::Cleanup(){
+    ins_releaseObject();
+    ins_releaseFrame();
+    ins_releaseFace();
+}
+void StageTest::ins_releaseFace(){
     RELEASE(faceGame);
+}
+void StageTest::ins_releaseFrame(){
+    RELEASE(sprShader);
 
-    DeleteCustomAligned(objCamera);
+    RELEASE(sprFrame);
+}
+void StageTest::ins_releaseObject(){
+    RELEASE(objCamera);
 
-    DeleteCustomAligned(objHuman);
+    RELEASE(objHuman);
 }
 
 void StageTest::Update(float delta){
@@ -70,14 +99,17 @@ void StageTest::Update(float delta){
 
 void StageTest::Draw(){
     const Matrix* matVP = objCamera->GetVPMatrix();
+    const Matrix matFP = matFrame * (*objCamera->GetProjectionMatrix());
+
     IDirect3DSurface9* surfOrg;
 
     Core::Graphic::GetRenderTarget(0, &surfOrg);
     Core::Graphic::SetRenderTarget(0, faceGame->GetSurface(0));
     ins_drawGame(matVP);
 
-
     Core::Graphic::SetRenderTarget(0, surfOrg);
+    ins_drawScene(&matFP);
+    
 }
 void StageTest::ins_drawGame(const Matrix* matVP){
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
@@ -93,4 +125,21 @@ void StageTest::ins_drawGame(const Matrix* matVP){
     objHuman->Draw(matVP);
 
     Graphic::GetDevice()->EndScene();
+}
+void StageTest::ins_drawScene(const Matrix* matP){
+    Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+    sprShader->SetMatrix("matWVP", matP);
+    sprShader->SetTexture("texMain", faceGame->GetTexture());
+
+    sprFrame->SendFaceInfo();
+
+    sprShader->IteratePass(
+        0,
+        [](void* rawObj)->HRESULT{
+            BasePlane* obj = (decltype(obj))rawObj;
+            return obj->Draw();
+        },
+        sprFrame
+        );
 }

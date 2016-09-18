@@ -2,14 +2,14 @@
 #include"Object.h"
 
 #include"ArchiveTable.h"
-#define SHADER_NAME _T("Basic.fxo")
+#define SHADER_NAME _T("Basic_wrap.fxo")
 #define FILE_NAME _T("dummyHuman.png")
 
 ObjHuman::ObjHuman(){
     ins_shader = Object::Shader::Read(&arcShaders, Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(SHADER_NAME, tstrlen(SHADER_NAME)));
 
     {
-        D3DXVECTOR2 planSize;
+        Vector2 planSize;
 
         ins_texture = Object::ExternalTexture::Read(&arcSprites, Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(FILE_NAME, tstrlen(FILE_NAME)));
         planSize.x = ins_texture->GetInfo()->Width;
@@ -26,6 +26,12 @@ ObjHuman::~ObjHuman(){
     RELEASE(ins_sprite);
 }
 
+ObjHuman* ObjHuman::Create(){
+    auto _new = Global::Alloc::NewCustomAligned<ObjHuman>(32);
+    return _new;
+}
+void ObjHuman::Release(){ Global::Alloc::DeleteCustomAligned(this); }
+
 static HRESULT _draw_callback(void* rawObj){
     auto obj = (BasePlane*)rawObj;
 
@@ -35,10 +41,6 @@ bool ObjHuman::Draw(const Matrix* matVP){
     Matrix matWVP;
 
     matWVP = ins_matWorld * (*matVP);
-
-    Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
-    Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-    Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);
 
     Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

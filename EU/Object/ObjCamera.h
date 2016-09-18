@@ -14,6 +14,14 @@ private:
 
     Matrix ins_matVP;
 
+private:
+    ObjCamera();
+    ~ObjCamera();
+
+public:
+    static ObjCamera* Create();
+    void Release();
+
 public:
     void Init();
 
@@ -31,4 +39,8 @@ public:
     INLINE const Matrix* GetViewMatrix()const{ return &ins_matView; }
     INLINE const Matrix* GetProjectionMatrix()const{ return &ins_matProj; }
     INLINE const Matrix* GetVPMatrix(){ ins_calVPMatrix(); return &ins_matVP; }
+
+public:
+    template<class T, typename... ARGS> friend T* Global::Alloc::NewCustomAligned(size_t, ARGS&&...);
+    template<class T> friend void Global::Alloc::DeleteCustomAligned(T*);
 };

@@ -17,10 +17,18 @@ private:
 private:
     Matrix ins_matWorld;
 
-public:
+private:
     ObjHuman();
     virtual ~ObjHuman();
 
 public:
+    static ObjHuman* Create();
+    void Release();
+
+public:
     bool Draw(const Matrix* matVP);
+
+public:
+    template<class T, typename... ARGS> friend T* Global::Alloc::NewCustomAligned(size_t, ARGS&&...);
+    template<class T> friend void Global::Alloc::DeleteCustomAligned(T*);
 };

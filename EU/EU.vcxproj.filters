@@ -54,7 +54,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\Basic.fx">
+    <FxCompile Include="Shader\Basic_wrap.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Basic_clamp.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
