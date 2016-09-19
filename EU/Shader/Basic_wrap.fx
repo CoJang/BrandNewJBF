@@ -2,10 +2,7 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-extern texture texMain;
-sampler sampMain = sampler_state{
-    Texture = (texMain);
-
+sampler sampMain : register(s0){
     MipFilter = point;
     MinFilter = linear;
     MagFilter = linear;
@@ -25,10 +22,6 @@ struct VS_OUTPUT{
     float4 pos : POSITION;
     float2 uv : TEXCOORD0;
 };
-
-struct PS_INPUT{
-    float2 uv : TEXCOORD0;
-};
 ///////////////////////////////////////////
 
 // Shader function(s) definition
@@ -41,8 +34,8 @@ VS_OUTPUT vert(VS_INPUT _in){
 
     return _out;
 }
-float4 frag(PS_INPUT _in) : COLOR{
-    return tex2D(sampMain, _in.uv);
+float4 frag(float2 uv : TEXCOORD0) : COLOR0{
+    return tex2D(sampMain, uv);
 }
 ///////////////////////////////////////////
 

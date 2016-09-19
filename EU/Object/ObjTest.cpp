@@ -48,7 +48,7 @@ bool ObjTest::Draw(const Matrix* matVP){
     Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
     ins_shader->SetMatrix("matWVP", &matWVP);
-    ins_shader->SetTexture("texMain", ins_texture->GetTexture());
+    Core::Graphic::SetTexture(0, ins_texture->GetTexture());
 
     ins_sprite->SendFaceInfo();
 

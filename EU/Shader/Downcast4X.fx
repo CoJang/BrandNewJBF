@@ -9,10 +9,7 @@ extern float4x4 matWVP : WVP;
 
 extern float fLevel;
 
-extern texture texMain;
-sampler sampMain = sampler_state{
-    Texture = (texMain);
-
+sampler sampMain : register(s0){
     MipFilter = point;
     MinFilter = linear;
     MagFilter = linear;
@@ -30,10 +27,6 @@ struct VS_INPUT{
 };
 struct VS_OUTPUT{
     float4 pos : POSITION;
-    float2 uv : TEXCOORD0;
-};
-
-struct PS_INPUT{
     float2 uv : TEXCOORD0;
 };
 ///////////////////////////////////////////
@@ -74,22 +67,17 @@ VS_OUTPUT vert(VS_INPUT _in){
 
     return _out;
 }
-float4 frag(PS_INPUT _in) : COLOR{
+float4 frag(float2 uv : TEXCOORD0) : COLOR0{
     float4 col = 0;
 
-    for (int i = 0; i < DOWN_FILTER_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelDownFilter[i].xy);
+    for (int i = 0; i < DOWN_FILTER_COUNT; ++i)col += tex2D(sampMain, uv + vTexelDownFilter[i].xy);
 
     return col / DOWN_FILTER_COUNT;
 }
 ///////////////////////////////////////////
 
 technique main{
-    pass P0
-    <
-        float fScaleX = 0.25f;
-        float fScaleY = 0.25f;
-    >
-    {
+    pass P0{
         VertexShader = compile vs_2_0 vert();
         PixelShader = compile ps_2_0 frag();
     }

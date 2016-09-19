@@ -49,8 +49,7 @@ private:
 
 private:
     Object::EmptyTexture* faceGame;
-    Object::EmptyTexture* faceDowncast4X;
-    Object::EmptyTexture* faceBrigh;
+    Object::EmptyTexture* faceRenderPass[2];
 
     Object::Shader* shadBasic;
     Object::Shader* shadDowncast4X;
@@ -61,6 +60,9 @@ private:
     Object::Shader* shadCombine4X;
 
     Matrix matFrame;
+    Matrix matFrameDown4X;
+    Matrix matFrameUp4X;
+
     BasePlane* sprFrame;
 
 private:

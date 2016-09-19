@@ -53,6 +53,7 @@ void StageTest::Init(){
     Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);
 }
 void StageTest::ins_initFace(){
+    size_t i;
     Object::EmptyTexture::INFO inf;
 
     {
@@ -64,14 +65,7 @@ void StageTest::ins_initFace(){
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
 
         faceGame = Object::EmptyTexture::Create(&inf);
-        faceBrigh = Object::EmptyTexture::Create(&inf);
-    }
-
-    {
-        inf.width = Core::Graphic::GetDisplayInfo()->Width;
-        inf.height = Core::Graphic::GetDisplayInfo()->Height;
-
-        faceDowncast4X = Object::EmptyTexture::Create(&inf);
+        for (i = 0; i < _countof(faceRenderPass); ++i)faceRenderPass[i] = Object::EmptyTexture::Create(&inf);
     }
 }
 void StageTest::ins_initShader(){
@@ -92,6 +86,18 @@ void StageTest::ins_initFrame(){
         0, 0, 1, 0,
         -1, 1, 0, 1
     );
+    matFrameDown4X = Matrix(
+        0.5f / size.x, 0, 0, 0,
+        0, 0.5f / size.y, 0, 0,
+        0, 0, 1, 0,
+        -1, 1, 0, 1
+    );
+    matFrameUp4X = Matrix(
+        8 / size.x, 0, 0, 0,
+        0, 8 / size.y, 0, 0,
+        0, 0, 1, 0,
+        -1, 1, 0, 1
+    );
 
     sprFrame = BasePlane::Create(&size);
 }
@@ -109,9 +115,10 @@ void StageTest::Cleanup(){
     ins_releaseFace();
 }
 void StageTest::ins_releaseFace(){
+    size_t i;
+
     RELEASE(faceGame);
-    RELEASE(faceDowncast4X);
-    RELEASE(faceBrigh);
+    for (i = 0; i < _countof(faceRenderPass); ++i)RELEASE(faceRenderPass[i]);
 }
 void StageTest::ins_releaseShader(){
     RELEASE(shadBasic);
@@ -170,75 +177,46 @@ void StageTest::Draw(){
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
 
     Core::Graphic::GetRenderTarget(0, &surfOrg);
-    Core::Graphic::SetRenderTarget(0, faceGame->GetSurface(0));
-    ins_drawGame(matVP);
+    {
+        Core::Graphic::SetRenderTarget(0, faceGame->GetSurface(0));
+        ins_drawGame(matVP);
+    }
 
     Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-    { // Down scale 4X twice
-        Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-        ins_drawTextureDownCast4X(&matFrame, faceGame);
-        ins_drawTextureDownCast4X(&matFrame, faceDowncast4X);
+    { // Down scale 4X
+        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+        ins_drawTextureDownCast4X(&matFrameDown4X, faceGame);
     }
 
     { // Extrace bright region
-        ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceDowncast4X);
+
+        Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+        ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceRenderPass[0]);
     }
 
-    Core::Graphic::SetRenderTarget(0, surfOrg);
-    ins_drawTextureOriginal(&matFrame, faceDowncast4X);
-
-    //{ // Make blur
-    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceDowncast4X);
-
-    //    Core::Graphic::SetRenderTarget(0, faceBrigh->GetSurface(0));
-    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
+    { // Make blur_horz
+        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+        ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceRenderPass[1]);
+    }
+    { // Make blur_horz
+        Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+        ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceRenderPass[0]);
+    }
+    //{ // Make blur_vert
+    //    Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceRenderPass[0]);
     //}
 
-    //{ // Make blur
-    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceBrigh);
+    { // Up scale 4X
+        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+        ins_drawTextureUpCast4X(&matFrameUp4X, faceRenderPass[1]);
+    }
 
-    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
-    //}
-
-    //{ // Up scale 4X twice then combine with back surface
-    //    ins_drawTextureUpCast4X(&matFrame, faceDowncast4X);
-
-    //    Core::Graphic::SetRenderTarget(0, surfOrg);
-    //    ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceDowncast4X);
-    //}
-
-    //{ // Down scale 4X twice
-    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-    //    ins_drawTextureDownCast4X(&matFrame, faceGame);
-    //    ins_drawTextureDownCast4X(&matFrame, faceDowncast4X);
-    //}
-
-    //{ // Extrace bright region
-    //    ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceDowncast4X);
-    //}
-
-    //{ // Make blur
-    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceDowncast4X);
-
-    //    Core::Graphic::SetRenderTarget(0, faceBrigh->GetSurface(0));
-    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
-    //}
-
-    //{ // Make blur
-    //    ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceBrigh);
-
-    //    Core::Graphic::SetRenderTarget(0, faceDowncast4X->GetSurface(0));
-    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceDowncast4X);
-    //}
-
-    //{ // Up scale 4X twice then combine with back surface
-    //    ins_drawTextureUpCast4X(&matFrame, faceDowncast4X);
-
-    //    Core::Graphic::SetRenderTarget(0, surfOrg);
-    //    ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceDowncast4X);
-    //}
+    { // Combine with back surface
+        Core::Graphic::SetRenderTarget(0, surfOrg);
+        ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceRenderPass[0]);
+    }
 
     Graphic::GetDevice()->EndScene();
 }
@@ -265,7 +243,7 @@ void StageTest::ins_drawGame(const Matrix* matVP){
 
 void StageTest::ins_drawTextureOriginal(const Matrix* matWMP, const Object::EmptyTexture* texture){
     shadBasic->SetMatrix("matWVP", matWMP);
-    shadBasic->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -273,7 +251,7 @@ void StageTest::ins_drawTextureOriginal(const Matrix* matWMP, const Object::Empt
 }
 void StageTest::ins_drawTextureDownCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture){
     shadDowncast4X->SetMatrix("matWVP", matWMP);
-    shadDowncast4X->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -282,7 +260,7 @@ void StageTest::ins_drawTextureDownCast4X(const Matrix* matWMP, const Object::Em
 void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
     shadBright->SetMatrix("matWVP", matWMP);
     shadBright->SetFloat("fLevel", *fBrightPassLevel);
-    shadBright->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -291,7 +269,7 @@ void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fB
 void StageTest::ins_drawTextureBlurHorz(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture){
     shadBlurHorz->SetMatrix("matWVP", matWMP);
     shadBlurHorz->SetFloat("fLevel", *fBrightLevel);
-    shadBlurHorz->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -300,7 +278,7 @@ void StageTest::ins_drawTextureBlurHorz(const Matrix* matWMP, const float* fBrig
 void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture){
     shadBlurVert->SetMatrix("matWVP", matWMP);
     shadBlurVert->SetFloat("fLevel", *fBrightLevel);
-    shadBlurVert->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -308,7 +286,7 @@ void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrig
 }
 void StageTest::ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture){
     shadUpcast4X->SetMatrix("matWVP", matWMP);
-    shadUpcast4X->SetTexture("texMain", texture->GetTexture());
+    Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
@@ -317,8 +295,8 @@ void StageTest::ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::Empt
 void StageTest::ins_drawTextureCombine4X(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB){
     shadCombine4X->SetMatrix("matWVP", matWMP);
     shadCombine4X->SetFloat("fLevel", *fSecondAlpha);
-    shadCombine4X->SetTexture("texFirst", textureA->GetTexture());
-    shadCombine4X->SetTexture("texSecond", textureB->GetTexture());
+    Core::Graphic::SetTexture(0, textureA->GetTexture());
+    Core::Graphic::SetTexture(1, textureB->GetTexture());
 
     sprFrame->SendFaceInfo();
 

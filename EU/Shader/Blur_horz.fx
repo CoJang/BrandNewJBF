@@ -1,6 +1,6 @@
 // Predefinition(s)
 ///////////////////////////////////////////
-#define BLUR_KERNAL_COUNT 13
+#define BLUR_KERNAL_COUNT 9
 ///////////////////////////////////////////
 
 // Binded object(s) definition
@@ -9,10 +9,7 @@ extern float4x4 matWVP : WVP;
 
 extern float fLevel;
 
-extern texture texMain;
-sampler sampMain = sampler_state{
-    Texture = (texMain);
-
+sampler sampMain : register(s0){
     MipFilter = point;
     MinFilter = linear;
     MagFilter = linear;
@@ -32,17 +29,11 @@ struct VS_OUTPUT{
     float4 pos : POSITION;
     float2 uv : TEXCOORD0;
 };
-
-struct PS_INPUT{
-    float2 uv : TEXCOORD0;
-};
 ///////////////////////////////////////////
 
 // Inner variable(s) definition
 ///////////////////////////////////////////
 static const float2 vPixelKernel[BLUR_KERNAL_COUNT] = {
-    { -6, 0 },
-    { -5, 0 },
     { -4, 0 },
     { -3, 0 },
     { -2, 0 },
@@ -52,25 +43,18 @@ static const float2 vPixelKernel[BLUR_KERNAL_COUNT] = {
     { 2, 0 },
     { 3, 0 },
     { 4, 0 },
-    { 5, 0 },
-    { 6, 0 },
 };
-static const float2 vTexelKernel[BLUR_KERNAL_COUNT]< string ConvertPixelsToTexels = "vPixelKernel"; >;
 
 static const float fBlurWeights[BLUR_KERNAL_COUNT] = {
-    0.002216,
-    0.008764,
-    0.026995,
-    0.064759,
-    0.120985,
-    0.176033,
-    0.199471,
-    0.176033,
-    0.120985,
-    0.064759,
-    0.026995,
-    0.008764,
-    0.002216,
+    0.05,
+    0.09,
+    0.12,
+    0.15,
+    0.16,
+    0.15,
+    0.12,
+    0.09,
+    0.05,
 };
 ///////////////////////////////////////////
 
@@ -84,10 +68,10 @@ VS_OUTPUT vert(VS_INPUT _in){
 
     return _out;
 }
-float4 frag(PS_INPUT _in) : COLOR{
+float4 frag(float2 uv : TEXCOORD0) : COLOR0{
     float4 col = 0;
 
-    for (int i = 0; i < BLUR_KERNAL_COUNT; ++i)col += tex2D(sampMain, _in.uv + vTexelKernel[i].xy * fLevel) * fBlurWeights[i];
+    for (int i = 0; i < BLUR_KERNAL_COUNT; ++i)col += tex2D(sampMain, uv + vPixelKernel[i].xy * fLevel) * fBlurWeights[i];
     col *= 1.5f;
 
     return col;
