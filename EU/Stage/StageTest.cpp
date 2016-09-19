@@ -182,7 +182,11 @@ void StageTest::Draw(){
         ins_drawGame(matVP);
     }
 
+    Graphic::GetDevice()->EndScene();
+
     Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+    if (FAILED(Graphic::GetDevice()->BeginScene()))return;
 
     { // Down scale 4X
         Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
@@ -203,10 +207,6 @@ void StageTest::Draw(){
         Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
         ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceRenderPass[0]);
     }
-    //{ // Make blur_vert
-    //    Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
-    //    ins_drawTextureBlurVert(&matFrame, &cfgBloomLevel, faceRenderPass[0]);
-    //}
 
     { // Up scale 4X
         Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));

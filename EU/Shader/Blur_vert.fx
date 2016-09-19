@@ -1,6 +1,6 @@
 // Predefinition(s)
 ///////////////////////////////////////////
-#define BLUR_KERNAL_COUNT 9
+#define BLUR_KERNAL_COUNT 13
 ///////////////////////////////////////////
 
 // Binded object(s) definition
@@ -34,6 +34,8 @@ struct VS_OUTPUT{
 // Inner variable(s) definition
 ///////////////////////////////////////////
 static const float2 vPixelKernel[BLUR_KERNAL_COUNT] = {
+    { 0, -6 },
+    { 0, -5 },
     { 0, -4 },
     { 0, -3 },
     { 0, -2 },
@@ -43,18 +45,24 @@ static const float2 vPixelKernel[BLUR_KERNAL_COUNT] = {
     { 0,  2 },
     { 0,  3 },
     { 0,  4 },
+    { 0,  5 },
+    { 0,  6 },
 };
 
 static const float fBlurWeights[BLUR_KERNAL_COUNT] = {
-    0.05,
-    0.09,
-    0.12,
-    0.15,
-    0.16,
-    0.15,
-    0.12,
-    0.09,
-    0.05,
+    0.002216,
+    0.008764,
+    0.026995,
+    0.064759,
+    0.120985,
+    0.176033,
+    0.199471,
+    0.176033,
+    0.120985,
+    0.064759,
+    0.026995,
+    0.008764,
+    0.002216,
 };
 ///////////////////////////////////////////
 

@@ -50,16 +50,12 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float3 col = tex2D(sampMain, uv);
+    float4 col = tex2D(sampMain, uv);
 
-    col *= BRIGHT_PASS_MIDDLE_GRAY / (fLevel + 0.001f);
-    col *= (1.f + (col / (BRIGHT_PASS_WHITE_CUTOFF * BRIGHT_PASS_WHITE_CUTOFF)));
-    col -= BRIGHT_PASS_THRESHOLD;
+    col = pow(col, 2.2f);
+    col = saturate((col - fLevel) / (1 - fLevel));
 
-    col = max(col, 0.f);
-    col.rgb /= (BRIGHT_PASS_OFFSET + col);
-
-    return float4(col, 1.f);
+    return col;
 }
 ///////////////////////////////////////////
 
