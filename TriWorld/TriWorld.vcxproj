@@ -176,6 +176,7 @@
     <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="Base\BaseMesh.cpp" />
     <ClCompile Include="Base\BaseXFormatMesh.cpp" />
+    <ClCompile Include="Config\CfgParseINI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ObjAxis.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp" />
@@ -195,6 +196,8 @@
     <ClInclude Include="Base\BaseMesh.h" />
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Base\BaseXFormatMesh.h" />
+    <ClInclude Include="Config\CfgParseINI.h" />
+    <ClInclude Include="Config\Config.h" />
     <ClInclude Include="Object\ObjAxis.h" />
     <ClInclude Include="Object\ObjCamera.h" />
     <ClInclude Include="Object\Object.h" />

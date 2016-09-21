@@ -29,6 +29,8 @@ extern int (WINAPIV *__vsnwprintf)(wchar_t*, size_t, const wchar_t*, va_list);
 #define CommandLineToArgv CommandLineToArgvW
 
 #define tstrlen wcslen
+#define tstrcmp wcscmp
+#define tstrncmp wcsncmp
 #define tstrcpy_s wcscpy_s
 #define tstrncpy_s wcsncpy_s
 
@@ -44,6 +46,8 @@ extern int (WINAPIV *__vsnwprintf)(wchar_t*, size_t, const wchar_t*, va_list);
 #define CommandLineToArgv CommandLineToArgvA
 
 #define tstrlen strlen
+#define tstrcmp strcmp
+#define tstrncmp strncmp
 #define tstrcpy_s strcpy_s
 #define tstrncpy_s strncpy_s
 

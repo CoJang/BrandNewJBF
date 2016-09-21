@@ -28,6 +28,9 @@
     <ClCompile Include="Object\ObjPlane.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Config\CfgParseINI.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
@@ -62,6 +65,12 @@
     <ClInclude Include="Object\ObjPlane.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Config\Config.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\CfgParseINI.h">
+      <Filter>Config</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -72,6 +81,9 @@
     </Filter>
     <Filter Include="Base">
       <UniqueIdentifier>{54b9f179-7a80-46e8-a696-2bcee845b92f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{ec3ddabc-a523-47ff-804a-4c5e58ed0ac0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

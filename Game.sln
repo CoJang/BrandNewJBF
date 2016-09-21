@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawContent", "RawContent", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TRI_Models", "TRI_Models", "{F4399F44-1BC9-4A5F-9880-F740108BAD73}"
 	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Models\JN-4(s).x = RawContent\TRI_Models\JN-4(s).x
 		RawContent\TRI_Models\JN-4.x = RawContent\TRI_Models\JN-4.x
 	EndProjectSection
 EndProject
@@ -47,6 +48,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EU_Sprites", "EU_Sprites", "{B68946F6-522B-4AFB-B2C6-B245583816B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EU_Shaders", "EU_Shaders", "{E65A6233-2C5C-492B-9F52-5956FC033044}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JN-4(s)", "JN-4(s)", "{E3CA2216-1FDE-4466-8A83-83FF8063B99E}"
+	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Textures\JN-4(s)\bihull.bmp = RawContent\TRI_Textures\JN-4(s)\bihull.bmp
+		RawContent\TRI_Textures\JN-4(s)\wings.bmp = RawContent\TRI_Textures\JN-4(s)\wings.bmp
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,5 +113,6 @@ Global
 		{A4315EC1-91BC-47BA-80C5-988725AF14F2} = {3A69451F-40F4-4080-9DA0-CD6A3519215F}
 		{B68946F6-522B-4AFB-B2C6-B245583816B7} = {BE28E37E-05E5-4E4D-B72F-91ADB8FCF644}
 		{E65A6233-2C5C-492B-9F52-5956FC033044} = {BE28E37E-05E5-4E4D-B72F-91ADB8FCF644}
+		{E3CA2216-1FDE-4466-8A83-83FF8063B99E} = {3A69451F-40F4-4080-9DA0-CD6A3519215F}
 	EndGlobalSection
 EndGlobal

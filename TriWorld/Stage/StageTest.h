@@ -2,6 +2,9 @@
 
 #include"JBF/JBFramework.h"
 
+#include"Config/Config.h"
+
+#include"Base/Base.h"
 #include"Object/Object.h"
 
 using namespace JBF;
@@ -22,6 +25,9 @@ public:
 private:
     bool bGridSwitch;
     bool bAxisSwitch;
+
+private:
+    CfgParseINI cfgINIReader;
 
 private:
     ObjCamera* objCamera;

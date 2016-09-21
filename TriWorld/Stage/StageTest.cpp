@@ -8,10 +8,19 @@ using namespace JBF::Core;
 
 StageTest stgTest;
 
-#define _NAME_PLANE _T("JN-4.x")
-#define NAME_PLANE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_NAME_PLANE, tstrlen(_NAME_PLANE))
-
 void StageTest::Init(){
+    ARCHIVE_HASHSIZE namePlane;
+
+    {
+        CfgParseINI::Value val;
+
+        if (cfgINIReader.Read(_T("./tri_setting.ini"))){
+            if (cfgINIReader.Get(_T("PlaneFile"), &val)){
+                if(val.type == CfgParseINI::STRING)namePlane = Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(val.string, tstrlen(val.string));
+            }
+        }
+    }
+
     {
         Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -31,7 +40,7 @@ void StageTest::Init(){
     }
 
     {
-        objPlane = ObjPlane::Create(&arcModels, &arcTextures, NAME_PLANE);
+        objPlane = ObjPlane::Create(&arcModels, &arcTextures, namePlane);
     }
 
     {
@@ -54,10 +63,7 @@ void StageTest::Cleanup(){
 }
 
 void StageTest::Update(float delta){
-    static const float speed = 10.f;
-    static Vector3 vCamTarget(0.f, 0.f, 0.f);
-
-    static const Vector3 vPlaneCenter(0.f, 0.f, 0.f);
+    static const Vector3 vPlaneCenter(0.f, 5.f, 0.f);
     static const float fPlaneTurnRad = 30.f;
     static const float fPlaneSpeed = 1.f;
 
@@ -76,13 +82,6 @@ void StageTest::Update(float delta){
     if (Core::Input::KeyPressed(Core::Input::DK_F2))bGridSwitch ^= true;
     if (Core::Input::KeyPressed(Core::Input::DK_F3))bAxisSwitch ^= true;
 
-    if (Core::Input::KeyDown(Core::Input::DK_W))vCamTarget.z += speed * delta;
-    else if (Core::Input::KeyDown(Core::Input::DK_S))vCamTarget.z -= speed * delta;
-    if (Core::Input::KeyDown(Core::Input::DK_A))vCamTarget.x -= speed * delta;
-    else if (Core::Input::KeyDown(Core::Input::DK_D))vCamTarget.x += speed * delta;
-
-    //objCamera->Update(&vCamTarget);
-
     objCamera->Update(objPlane->GetPosition());
     if(bAxisSwitch)objAxis->Update(&Vector3(0.f, 0.f, 0.f));
 
@@ -100,14 +99,13 @@ void StageTest::Draw(){
         0
     );
 
+    if (bGridSwitch)objGrid->Draw();
+
     {
         objPlane->Draw();
     }
 
-    {
-        if(bGridSwitch)objGrid->Draw();
-        if(bAxisSwitch)objAxis->Draw();
-    }
+    if (bAxisSwitch)objAxis->Draw();
 
     Graphic::GetDevice()->EndScene();
 }
