@@ -19,9 +19,13 @@ private:
     FORMAT_VERTEX* ins_vertices;
     IDirect3DVertexBuffer9* ins_vBuf;
 
-public:
+private:
     ObjGrid();
     virtual ~ObjGrid();
+
+public:
+    static ObjGrid* Create(size_t sideCellCount, float scale);
+    void Release();
 
 public:
     virtual HRESULT Validate();

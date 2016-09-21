@@ -22,6 +22,12 @@
     <ClCompile Include="Base\BaseMesh.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Base\BaseXFormatMesh.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjPlane.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
@@ -43,6 +49,18 @@
     </ClInclude>
     <ClInclude Include="Base\BaseMesh.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Base.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\BaseXFormatMesh.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjPlane.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

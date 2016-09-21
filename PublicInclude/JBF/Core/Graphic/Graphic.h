@@ -44,6 +44,9 @@ namespace JBF{
             extern INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture);
             extern INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture);
 
+            extern INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial);
+            extern INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial);
+
             extern INLINE HRESULT GetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD* pValue);
             extern INLINE HRESULT SetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD Value);
 

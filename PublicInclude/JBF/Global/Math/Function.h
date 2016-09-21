@@ -19,6 +19,13 @@ namespace JBF{
             extern Vector3* MATH_CALL Vec3TransformCoord(Vector3* pOut, const Vector3* pV, const Matrix* pM);
             extern Vector4* MATH_CALL Vec4TransformCoord(Vector4* pOut, const Vector4* pV, const Matrix* pM);
 
+            extern Matrix* MatrixRotationX(Matrix* pOut, float xAngle);
+            extern Matrix* MatrixRotationY(Matrix* pOut, float xAngle);
+            extern Matrix* MatrixRotationZ(Matrix* pOut, float xAngle);
+
+            extern Matrix* MatrixTranslation(Matrix* pOut, float x, float y, float z);
+            extern Matrix* MatrixTranslation(Matrix* pOut, const Vector3* pV);
+
             extern Matrix* MatrixLookAtLH(Matrix* pOut, const Vector3* pEye, const Vector3* pAt, const Vector3* pUp);
 
             extern Matrix* MatrixPerspectiveFovLH(Matrix* pOut, float fovy, float Aspect, float zn, float zf);

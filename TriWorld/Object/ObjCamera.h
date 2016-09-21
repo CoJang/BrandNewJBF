@@ -21,10 +21,19 @@ private:
     Matrix ins_mProj;
     Matrix ins_mView;
 
-public:
+private:
     ObjCamera();
+    ~ObjCamera();
+
+public:
+    static ObjCamera* Create();
+    void Release();
 
 public:
     void Init();
-    void Update(Vector3* vTarget);
+    void Update(const Vector3* vTarget);
+
+public:
+    template<class T, typename... ARGS> friend T* Global::Alloc::NewCustomAligned(size_t, ARGS&&...);
+    template<class T> friend void Global::Alloc::DeleteCustomAligned(T*);
 };

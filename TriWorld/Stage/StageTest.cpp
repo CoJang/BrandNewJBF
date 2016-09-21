@@ -1,11 +1,15 @@
 ﻿#include"pch.h"
 #include"StageTest.h"
+#include"ArchiveTable.h"
 
 using namespace JBF;
 using namespace JBF::Global::Alloc;
 using namespace JBF::Core;
 
 StageTest stgTest;
+
+#define _NAME_PLANE _T("JN-4.x")
+#define NAME_PLANE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_NAME_PLANE, tstrlen(_NAME_PLANE))
 
 void StageTest::Init(){
     {
@@ -19,32 +23,43 @@ void StageTest::Init(){
     }
 
     {
-        objCamera = NewCustomAligned<ObjCamera>(32);
+        objCamera = ObjCamera::Create();
         objFont = ObjFont::GetInstance();
 
-        objGrid = new ObjGrid();
-        objAxis = NewCustomAligned<ObjAxis>(32);
+        objGrid = ObjGrid::Create(100, 5.f);
+        objAxis = ObjAxis::Create(5.f);
     }
 
     {
-        objCamera->Init();
-        objFont->Init();
+        objPlane = ObjPlane::Create(&arcModels, &arcTextures, NAME_PLANE);
+    }
 
-        objGrid->Init(100, 5.f);
-        objAxis->Init(5.f);
+    {
+        objFont->Init();
     }
 }
 void StageTest::Cleanup(){
-    DeleteCustomAligned(objCamera);
-    ObjFont::Release();
+    {
+        RELEASE(objCamera);
 
-    delete objGrid;
-    DeleteCustomAligned(objAxis);
+        RELEASE(objGrid);
+        RELEASE(objAxis);
+
+        ObjFont::Release();
+    }
+
+    {
+        RELEASE(objPlane);
+    }
 }
 
 void StageTest::Update(float delta){
     static const float speed = 10.f;
     static Vector3 vCamTarget(0.f, 0.f, 0.f);
+
+    static const Vector3 vPlaneCenter(0.f, 0.f, 0.f);
+    static const float fPlaneTurnRad = 30.f;
+    static const float fPlaneSpeed = 1.f;
 
 #ifdef _DEBUG
     {
@@ -66,8 +81,13 @@ void StageTest::Update(float delta){
     if (Core::Input::KeyDown(Core::Input::DK_A))vCamTarget.x -= speed * delta;
     else if (Core::Input::KeyDown(Core::Input::DK_D))vCamTarget.x += speed * delta;
 
-    objCamera->Update(&vCamTarget);
+    //objCamera->Update(&vCamTarget);
+
+    objCamera->Update(objPlane->GetPosition());
     if(bAxisSwitch)objAxis->Update(&Vector3(0.f, 0.f, 0.f));
+
+    objPlane->TurnAround(&vPlaneCenter, fPlaneTurnRad, fPlaneSpeed);
+    objPlane->Update(delta);
 }
 void StageTest::Draw(){
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
@@ -79,6 +99,10 @@ void StageTest::Draw(){
         1.f,
         0
     );
+
+    {
+        objPlane->Draw();
+    }
 
     {
         if(bGridSwitch)objGrid->Draw();

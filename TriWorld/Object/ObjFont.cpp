@@ -1,5 +1,5 @@
 ﻿#include"pch.h"
-#include"ObjFont.h"
+#include"Object.h"
 
 ObjFont* ObjFont::ins_instance = nullptr;
 

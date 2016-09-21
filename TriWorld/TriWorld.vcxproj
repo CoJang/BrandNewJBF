@@ -175,11 +175,13 @@
   <ItemGroup>
     <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="Base\BaseMesh.cpp" />
+    <ClCompile Include="Base\BaseXFormatMesh.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ObjAxis.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp" />
     <ClCompile Include="Object\ObjFont.cpp" />
     <ClCompile Include="Object\ObjGrid.cpp" />
+    <ClCompile Include="Object\ObjPlane.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -191,10 +193,14 @@
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
     <ClInclude Include="Base\BaseMesh.h" />
+    <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Base\BaseXFormatMesh.h" />
     <ClInclude Include="Object\ObjAxis.h" />
     <ClInclude Include="Object\ObjCamera.h" />
+    <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\ObjFont.h" />
     <ClInclude Include="Object\ObjGrid.h" />
+    <ClInclude Include="Object\ObjPlane.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Stage\StageTest.h" />
   </ItemGroup>

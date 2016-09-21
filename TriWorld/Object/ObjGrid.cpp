@@ -1,7 +1,19 @@
 ﻿#include"pch.h"
-#include"ObjGrid.h"
+#include"Object.h"
 
 ObjGrid::ObjGrid() : DXResource(RESTYPE_MANAGE){}
+ObjGrid::~ObjGrid(){
+    Invalidate();
+    delete[] ins_vertices;
+}
+
+ObjGrid* ObjGrid::Create(size_t sideCellCount, float scale){
+    auto _new = new ObjGrid();
+
+    _new->Init(sideCellCount, scale);
+    return _new;
+}
+void ObjGrid::Release(){ delete this; }
 
 HRESULT ObjGrid::Validate(){
     size_t assignSize = ins_lineCount * 2 * sizeof FORMAT_VERTEX;
@@ -86,10 +98,6 @@ void ObjGrid::Init(size_t sideCellCount, float scale){
     }
 
     Validate();
-}
-ObjGrid::~ObjGrid(){
-    Invalidate();
-    delete[] ins_vertices;
 }
 
 void ObjGrid::Draw(){

@@ -20,9 +20,13 @@ private:
     Matrix ins_mWorld;
     IDirect3DVertexBuffer9* ins_vBuf;
 
-public:
+private:
     ObjAxis();
     virtual ~ObjAxis();
+
+public:
+    static ObjAxis* Create(float length);
+    void Release();
 
 public:
     virtual HRESULT Validate();
@@ -33,4 +37,8 @@ public:
 public:
     void Update(Vector3* vpPos);
     void Draw();
+
+public:
+    template<class T, typename... ARGS> friend T* Global::Alloc::NewCustomAligned(size_t, ARGS&&...);
+    template<class T> friend void Global::Alloc::DeleteCustomAligned(T*);
 };

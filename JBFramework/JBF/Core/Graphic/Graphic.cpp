@@ -203,6 +203,9 @@ namespace JBF{
             INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture){ return ins_device->GetTexture(Stage, ppTexture); }
             INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture){ return ins_device->SetTexture(Stage, pTexture); }
 
+            INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial){ return ins_device->GetMaterial(pMaterial); }
+            INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial){ return ins_device->SetMaterial(pMaterial); }
+
             INLINE HRESULT GetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD* pValue){ return ins_device->GetTextureStageState(Stage, Type, pValue); }
             INLINE HRESULT SetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD Value){ return ins_device->SetTextureStageState(Stage, Type, Value); }
 

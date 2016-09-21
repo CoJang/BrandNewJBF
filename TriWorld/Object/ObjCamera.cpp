@@ -1,5 +1,5 @@
 ﻿#include"pch.h"
-#include"ObjCamera.h"
+#include"Object.h"
 
 ObjCamera::ObjCamera(){
     ins_vEye = Vector3(0.f, 10.f, -40.f);
@@ -11,6 +11,15 @@ ObjCamera::ObjCamera(){
     ins_fZNear = 1.f;
     ins_fZFar = 300.f;
 }
+ObjCamera::~ObjCamera(){}
+
+ObjCamera* ObjCamera::Create(){
+    auto _new = Global::Alloc::NewCustomAligned<ObjCamera>(32);
+
+    _new->Init();
+    return _new;
+}
+void ObjCamera::Release(){ Global::Alloc::DeleteCustomAligned(this); }
 
 void ObjCamera::Init(){
     MatrixLookAtLH(&ins_mView, &ins_vEye, &ins_vLookAt, &ins_vUp);
@@ -20,7 +29,7 @@ void ObjCamera::Init(){
     MatrixPerspectiveFovLH(&ins_mProj, ins_fFov, ins_fAspect, ins_fZNear, ins_fZFar);
     Core::Graphic::SetTransform(D3DTS_PROJECTION, &ins_mProj);
 }
-void ObjCamera::Update(Vector3* vTarget){
+void ObjCamera::Update(const Vector3* vTarget){
     MatrixLookAtLH(&ins_mView, &ins_vEye, vTarget, &ins_vUp);
     Core::Graphic::SetTransform(D3DTS_VIEW, &ins_mView);
 }

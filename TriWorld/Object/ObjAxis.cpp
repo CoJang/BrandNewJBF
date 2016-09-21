@@ -1,9 +1,18 @@
 ﻿#include"pch.h"
-
-#include"ObjFont.h"
-#include"ObjAxis.h"
+#include"Object.h"
 
 ObjAxis::ObjAxis() : DXResource(RESTYPE_MANAGE){}
+ObjAxis::~ObjAxis(){
+    Invalidate();
+}
+
+ObjAxis* ObjAxis::Create(float length){
+    auto _new = Global::Alloc::NewCustomAligned<ObjAxis>(32);
+
+    _new->Init(length);
+    return _new;
+}
+void ObjAxis::Release(){ Global::Alloc::DeleteCustomAligned(this); }
 
 HRESULT ObjAxis::Validate(){
     FORMAT_VERTEX* buf;
@@ -61,9 +70,6 @@ void ObjAxis::Init(float length){
     }
 
     Validate();
-}
-ObjAxis::~ObjAxis(){
-    Invalidate();
 }
 
 void ObjAxis::Update(Vector3* vpPos){

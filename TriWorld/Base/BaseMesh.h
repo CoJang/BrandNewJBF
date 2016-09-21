@@ -5,26 +5,14 @@
 
 using namespace JBF;
 
-class BaseMesh : Base::DXResource{
-private:
-    ARCHIVE_HASHSIZE ins_fileName;
+class BaseMesh : public Base::DXResource{
+protected:
     ID3DXMesh* ins_mesh;
     std::vector<D3DMATERIAL9> ins_mtrlTable;
+    std::vector<Object::ExternalTexture*> ins_texTable;
+    DWORD ins_partConut;
 
-private:
-    HRESULT(*ins_validateFunc)(BaseMesh* obj);
-
-public:
-    BaseMesh();
+protected:
+    BaseMesh(RES_TYPE type);
     virtual ~BaseMesh();
-
-public:
-    bool ParseXFormat(ARCHIVE_HASHSIZE fileName);
-
-public:
-    virtual HRESULT Validate();
-    virtual void Invalidate();
-
-private:
-    static HRESULT ins_fillMeshByXFormat(BaseMesh* obj);
 };

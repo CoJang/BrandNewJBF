@@ -2,10 +2,7 @@
 
 #include"JBF/JBFramework.h"
 
-#include"Object/ObjCamera.h"
-#include"Object/ObjFont.h"
-#include"Object/ObjGrid.h"
-#include"Object/ObjAxis.h"
+#include"Object/Object.h"
 
 using namespace JBF;
 
@@ -32,4 +29,6 @@ private:
 
     ObjGrid* objGrid;
     ObjAxis* objAxis;
+private:
+    ObjPlane* objPlane;
 };

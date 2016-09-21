@@ -10,6 +10,130 @@ namespace JBF{
                 return v;
             }
 
+            Matrix* MatrixRotationX(Matrix* pOut, float Angle){
+                float cos = Cos(Angle);
+                float sin = Sin(Angle);
+
+                pOut->_11 = 1.f;
+                pOut->_12 = 0.f;
+                pOut->_13 = 0.f;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = 0.f;
+                pOut->_22 = cos;
+                pOut->_23 = sin;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = 0.f;
+                pOut->_32 = -sin;
+                pOut->_33 = cos;
+                pOut->_34 = 0.f;
+
+                pOut->_41 = 0.f;
+                pOut->_42 = 0.f;
+                pOut->_43 = 0.f;
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
+            Matrix* MatrixRotationY(Matrix* pOut, float Angle){
+                float cos = Cos(Angle);
+                float sin = Sin(Angle);
+
+                pOut->_11 = cos;
+                pOut->_12 = 0.f;
+                pOut->_13 = -sin;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = 0.f;
+                pOut->_22 = 1.f;
+                pOut->_23 = 0.f;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = sin;
+                pOut->_32 = 0.f;
+                pOut->_33 = cos;
+                pOut->_34 = 0.f;
+
+                pOut->_41 = 0.f;
+                pOut->_42 = 0.f;
+                pOut->_43 = 0.f;
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
+            Matrix* MatrixRotationZ(Matrix* pOut, float Angle){
+                float cos = Cos(Angle);
+                float sin = Sin(Angle);
+
+                pOut->_11 = cos;
+                pOut->_12 = sin;
+                pOut->_13 = 0.f;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = -sin;
+                pOut->_22 = cos;
+                pOut->_23 = 0.f;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = 0.f;
+                pOut->_32 = 0.f;
+                pOut->_33 = 1.f;
+                pOut->_34 = 0.f;
+
+                pOut->_41 = 0.f;
+                pOut->_42 = 0.f;
+                pOut->_43 = 0.f;
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
+
+            Matrix* MatrixTranslation(Matrix* pOut, float x, float y, float z){
+                pOut->_11 = 1.f;
+                pOut->_12 = 0.f;
+                pOut->_13 = 0.f;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = 0.f;
+                pOut->_22 = 1.f;
+                pOut->_23 = 0.f;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = 0.f;
+                pOut->_32 = 0.f;
+                pOut->_33 = 1.f;
+                pOut->_34 = 0.f;
+
+                pOut->_41 = x;
+                pOut->_42 = y;
+                pOut->_43 = z;
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
+            Matrix* MatrixTranslation(Matrix* pOut, const Vector3* pV){
+                pOut->_11 = 1.f;
+                pOut->_12 = 0.f;
+                pOut->_13 = 0.f;
+                pOut->_14 = 0.f;
+
+                pOut->_21 = 0.f;
+                pOut->_22 = 1.f;
+                pOut->_23 = 0.f;
+                pOut->_24 = 0.f;
+
+                pOut->_31 = 0.f;
+                pOut->_32 = 0.f;
+                pOut->_33 = 1.f;
+                pOut->_34 = 0.f;
+
+                *(Vector3*)&pOut->_41 = *pV;
+                pOut->_44 = 1.f;
+
+                return pOut;
+            }
+
             Matrix* MatrixLookAtLH(Matrix* pOut, const Vector3* pEye, const Vector3* pAt, const Vector3* pUp){
                 Vector3 zaxis = ((*pAt) - (*pEye)).normalized();
                 Vector3 xaxis = pUp->crossed(zaxis).normalized();
