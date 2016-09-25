@@ -21,7 +21,8 @@ namespace JBF{
             virtual void Invalidate();
 
         public:
-            HRESULT IteratePass(DWORD flag, HRESULT(*func)(void*), void* funcArg);
+            HRESULT IteratePass(D3DXHANDLE entryName, DWORD flag, HRESULT(*func)(void*), void* funcArg);
+            INLINE HRESULT IteratePass(DWORD flag, HRESULT(*func)(void*), void* funcArg){ return IteratePass("name", flag, func, funcArg); }
 
         public:
             INLINE HRESULT GetTexture(D3DXHANDLE hParameter, IDirect3DBaseTexture9** ppTexture){ return ins_effect->GetTexture(hParameter, ppTexture); }

@@ -3,8 +3,6 @@
 #include"JBF/JBFramework.h"
 #include"JBF/Object/Object.h"
 
-#define ENTRY_NAME "main"
-
 namespace JBF{
     namespace Object{
         Shader::Shader() : DXResource(RESTYPE_MANAGE), ins_effect(nullptr){}
@@ -53,11 +51,11 @@ namespace JBF{
             if (ins_effect)RELEASE(ins_effect);
         }
 
-        HRESULT Shader::IteratePass(DWORD flag, HRESULT(*func)(void*), void* funcArg){
+        HRESULT Shader::IteratePass(D3DXHANDLE entryName, DWORD flag, HRESULT(*func)(void*), void* funcArg){
             HRESULT hr;
             UINT cnt, i;
 
-            hr = ins_effect->SetTechnique(ENTRY_NAME);
+            hr = ins_effect->SetTechnique(entryName);
             if (SUCCEEDED(hr)){
 
                 hr = ins_effect->Begin(&cnt, flag);
