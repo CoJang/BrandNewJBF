@@ -75,7 +75,7 @@ bool CfgParseINI::Read(const TCHAR* fileName){
             else if (*curLine == _T('\r'))continue;
             else if (*curLine == _T('\0'))continue;
 
-            {
+            { // read key
                 tmpLen0 = _strReadUntilChar(curLine, _T('='), lineLen - (curLine - rawLine));
                 if (tmpLen0 == -1){
                     Global::MsgBox(nullptr, _T("Error"), MB_ICONERROR | MB_OK, _T("Error to read on %s.\n Cannot find value.\nLine: %u"), fileName, i + 1);
@@ -88,14 +88,18 @@ bool CfgParseINI::Read(const TCHAR* fileName){
                 tstrncpy_s(tmpStr, curLine, tmpLen1);
                 tmpStr[tmpLen1] = 0;
 
-                ++tmpLen0;
-                curLine += tmpLen0;
+                curLine += ++tmpLen0;
 
                 strName = tmpStr;
             }
 
-            {
-                ZeroMemory(&valNew, sizeof valNew);
+            { // read value
+                {
+                    valNew.type = Type::UNKNOWN;
+                    valNew.interger = 0;
+                    valNew.flotingPoint = 0;
+                    valNew.string[0] = 0;
+                }
 
                 curLine = _strRemoveSpace(curLine);
 
@@ -133,13 +137,27 @@ bool CfgParseINI::Read(const TCHAR* fileName){
         }
         ifStream.close();
     }
+    else return false;
+
+    return true;
 }
 
 bool CfgParseINI::Get(const std::basic_string<TCHAR>& key, Value* value){
     auto itr = ins_varTable.find(key);
 
     if (itr != ins_varTable.end()){
-        memcpy_s(value, sizeof Value, &itr->second, sizeof Value);
+        value->type = itr->second.type;
+
+        switch (itr->second.type){
+        case Type::NUMBER:
+            value->interger = itr->second.interger;
+            value->flotingPoint = itr->second.flotingPoint;
+            break;
+
+        case Type::STRING:
+            tstrcpy_s(value->string, itr->second.string);
+            break;
+        }
     }
     else return false;
 

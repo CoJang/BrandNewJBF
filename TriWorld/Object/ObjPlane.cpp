@@ -74,11 +74,8 @@ void ObjPlane::TurnAround(const Vector3* pCenter, const float fRad, const float 
 
     MatrixRotationZ(&ins_mWorld, 0.3f);
 
-    MatrixRotationY(&mTmp, -PIf * 0.5f);
-    ins_mWorld *= mTmp;
-
     vPos = *pCenter;
-    vPos.z += fRad;
+    vPos.x += fRad;
     MatrixTranslation(&mTmp, &vPos);
     ins_mWorld *= mTmp;
 

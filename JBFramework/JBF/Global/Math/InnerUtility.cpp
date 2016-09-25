@@ -46,7 +46,7 @@ namespace JBF{
                 return m_y;
             }
             __m128 MATH_CALL xmm_cos(__m128 v){
-                v = _mm_add_ps(v, _mm_set1_ps(PIf / 2.f));
+                v = _mm_add_ps(v, _mm_set1_ps(PIf * 0.5f));
                 return xmm_sin(v);
             }
 
