@@ -234,16 +234,16 @@ void StageTest::ins_drawGame(const Matrix* matVP){
     objHuman->Draw(matVP);
 }
 
-void StageTest::ins_drawTextureOriginal(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadBasic->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureOriginal(const Matrix* matWVP, const Object::EmptyTexture* texture){
+    shadBasic->SetMatrix("matWVP", matWVP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
     shadBasic->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
-    shadBright->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureBrighRegion(const Matrix* matWVP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
+    shadBright->SetMatrix("matWVP", matWVP);
     shadBright->SetFloat("fLevel", *fBrightPassLevel);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
@@ -251,24 +251,24 @@ void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fB
 
     shadBright->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureBlurHorz(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadBlur->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureBlurHorz(const Matrix* matWVP, const Object::EmptyTexture* texture){
+    shadBlur->SetMatrix("matWVP", matWVP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
     shadBlur->IteratePass("main_h", 0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadBlur->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureBlurVert(const Matrix* matWVP, const Object::EmptyTexture* texture){
+    shadBlur->SetMatrix("matWVP", matWVP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
     shadBlur->IteratePass("main_v", 0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureCombine(const Matrix* matWMP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom){
-    shadCombine->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom){
+    shadCombine->SetMatrix("matWVP", matWVP);
 
     Core::Graphic::SetTexture(0, texBase->GetTexture());
     Core::Graphic::SetTexture(1, texBloom->GetTexture());
@@ -277,8 +277,8 @@ void StageTest::ins_drawTextureCombine(const Matrix* matWMP, const Object::Empty
 
     shadCombine->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureDistortion(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadDistortion->SetMatrix("matWVP", matWMP);
+void StageTest::ins_drawTextureDistortion(const Matrix* matWVP, const Object::EmptyTexture* texture){
+    shadDistortion->SetMatrix("matWVP", matWVP);
 
     shadDistortion->SetFloat("fCoefficient", -0.15f);
     shadDistortion->SetFloat("fLevel", 0.15f);

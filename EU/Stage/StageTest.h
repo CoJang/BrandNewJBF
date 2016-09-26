@@ -34,12 +34,12 @@ public:
 private:
     void ins_drawGame(const Matrix* matVP);
 
-    void ins_drawTextureOriginal(const Matrix* matWMP, const Object::EmptyTexture* texture);
-    void ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture);
-    void ins_drawTextureBlurHorz(const Matrix* matWMP, const Object::EmptyTexture* texture);
-    void ins_drawTextureBlurVert(const Matrix* matWMP, const Object::EmptyTexture* texture);
-    void ins_drawTextureCombine(const Matrix* matWMP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom);
-    void ins_drawTextureDistortion(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureOriginal(const Matrix* matWVP, const Object::EmptyTexture* texture);
+    void ins_drawTextureBrighRegion(const Matrix* matWVP, const float* fBrightPassLevel, const Object::EmptyTexture* texture);
+    void ins_drawTextureBlurHorz(const Matrix* matWVP, const Object::EmptyTexture* texture);
+    void ins_drawTextureBlurVert(const Matrix* matWVP, const Object::EmptyTexture* texture);
+    void ins_drawTextureCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom);
+    void ins_drawTextureDistortion(const Matrix* matWVP, const Object::EmptyTexture* texture);
 
 private:
     float cfgBrightPassLevel;
