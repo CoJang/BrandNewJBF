@@ -39,6 +39,16 @@ struct PS_INPUT{
 };
 ///////////////////////////////////////////
 
+// Inner function(s) definition
+///////////////////////////////////////////
+float4 extractBright(float4 col){
+    col = pow(max(col, 0), 2.2f);
+    col = saturate((col - fLevel) / (1 - fLevel));
+
+    return col;
+}
+///////////////////////////////////////////
+
 // Shader function(s) definition
 ///////////////////////////////////////////
 VS_OUTPUT vert(VS_INPUT _in){
@@ -51,11 +61,7 @@ VS_OUTPUT vert(VS_INPUT _in){
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
     float4 col = tex2D(sampMain, uv);
-
-    col = pow(col, 2.2f);
-    col = saturate((col - fLevel) / (1 - fLevel));
-
-    return col;
+    return extractBright(col);
 }
 ///////////////////////////////////////////
 

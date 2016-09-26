@@ -12,23 +12,14 @@
 #define _SHADER_BASIC _T("Basic_clamp.fxo")
 #define SHADER_BASIC JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BASIC, tstrlen(_SHADER_BASIC))
 
-#define _SHADER_DOWNCAST4X _T("Downcast4X.fxo")
-#define SHADER_DOWNCAST4X JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_DOWNCAST4X, tstrlen(_SHADER_DOWNCAST4X))
-
 #define _SHADER_BRIGHT _T("Bright.fxo")
 #define SHADER_BRIGHT JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BRIGHT, tstrlen(_SHADER_BRIGHT))
 
-#define _SHADER_BLUR_HORZ _T("Blur_horz.fxo")
-#define SHADER_BLUR_HORZ JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BLUR_HORZ, tstrlen(_SHADER_BLUR_HORZ))
+#define _SHADER_BLUR _T("Blur.fxo")
+#define SHADER_BLUR JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BLUR, tstrlen(_SHADER_BLUR))
 
-#define _SHADER_BLUR_VERT _T("Blur_vert.fxo")
-#define SHADER_BLUR_VERT JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BLUR_VERT, tstrlen(_SHADER_BLUR_VERT))
-
-#define _SHADER_UPCAST4X _T("Upcast4X.fxo")
-#define SHADER_UPCAST4X JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_DOWNCAST4X, tstrlen(_SHADER_DOWNCAST4X))
-
-#define _SHADER_COMBINE4X _T("Combine4X.fxo")
-#define SHADER_COMBINE4X JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE4X, tstrlen(_SHADER_COMBINE4X))
+#define _SHADER_COMBINE _T("Combine.fxo")
+#define SHADER_COMBINE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE, tstrlen(_SHADER_COMBINE))
 
 using namespace JBF;
 using namespace JBF::Global::Alloc;
@@ -43,8 +34,6 @@ void StageTest::Init(){
     ins_initObject();
 
     cfgBrightPassLevel = 0.04f;
-    cfgBloomLevel = 1.5f;
-    cfgBloomAlpha = 1.f;
 
     Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -70,12 +59,9 @@ void StageTest::ins_initFace(){
 }
 void StageTest::ins_initShader(){
     shadBasic = Object::Shader::Read(&arcShaders, SHADER_BASIC);
-    shadDowncast4X = Object::Shader::Read(&arcShaders, SHADER_DOWNCAST4X);
     shadBright = Object::Shader::Read(&arcShaders, SHADER_BRIGHT);
-    shadBlurHorz = Object::Shader::Read(&arcShaders, SHADER_BLUR_HORZ);
-    shadBlurVert = Object::Shader::Read(&arcShaders, SHADER_BLUR_VERT);
-    shadUpcast4X = Object::Shader::Read(&arcShaders, SHADER_UPCAST4X);
-    shadCombine4X = Object::Shader::Read(&arcShaders, SHADER_COMBINE4X);
+    shadBlur = Object::Shader::Read(&arcShaders, SHADER_BLUR);
+    shadCombine = Object::Shader::Read(&arcShaders, SHADER_COMBINE);
 }
 void StageTest::ins_initFrame(){
     Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
@@ -86,15 +72,15 @@ void StageTest::ins_initFrame(){
         0, 0, 1, 0,
         -1, 1, 0, 1
     );
-    matFrameDown4X = Matrix(
-        0.5f / size.x, 0, 0, 0,
-        0, 0.5f / size.y, 0, 0,
+    matFrameDown2X = Matrix(
+        1.f / size.x, 0, 0, 0,
+        0, 1.f / size.y, 0, 0,
         0, 0, 1, 0,
         -1, 1, 0, 1
     );
-    matFrameUp4X = Matrix(
-        8 / size.x, 0, 0, 0,
-        0, 8 / size.y, 0, 0,
+    matFrameUp2X = Matrix(
+        4 / size.x, 0, 0, 0,
+        0, 4 / size.y, 0, 0,
         0, 0, 1, 0,
         -1, 1, 0, 1
     );
@@ -122,12 +108,9 @@ void StageTest::ins_releaseFace(){
 }
 void StageTest::ins_releaseShader(){
     RELEASE(shadBasic);
-    RELEASE(shadDowncast4X);
     RELEASE(shadBright);
-    RELEASE(shadBlurHorz);
-    RELEASE(shadBlurVert);
-    RELEASE(shadUpcast4X);
-    RELEASE(shadCombine4X);
+    RELEASE(shadBlur);
+    RELEASE(shadCombine);
 }
 void StageTest::ins_releaseFrame(){
     RELEASE(sprFrame);
@@ -158,9 +141,6 @@ void StageTest::Update(float delta){
     if (Core::Input::KeyDown(Core::Input::DK_2))cfgBrightPassLevel += delta * 0.1f;
     else if (Core::Input::KeyDown(Core::Input::DK_1))cfgBrightPassLevel -= delta * 0.1f;
 
-    if (Core::Input::KeyDown(Core::Input::DK_4))cfgBloomLevel += delta * 10.f;
-    else if (Core::Input::KeyDown(Core::Input::DK_3))cfgBloomLevel -= delta * 10.f;
-
     if (Core::Input::KeyDown(Core::Input::DK_W))vCamDir.y += speed * delta;
     else if (Core::Input::KeyDown(Core::Input::DK_S))vCamDir.y -= speed * delta;
     if (Core::Input::KeyDown(Core::Input::DK_A))vCamDir.x -= speed * delta;
@@ -188,34 +168,34 @@ void StageTest::Draw(){
 
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
 
-    { // Down scale 4X
+    { // Downfiltering
         Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureDownCast4X(&matFrameDown4X, faceGame);
+        ins_drawTextureOriginal(&matFrameDown2X, faceGame);
     }
 
     { // Extrace bright region
-
         Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
         ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceRenderPass[0]);
     }
 
-    { // Make blur_horz
+    { // apply horz blur
         Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceRenderPass[1]);
+        ins_drawTextureBlurHorz(&matFrame, faceRenderPass[1]);
     }
-    { // Make blur_horz
+
+    { // apply vert blur
         Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
-        ins_drawTextureBlurHorz(&matFrame, &cfgBloomLevel, faceRenderPass[0]);
+        ins_drawTextureBlurVert(&matFrame, faceRenderPass[0]);
     }
 
-    { // Up scale 4X
+    { // Upfiltering
         Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureUpCast4X(&matFrameUp4X, faceRenderPass[1]);
+        ins_drawTextureOriginal(&matFrameUp2X, faceRenderPass[1]);
     }
 
-    { // Combine with back surface
+    { // combine base and bright
         Core::Graphic::SetRenderTarget(0, surfOrg);
-        ins_drawTextureCombine4X(&matFrame, &cfgBloomAlpha, faceGame, faceRenderPass[0]);
+        ins_drawTextureCombine(&matFrame, faceGame, faceRenderPass[0]);
     }
 
     Graphic::GetDevice()->EndScene();
@@ -249,14 +229,6 @@ void StageTest::ins_drawTextureOriginal(const Matrix* matWMP, const Object::Empt
 
     shadBasic->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureDownCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadDowncast4X->SetMatrix("matWVP", matWMP);
-    Core::Graphic::SetTexture(0, texture->GetTexture());
-
-    sprFrame->SendFaceInfo();
-
-    shadDowncast4X->IteratePass(0, _drawCallback, sprFrame);
-}
 void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
     shadBright->SetMatrix("matWVP", matWMP);
     shadBright->SetFloat("fLevel", *fBrightPassLevel);
@@ -266,39 +238,29 @@ void StageTest::ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fB
 
     shadBright->IteratePass(0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureBlurHorz(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture){
-    shadBlurHorz->SetMatrix("matWVP", matWMP);
-    shadBlurHorz->SetFloat("fLevel", *fBrightLevel);
+void StageTest::ins_drawTextureBlurHorz(const Matrix* matWMP, const Object::EmptyTexture* texture){
+    shadBlur->SetMatrix("matWVP", matWMP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadBlurHorz->IteratePass(0, _drawCallback, sprFrame);
+    shadBlur->IteratePass("main_h", 0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture){
-    shadBlurVert->SetMatrix("matWVP", matWMP);
-    shadBlurVert->SetFloat("fLevel", *fBrightLevel);
+void StageTest::ins_drawTextureBlurVert(const Matrix* matWMP, const Object::EmptyTexture* texture){
+    shadBlur->SetMatrix("matWVP", matWMP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadBlurVert->IteratePass(0, _drawCallback, sprFrame);
+    shadBlur->IteratePass("main_v", 0, _drawCallback, sprFrame);
 }
-void StageTest::ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture){
-    shadUpcast4X->SetMatrix("matWVP", matWMP);
-    Core::Graphic::SetTexture(0, texture->GetTexture());
+void StageTest::ins_drawTextureCombine(const Matrix* matWMP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom){
+    shadCombine->SetMatrix("matWVP", matWMP);
+
+    Core::Graphic::SetTexture(0, texBase->GetTexture());
+    Core::Graphic::SetTexture(1, texBloom->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadUpcast4X->IteratePass(0, _drawCallback, sprFrame);
-}
-void StageTest::ins_drawTextureCombine4X(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB){
-    shadCombine4X->SetMatrix("matWVP", matWMP);
-    shadCombine4X->SetFloat("fLevel", *fSecondAlpha);
-    Core::Graphic::SetTexture(0, textureA->GetTexture());
-    Core::Graphic::SetTexture(1, textureB->GetTexture());
-
-    sprFrame->SendFaceInfo();
-
-    shadCombine4X->IteratePass(0, _drawCallback, sprFrame);
+    shadCombine->IteratePass(0, _drawCallback, sprFrame);
 }

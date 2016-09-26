@@ -1,15 +1,17 @@
-// Predefinition(s)
-///////////////////////////////////////////
-#define BLUR_KERNAL_COUNT 13
-///////////////////////////////////////////
-
 // Binded object(s) definition
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-extern float fLevel;
+sampler sampBase : register(s0){
+    MipFilter = point;
+    MinFilter = linear;
+    MagFilter = linear;
 
-sampler sampMain : register(s0){
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
+sampler sampBloom : register(s1){
     MipFilter = point;
     MinFilter = linear;
     MagFilter = linear;
@@ -31,41 +33,6 @@ struct VS_OUTPUT{
 };
 ///////////////////////////////////////////
 
-// Inner variable(s) definition
-///////////////////////////////////////////
-static const float2 vPixelKernel[BLUR_KERNAL_COUNT] = {
-    { -6, 0 },
-    { -5, 0 },
-    { -4, 0 },
-    { -3, 0 },
-    { -2, 0 },
-    { -1, 0 },
-    { 0, 0 },
-    { 1, 0 },
-    { 2, 0 },
-    { 3, 0 },
-    { 4, 0 },
-    { 5, 0 },
-    { 6, 0 },
-};
-
-static const float fBlurWeights[BLUR_KERNAL_COUNT] = {
-    0.002216,
-    0.008764,
-    0.026995,
-    0.064759,
-    0.120985,
-    0.176033,
-    0.199471,
-    0.176033,
-    0.120985,
-    0.064759,
-    0.026995,
-    0.008764,
-    0.002216,
-};
-///////////////////////////////////////////
-
 // Shader function(s) definition
 ///////////////////////////////////////////
 VS_OUTPUT vert(VS_INPUT _in){
@@ -77,10 +44,10 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float4 col = 0;
+    float4 col = tex2D(sampBase, uv);
 
-    for (int i = 0; i < BLUR_KERNAL_COUNT; ++i)col += tex2D(sampMain, uv + vPixelKernel[i].xy * fLevel) * fBlurWeights[i];
-    col *= 1.5f;
+    col += tex2D(sampBloom, uv);
+    col = saturate(col);
 
     return col;
 }

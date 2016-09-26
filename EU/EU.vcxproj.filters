@@ -63,19 +63,10 @@
     <FxCompile Include="Shader\Bright.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Downcast4X.fx">
+    <FxCompile Include="Shader\Blur.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Blur_horz.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\Blur_vert.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\Combine4X.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\Upcast4X.fx">
+    <FxCompile Include="Shader\Combine.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

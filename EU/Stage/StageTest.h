@@ -35,33 +35,26 @@ private:
     void ins_drawGame(const Matrix* matVP);
 
     void ins_drawTextureOriginal(const Matrix* matWMP, const Object::EmptyTexture* texture);
-    void ins_drawTextureDownCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture);
     void ins_drawTextureBrighRegion(const Matrix* matWMP, const float* fBrightPassLevel, const Object::EmptyTexture* texture);
-    void ins_drawTextureBlurHorz(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture);
-    void ins_drawTextureBlurVert(const Matrix* matWMP, const float* fBrightLevel, const Object::EmptyTexture* texture);
-    void ins_drawTextureUpCast4X(const Matrix* matWMP, const Object::EmptyTexture* texture);
-    void ins_drawTextureCombine4X(const Matrix* matWMP, const float* fSecondAlpha, const Object::EmptyTexture* textureA, const Object::EmptyTexture* textureB);
+    void ins_drawTextureBlurHorz(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureBlurVert(const Matrix* matWMP, const Object::EmptyTexture* texture);
+    void ins_drawTextureCombine(const Matrix* matWMP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom);
 
 private:
     float cfgBrightPassLevel;
-    float cfgBloomLevel;
-    float cfgBloomAlpha;
 
 private:
     Object::EmptyTexture* faceGame;
     Object::EmptyTexture* faceRenderPass[2];
 
     Object::Shader* shadBasic;
-    Object::Shader* shadDowncast4X;
     Object::Shader* shadBright;
-    Object::Shader* shadBlurHorz;
-    Object::Shader* shadBlurVert;
-    Object::Shader* shadUpcast4X;
-    Object::Shader* shadCombine4X;
+    Object::Shader* shadBlur;
+    Object::Shader* shadCombine;
 
     Matrix matFrame;
-    Matrix matFrameDown4X;
-    Matrix matFrameUp4X;
+    Matrix matFrameDown2X;
+    Matrix matFrameUp2X;
 
     BasePlane* sprFrame;
 
