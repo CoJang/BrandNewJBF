@@ -47,10 +47,10 @@ float4 frag(float2 uv : TEXCOORD0) : COLOR0{
 
     float2 uv2 = f * (uv - 0.5f) + 0.5f;
 
-    float4 col_r = tex2D(sampMain, uv2) * float4(1, 0, 0, 1);
-    float4 col_b = tex2D(sampMain, uv) * float4(0, 1, 1, 1);
+    float3 col_r = tex2D(sampMain, uv2) * float3(1, 0, 0);
+    float3 col_b = tex2D(sampMain, uv) * float3(0, 1, 1);
 
-    return max(col_r, col_b);
+    return float4(max(col_r, col_b), 1);
 }
 ///////////////////////////////////////////
 
