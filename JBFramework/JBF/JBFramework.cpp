@@ -157,6 +157,8 @@ namespace JBF{
         if (appEndup)appEndup();
         ins_cleanupApp();
 
+        UnregisterClass(lpszClassName, ins_mainInstance);
+
 #ifdef _DEBUG
         Debug::Logger::Release();
 #endif

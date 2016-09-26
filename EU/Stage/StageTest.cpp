@@ -21,6 +21,9 @@
 #define _SHADER_COMBINE _T("Combine.fxo")
 #define SHADER_COMBINE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE, tstrlen(_SHADER_COMBINE))
 
+#define _SHADER_DISTORTION _T("CubicDistortion.fxo")
+#define SHADER_DISTORTION JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_DISTORTION, tstrlen(_SHADER_DISTORTION))
+
 using namespace JBF;
 using namespace JBF::Global::Alloc;
 using namespace JBF::Core;
@@ -62,6 +65,7 @@ void StageTest::ins_initShader(){
     shadBright = Object::Shader::Read(&arcShaders, SHADER_BRIGHT);
     shadBlur = Object::Shader::Read(&arcShaders, SHADER_BLUR);
     shadCombine = Object::Shader::Read(&arcShaders, SHADER_COMBINE);
+    shadDistortion = Object::Shader::Read(&arcShaders, SHADER_DISTORTION);
 }
 void StageTest::ins_initFrame(){
     Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
@@ -111,6 +115,7 @@ void StageTest::ins_releaseShader(){
     RELEASE(shadBright);
     RELEASE(shadBlur);
     RELEASE(shadCombine);
+    RELEASE(shadDistortion);
 }
 void StageTest::ins_releaseFrame(){
     RELEASE(sprFrame);
@@ -168,34 +173,42 @@ void StageTest::Draw(){
 
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
 
-    { // Downfiltering
-        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureOriginal(&matFrameDown2X, faceGame);
+    { // Bloom
+        { // Downfiltering
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+            ins_drawTextureOriginal(&matFrameDown2X, faceGame);
+        }
+
+        { // Extrace bright region
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+            ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceRenderPass[0]);
+        }
+
+        { // apply horz blur
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+            ins_drawTextureBlurHorz(&matFrame, faceRenderPass[1]);
+        }
+
+        { // apply vert blur
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+            ins_drawTextureBlurVert(&matFrame, faceRenderPass[0]);
+        }
+
+        { // Upfiltering
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
+            ins_drawTextureOriginal(&matFrameUp2X, faceRenderPass[1]);
+        }
+
+        { // combine base and bright
+            Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
+            ins_drawTextureCombine(&matFrame, faceGame, faceRenderPass[0]);
+        }
     }
 
-    { // Extrace bright region
-        Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
-        ins_drawTextureBrighRegion(&matFrame, &cfgBrightPassLevel, faceRenderPass[0]);
-    }
-
-    { // apply horz blur
-        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureBlurHorz(&matFrame, faceRenderPass[1]);
-    }
-
-    { // apply vert blur
-        Core::Graphic::SetRenderTarget(0, faceRenderPass[1]->GetSurface(0));
-        ins_drawTextureBlurVert(&matFrame, faceRenderPass[0]);
-    }
-
-    { // Upfiltering
-        Core::Graphic::SetRenderTarget(0, faceRenderPass[0]->GetSurface(0));
-        ins_drawTextureOriginal(&matFrameUp2X, faceRenderPass[1]);
-    }
-
-    { // combine base and bright
+    { // Distortion
         Core::Graphic::SetRenderTarget(0, surfOrg);
-        ins_drawTextureCombine(&matFrame, faceGame, faceRenderPass[0]);
+        //ins_drawTextureOriginal(&matFrame, faceRenderPass[1]);
+        ins_drawTextureDistortion(&matFrame, faceRenderPass[1]);
     }
 
     Graphic::GetDevice()->EndScene();
@@ -263,4 +276,16 @@ void StageTest::ins_drawTextureCombine(const Matrix* matWMP, const Object::Empty
     sprFrame->SendFaceInfo();
 
     shadCombine->IteratePass(0, _drawCallback, sprFrame);
+}
+void StageTest::ins_drawTextureDistortion(const Matrix* matWMP, const Object::EmptyTexture* texture){
+    shadDistortion->SetMatrix("matWVP", matWMP);
+
+    shadDistortion->SetFloat("fCoefficient", -0.15f);
+    shadDistortion->SetFloat("fLevel", 0.15f);
+
+    Core::Graphic::SetTexture(0, texture->GetTexture());
+
+    sprFrame->SendFaceInfo();
+
+    shadDistortion->IteratePass(0, _drawCallback, sprFrame);
 }

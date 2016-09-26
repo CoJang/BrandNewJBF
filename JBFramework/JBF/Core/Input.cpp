@@ -161,61 +161,53 @@ namespace JBF{
             }
 
             static void ins_keyInit(){
-                ins_keyMapping();
-
+                HRESULT hr;
                 auto hWnd = JBF::GetHandle();
 
-                if (FAILED(DirectInput8Create(
+                ins_keyMapping();
+
+                hr = DirectInput8Create(
                     JBF::GetInstance(),
                     DIRECTINPUT_VERSION,
                     IID_IDirectInput8,
                     (void**)&ins_device,
                     nullptr
-                    )))ASSERT(false, _T("Failed to create DirectInput8 device."));
+                );
+                ASSERT_HRESULT(hr, _T("Failed to create DirectInput8 device."));
 
-                {
-                    if (FAILED(ins_device->CreateDevice(
-                        GUID_SysKeyboard,
-                        &ins_keyboard,
-                        nullptr
-                        )))ASSERT(false, _T("Failed to create keyboard device."));
+                { // Init keyboard
+                    hr = ins_device->CreateDevice(GUID_SysKeyboard, &ins_keyboard, nullptr);
+                    ASSERT_HRESULT(hr, _T("Failed to create keyboard device."));
 
-                    if (FAILED(ins_keyboard->SetDataFormat(
-                        &c_dfDIKeyboard
-                        )))ASSERT(false, _T("Keyboard SetDataFormat failed."));
+                    hr = ins_keyboard->SetDataFormat(&c_dfDIKeyboard);
+                    ASSERT_HRESULT(hr, _T("Keyboard SetDataFormat failed."));
 
-                    if (FAILED(ins_keyboard->SetCooperativeLevel(
-                        hWnd,
-                        DISCL_FOREGROUND | DISCL_NONEXCLUSIVE
-                        )))ASSERT(false, _T("Keyboard SetCooperativeLevel failed."));
+                    hr = ins_keyboard->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+                    ASSERT_HRESULT(hr, _T("Keyboard SetCooperativeLevel failed."));
 
-                    DIPROPDWORD dipdw;
-                    dipdw.diph.dwSize = sizeof DIPROPDWORD;
-                    dipdw.diph.dwHeaderSize = sizeof DIPROPHEADER;
-                    dipdw.diph.dwObj = 0;
-                    dipdw.diph.dwHow = DIPH_DEVICE;
-                    dipdw.dwData = 10;
-                    if (FAILED(ins_keyboard->SetProperty(
-                        DIPROP_BUFFERSIZE,
-                        &dipdw.diph
-                        )))ASSERT(false, _T("Failed to set keyboard buffer size."));
+                    {
+                        DIPROPDWORD dipdw;
+
+                        dipdw.diph.dwSize = sizeof DIPROPDWORD;
+                        dipdw.diph.dwHeaderSize = sizeof DIPROPHEADER;
+                        dipdw.diph.dwObj = 0;
+                        dipdw.diph.dwHow = DIPH_DEVICE;
+                        dipdw.dwData = 10;
+
+                        hr = ins_keyboard->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+                        ASSERT_HRESULT(hr, _T("Failed to set keyboard buffer size."));
+                    }
                 }
 
-                {
-                    if (FAILED(ins_device->CreateDevice(
-                        GUID_SysMouse,
-                        &ins_mouse,
-                        nullptr
-                        )))ASSERT(false, _T("Failed to create mouse device."));
+                { // Init mouse
+                    hr = ins_device->CreateDevice(GUID_SysMouse, &ins_mouse, nullptr);
+                    ASSERT_HRESULT(hr, _T("Failed to create mouse device."));
 
-                    if (FAILED(ins_mouse->SetDataFormat(
-                        &c_dfDIMouse2
-                        )))ASSERT(false, _T("Mouse SetDataFormat failed."));
+                    hr = ins_mouse->SetDataFormat(&c_dfDIMouse2);
+                    ASSERT_HRESULT(hr, _T("Mouse SetDataFormat failed."));
 
-                    if (FAILED(ins_mouse->SetCooperativeLevel(
-                        hWnd,
-                        DISCL_FOREGROUND | DISCL_EXCLUSIVE
-                        )))ASSERT(false, _T("Mouse SetCooperativeLevel failed."));
+                    hr = ins_mouse->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+                    ASSERT_HRESULT(hr, _T("Mouse SetCooperativeLevel failed."));
                 }
 
                 ins_keyZerofill();

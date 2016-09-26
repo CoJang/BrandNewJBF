@@ -69,5 +69,8 @@
     <FxCompile Include="Shader\Combine.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="Shader\CubicDistortion.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

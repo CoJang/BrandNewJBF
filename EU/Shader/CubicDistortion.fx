@@ -2,6 +2,7 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
+extern float fCoefficient;
 extern float fLevel;
 
 sampler sampMain : register(s0){
@@ -30,16 +31,6 @@ struct PS_INPUT{
 };
 ///////////////////////////////////////////
 
-// Inner function(s) definition
-///////////////////////////////////////////
-float4 extractBright(float4 col){
-    col = pow(max(col, 0), 2.2f);
-    col = saturate((col - fLevel) / (1 - fLevel));
-
-    return col;
-}
-///////////////////////////////////////////
-
 // Shader function(s) definition
 ///////////////////////////////////////////
 VS_OUTPUT vert(VS_INPUT _in){
@@ -51,8 +42,15 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float4 col = tex2D(sampMain, uv);
-    return extractBright(col);
+    float r2 = ((uv.x - 0.5f) * (uv.x - 0.5f)) + ((uv.y - 0.5f) * (uv.y - 0.5f));
+    float f = (fLevel != 0) ? (1.f + r2 * (fCoefficient + fLevel * sqrt(r2))) : (1.f + r2 * fCoefficient);
+
+    float2 uv2 = f * (uv - 0.5f) + 0.5f;
+
+    float4 col_r = tex2D(sampMain, uv2) * float4(1, 0, 0, 1);
+    float4 col_b = tex2D(sampMain, uv) * float4(0, 1, 1, 1);
+
+    return max(col_r, col_b);
 }
 ///////////////////////////////////////////
 

@@ -39,6 +39,7 @@ private:
     void ins_drawTextureBlurHorz(const Matrix* matWMP, const Object::EmptyTexture* texture);
     void ins_drawTextureBlurVert(const Matrix* matWMP, const Object::EmptyTexture* texture);
     void ins_drawTextureCombine(const Matrix* matWMP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom);
+    void ins_drawTextureDistortion(const Matrix* matWMP, const Object::EmptyTexture* texture);
 
 private:
     float cfgBrightPassLevel;
@@ -51,6 +52,7 @@ private:
     Object::Shader* shadBright;
     Object::Shader* shadBlur;
     Object::Shader* shadCombine;
+    Object::Shader* shadDistortion;
 
     Matrix matFrame;
     Matrix matFrameDown2X;
