@@ -1,7 +1,8 @@
 ﻿#include"pch.h"
-#include"StageTest.h"
+#include"Stage.h"
 
 #include"ArchiveTable.h"
+#include"ShaderTable.h"
 
 #define _SPRITE_BACKGROUND _T("dummyBackground.png")
 #define SPRITE_BACKGROUND JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SPRITE_BACKGROUND, tstrlen(_SPRITE_BACKGROUND))
@@ -28,11 +29,8 @@ using namespace JBF;
 using namespace JBF::Global::Alloc;
 using namespace JBF::Core;
 
-StageTest stgTest;
-
 void StageTest::Init(){
     ins_initFace();
-    ins_initShader();
     ins_initFrame();
     ins_initObject();
 
@@ -60,13 +58,6 @@ void StageTest::ins_initFace(){
         for (i = 0; i < _countof(faceRenderPass); ++i)faceRenderPass[i] = Object::EmptyTexture::Create(&inf);
     }
 }
-void StageTest::ins_initShader(){
-    shadBasic = Object::Shader::Read(&arcShaders, SHADER_BASIC);
-    shadBright = Object::Shader::Read(&arcShaders, SHADER_BRIGHT);
-    shadBlur = Object::Shader::Read(&arcShaders, SHADER_BLUR);
-    shadCombine = Object::Shader::Read(&arcShaders, SHADER_COMBINE);
-    shadDistortion = Object::Shader::Read(&arcShaders, SHADER_DISTORTION);
-}
 void StageTest::ins_initFrame(){
     Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
 
@@ -92,16 +83,17 @@ void StageTest::ins_initFrame(){
     sprFrame = BasePlane::Create(&size);
 }
 void StageTest::ins_initObject(){
+    Vector2 vRT = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
+
     objCamera = ObjCamera::Create();
 
-    objBackground = ObjTest::Create(SPRITE_BACKGROUND);
+    objBackground = ObjTest::Create(SPRITE_BACKGROUND, &vRT);
     objHuman = ObjTest::Create(SPRITE_OBJECT);
 }
 
 void StageTest::Cleanup(){
     ins_releaseObject();
     ins_releaseFrame();
-    ins_releaseShader();
     ins_releaseFace();
 }
 void StageTest::ins_releaseFace(){
@@ -109,13 +101,6 @@ void StageTest::ins_releaseFace(){
 
     RELEASE(faceGame);
     for (i = 0; i < _countof(faceRenderPass); ++i)RELEASE(faceRenderPass[i]);
-}
-void StageTest::ins_releaseShader(){
-    RELEASE(shadBasic);
-    RELEASE(shadBright);
-    RELEASE(shadBlur);
-    RELEASE(shadCombine);
-    RELEASE(shadDistortion);
 }
 void StageTest::ins_releaseFrame(){
     RELEASE(sprFrame);
@@ -235,12 +220,12 @@ void StageTest::ins_drawGame(const Matrix* matVP){
 }
 
 void StageTest::ins_drawTextureOriginal(const Matrix* matWVP, const Object::EmptyTexture* texture){
-    shadBasic->SetMatrix("matWVP", matWVP);
+    shadBasicClamp->SetMatrix("matWVP", matWVP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadBasic->IteratePass(0, _drawCallback, sprFrame);
+    shadBasicClamp->IteratePass(0, _drawCallback, sprFrame);
 }
 void StageTest::ins_drawTextureBrighRegion(const Matrix* matWVP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
     shadBright->SetMatrix("matWVP", matWVP);

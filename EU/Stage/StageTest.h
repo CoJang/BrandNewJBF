@@ -17,13 +17,11 @@ public:
 
 private:
     void ins_initFace();
-    void ins_initShader();
     void ins_initFrame();
     void ins_initObject();
 
 private:
     void ins_releaseFace();
-    void ins_releaseShader();
     void ins_releaseFrame();
     void ins_releaseObject();
 
@@ -47,12 +45,6 @@ private:
 private:
     Object::EmptyTexture* faceGame;
     Object::EmptyTexture* faceRenderPass[2];
-
-    Object::Shader* shadBasic;
-    Object::Shader* shadBright;
-    Object::Shader* shadBlur;
-    Object::Shader* shadCombine;
-    Object::Shader* shadDistortion;
 
     Matrix matFrame;
     Matrix matFrameDown2X;

@@ -21,6 +21,16 @@ ObjTest::ObjTest(ARCHIVE_HASHSIZE sprite){
 
     ins_matWorld = Matrix::constIdentity;
 }
+ObjTest::ObjTest(ARCHIVE_HASHSIZE sprite, const Vector2* size){
+    ins_shader = Object::Shader::Read(&arcShaders, SHADER_NAME));
+
+    {
+        ins_texture = Object::ExternalTexture::Read(&arcSprites, sprite);
+        ins_sprite = BasePlane::Create(size);
+    }
+
+    ins_matWorld = Matrix::constIdentity;
+}
 ObjTest::~ObjTest(){
     RELEASE(ins_shader);
     RELEASE(ins_texture);
@@ -29,6 +39,10 @@ ObjTest::~ObjTest(){
 
 ObjTest* ObjTest::Create(ARCHIVE_HASHSIZE sprite){
     auto _new = Global::Alloc::NewCustomAligned<ObjTest>(32, sprite);
+    return _new;
+}
+ObjTest* ObjTest::Create(ARCHIVE_HASHSIZE sprite, const Vector2* size){
+    auto _new = Global::Alloc::NewCustomAligned<ObjTest>(32, sprite, size);
     return _new;
 }
 void ObjTest::Release(){ Global::Alloc::DeleteCustomAligned(this); }

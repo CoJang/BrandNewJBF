@@ -19,10 +19,13 @@ private:
 
 private:
     ObjTest(ARCHIVE_HASHSIZE sprite);
+    ObjTest(ARCHIVE_HASHSIZE sprite, const Vector2* size);
     virtual ~ObjTest();
 
 public:
     static ObjTest* Create(ARCHIVE_HASHSIZE sprite);
+    static ObjTest* Create(ARCHIVE_HASHSIZE sprite, const Vector2* size);
+
     void Release();
 
 public:

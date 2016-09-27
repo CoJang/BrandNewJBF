@@ -184,7 +184,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ShaderTable.cpp" />
+    <ClCompile Include="Stage\Stage.cpp" />
     <ClCompile Include="Stage\StageTest.cpp" />
+    <ClCompile Include="Stage\StageTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveTable.h" />
@@ -194,7 +197,10 @@
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\ObjTest.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ShaderTable.h" />
+    <ClInclude Include="Stage\Stage.h" />
     <ClInclude Include="Stage\StageTest.h" />
+    <ClInclude Include="Stage\StageTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\Basic_clamp.fx">
