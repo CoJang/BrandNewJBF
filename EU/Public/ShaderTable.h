@@ -3,8 +3,11 @@
 class JBF::Object::Shader;
 
 
-extern JBF::Object::Shader* shadBasicWrap;
-extern JBF::Object::Shader* shadBasicClamp;
+extern JBF::Object::Shader* shadBasic;
+extern JBF::Object::Shader* shadRGBZero;
+
+extern JBF::Object::Shader* shadLightExtract;
+extern JBF::Object::Shader* shadLightCombine;
 
 extern JBF::Object::Shader* shadBright;
 extern JBF::Object::Shader* shadBlur;

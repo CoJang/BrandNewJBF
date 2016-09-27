@@ -53,9 +53,6 @@ private:
     BasePlane* sprFrame;
 
 private:
-    ObjCamera* objCamera;
-
-private:
     ObjTest* objBackground;
     ObjTest* objHuman;
 };

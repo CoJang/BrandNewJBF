@@ -2,9 +2,6 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-extern float fCoefficient;
-extern float fLevel;
-
 sampler sampMain : register(s0);
 ///////////////////////////////////////////
 
@@ -16,10 +13,6 @@ struct VS_INPUT{
 };
 struct VS_OUTPUT{
     float4 pos : POSITION;
-    float2 uv : TEXCOORD0;
-};
-
-struct PS_INPUT{
     float2 uv : TEXCOORD0;
 };
 ///////////////////////////////////////////
@@ -35,15 +28,11 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float r2 = ((uv.x - 0.5f) * (uv.x - 0.5f)) + ((uv.y - 0.5f) * (uv.y - 0.5f));
-    float f = (fLevel != 0) ? (1.f + r2 * (fCoefficient + fLevel * sqrt(r2))) : (1.f + r2 * fCoefficient);
+    float4 col = tex2D(sampMain, uv);
 
-    float2 uv2 = f * (uv - 0.5f) + 0.5f;
+    col.rgb = 0;
 
-    float3 col_r = tex2D(sampMain, uv2) * float3(1, 0, 0);
-    float3 col_b = tex2D(sampMain, uv) * float3(0, 1, 1);
-
-    return float4(max(col_r, col_b), 1);
+    return col;
 }
 ///////////////////////////////////////////
 

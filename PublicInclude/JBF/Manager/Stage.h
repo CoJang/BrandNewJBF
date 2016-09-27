@@ -14,6 +14,9 @@ namespace JBF{
             extern void ChangeStage(Base::Stage* stage);
             extern void PushStage(Base::Stage* stage);
             extern void PopStage();
+
+            extern void Validate();
+            extern void Invalidate();
         };
     };
 };

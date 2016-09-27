@@ -5,15 +5,16 @@
 
 namespace JBF{
     namespace Object{
-        EmptyTexture::EmptyTexture(INFO* inf) : 
+        EmptyTexture::EmptyTexture(const INFO* inf) : 
             Base::Texture(inf->pool == D3DPOOL_MANAGED ? RESTYPE_MANAGE : RESTYPE_VRAM),
-            ins_surfaceTable(inf->mipLevels)
+            ins_surfaceTable(inf->mipLevels),
+            ins_validateCallback(nullptr)
         {
             memcpy_s(&ins_info, sizeof(*inf), inf, sizeof(*inf));
         }
         EmptyTexture::~EmptyTexture(){ Invalidate(); }
 
-        EmptyTexture* EmptyTexture::Create(INFO* inf){
+        EmptyTexture* EmptyTexture::Create(const INFO* inf){
             HRESULT hr;
             auto _new = new EmptyTexture(inf);
 
@@ -29,6 +30,8 @@ namespace JBF{
 
         HRESULT EmptyTexture::Validate(){
             HRESULT hr;
+
+            if (ins_validateCallback)ins_validateCallback(ins_validateCallbackArg);
 
             {
                 hr = D3DXCreateTexture(

@@ -2,10 +2,8 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-extern float fCoefficient;
-extern float fLevel;
-
-sampler sampMain : register(s0);
+sampler sampMask : register(s0);
+sampler sampLight : register(s1);
 ///////////////////////////////////////////
 
 // Inner structure(s) definition
@@ -35,15 +33,13 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float r2 = ((uv.x - 0.5f) * (uv.x - 0.5f)) + ((uv.y - 0.5f) * (uv.y - 0.5f));
-    float f = (fLevel != 0) ? (1.f + r2 * (fCoefficient + fLevel * sqrt(r2))) : (1.f + r2 * fCoefficient);
+    float3 light = tex2D(sampLight, uv);
+    float3 mask = tex2D(sampMask, uv);
 
-    float2 uv2 = f * (uv - 0.5f) + 0.5f;
+    light -= mask.r;
+    light = saturate(light);
 
-    float3 col_r = tex2D(sampMain, uv2) * float3(1, 0, 0);
-    float3 col_b = tex2D(sampMain, uv) * float3(0, 1, 1);
-
-    return float4(max(col_r, col_b), 1);
+    return float4(light, 1);
 }
 ///////////////////////////////////////////
 

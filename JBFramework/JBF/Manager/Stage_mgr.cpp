@@ -42,6 +42,13 @@ namespace JBF{
                 if (!ins_table.empty())(*ins_table.begin())->Cleanup();
                 if (!ins_table.empty())(*ins_table.begin())->Resume();
             }
+
+            void Validate(){
+                for (auto i : ins_table)i->Validate();
+            }
+            void Invalidate(){
+                for (auto i : ins_table)i->Invalidate();
+            }
         };
     };
 };

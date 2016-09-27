@@ -2,23 +2,8 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-sampler sampBase : register(s0){
-    MipFilter = point;
-    MinFilter = linear;
-    MagFilter = linear;
-
-    AddressU = clamp;
-    AddressV = clamp;
-};
-
-sampler sampBloom : register(s1){
-    MipFilter = point;
-    MinFilter = linear;
-    MagFilter = linear;
-
-    AddressU = clamp;
-    AddressV = clamp;
-};
+sampler sampBase : register(s0);
+sampler sampBloom : register(s1);
 ///////////////////////////////////////////
 
 // Inner structure(s) definition

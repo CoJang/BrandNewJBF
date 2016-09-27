@@ -17,6 +17,10 @@ namespace JBF{
         public:
             virtual void Pause();
             virtual void Resume();
+
+        public:
+            virtual HRESULT Validate();
+            virtual void Invalidate();
         };
     };
 };

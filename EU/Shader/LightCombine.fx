@@ -2,14 +2,9 @@
 ///////////////////////////////////////////
 extern float4x4 matWVP : WVP;
 
-sampler sampMain : register(s0){
-    MipFilter = point;
-    MinFilter = linear;
-    MagFilter = linear;
-
-    AddressU = wrap;
-    AddressV = wrap;
-};
+sampler sampBase : register(s0);
+sampler sampMask : register(s1);
+sampler sampLight : register(s2);
 ///////////////////////////////////////////
 
 // Inner structure(s) definition
@@ -20,6 +15,10 @@ struct VS_INPUT{
 };
 struct VS_OUTPUT{
     float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+struct PS_INPUT{
     float2 uv : TEXCOORD0;
 };
 ///////////////////////////////////////////
@@ -35,7 +34,15 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    return tex2D(sampMain, uv);
+    float3 col = tex2D(sampMain, uv);
+
+    float4 light = tex2D(sampLight, uv);
+    float3 mask = tex2D(sampMask, uv);
+
+    light -= mask.r;
+    light = saturate(light);
+
+    return extractBright(col);
 }
 ///////////////////////////////////////////
 

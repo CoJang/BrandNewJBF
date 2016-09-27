@@ -14,5 +14,8 @@ namespace JBF{
 
         void Stage::Pause(){}
         void Stage::Resume(){}
+
+        HRESULT Stage::Validate(){ return S_OK; }
+        void Stage::Invalidate(){}
     };
 };

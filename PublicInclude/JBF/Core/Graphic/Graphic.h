@@ -44,11 +44,14 @@ namespace JBF{
             extern INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture);
             extern INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture);
 
-            extern INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial);
-            extern INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial);
-
             extern INLINE HRESULT GetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD* pValue);
             extern INLINE HRESULT SetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD Value);
+
+            extern INLINE HRESULT GetSamplerState(DWORD Sampler, D3DSAMPLERSTATETYPE Type, DWORD* pValue);
+            extern INLINE HRESULT SetSamplerState(DWORD Sampler, D3DSAMPLERSTATETYPE Type, DWORD Value);
+
+            extern INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial);
+            extern INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial);
 
             extern INLINE HRESULT GetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9** ppRenderTarget);
             extern INLINE HRESULT SetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9* pRenderTarget);

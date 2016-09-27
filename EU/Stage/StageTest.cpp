@@ -1,29 +1,13 @@
 ﻿#include"pch.h"
 #include"Stage.h"
 
-#include"ArchiveTable.h"
-#include"ShaderTable.h"
+#include"Public/Public.h"
 
 #define _SPRITE_BACKGROUND _T("dummyBackground.png")
 #define SPRITE_BACKGROUND JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SPRITE_BACKGROUND, tstrlen(_SPRITE_BACKGROUND))
 
 #define _SPRITE_OBJECT _T("dummyHuman.png")
 #define SPRITE_OBJECT JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SPRITE_OBJECT, tstrlen(_SPRITE_OBJECT))
-
-#define _SHADER_BASIC _T("Basic_clamp.fxo")
-#define SHADER_BASIC JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BASIC, tstrlen(_SHADER_BASIC))
-
-#define _SHADER_BRIGHT _T("Bright.fxo")
-#define SHADER_BRIGHT JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BRIGHT, tstrlen(_SHADER_BRIGHT))
-
-#define _SHADER_BLUR _T("Blur.fxo")
-#define SHADER_BLUR JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_BLUR, tstrlen(_SHADER_BLUR))
-
-#define _SHADER_COMBINE _T("Combine.fxo")
-#define SHADER_COMBINE JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_COMBINE, tstrlen(_SHADER_COMBINE))
-
-#define _SHADER_DISTORTION _T("CubicDistortion.fxo")
-#define SHADER_DISTORTION JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_DISTORTION, tstrlen(_SHADER_DISTORTION))
 
 using namespace JBF;
 using namespace JBF::Global::Alloc;
@@ -85,7 +69,7 @@ void StageTest::ins_initFrame(){
 void StageTest::ins_initObject(){
     Vector2 vRT = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
 
-    objCamera = ObjCamera::Create();
+    objCamera->Init();
 
     objBackground = ObjTest::Create(SPRITE_BACKGROUND, &vRT);
     objHuman = ObjTest::Create(SPRITE_OBJECT);
@@ -106,8 +90,6 @@ void StageTest::ins_releaseFrame(){
     RELEASE(sprFrame);
 }
 void StageTest::ins_releaseObject(){
-    RELEASE(objCamera);
-
     RELEASE(objBackground);
     RELEASE(objHuman);
 }
@@ -220,12 +202,12 @@ void StageTest::ins_drawGame(const Matrix* matVP){
 }
 
 void StageTest::ins_drawTextureOriginal(const Matrix* matWVP, const Object::EmptyTexture* texture){
-    shadBasicClamp->SetMatrix("matWVP", matWVP);
+    shadBasic->SetMatrix("matWVP", matWVP);
     Core::Graphic::SetTexture(0, texture->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadBasicClamp->IteratePass(0, _drawCallback, sprFrame);
+    shadBasic->IteratePass(0, _drawCallback, sprFrame);
 }
 void StageTest::ins_drawTextureBrighRegion(const Matrix* matWVP, const float* fBrightPassLevel, const Object::EmptyTexture* texture){
     shadBright->SetMatrix("matWVP", matWVP);

@@ -20,12 +20,15 @@ namespace JBF{
             std::vector<IDirect3DSurface9*> ins_surfaceTable;
             INFO ins_info;
 
+            void(*ins_validateCallback)(void* arg);
+            void* ins_validateCallbackArg;
+
         private:
-            EmptyTexture(INFO* inf);
+            EmptyTexture(const INFO* inf);
             virtual ~EmptyTexture();
 
         public:
-            static EmptyTexture* Create(INFO* inf);
+            static EmptyTexture* Create(const INFO* inf);
             void Release();
 
         public:
@@ -37,7 +40,9 @@ namespace JBF{
 
         public:
             INLINE IDirect3DSurface9* GetSurface(UINT level){ return ins_surfaceTable[level]; }
-            INLINE const INFO* GetInfo()const{ return &ins_info; }
+            INLINE INFO* GetInfo(){ return &ins_info; }
+        public:
+            INLINE void SetValidateCallback(void(*callback)(void* arg), void* arg){ ins_validateCallback = callback; ins_validateCallbackArg = arg; }
         };
     };
 };

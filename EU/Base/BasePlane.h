@@ -29,6 +29,10 @@ private:
     IDirect3DVertexDeclaration9* ins_vertDecl;
 
 private:
+    void(*ins_validateCallback)(void* arg);
+    void* ins_validateCallbackArg;
+
+private:
     BasePlane();
     virtual ~BasePlane();
 
@@ -37,10 +41,16 @@ public:
     void Release();
 
 public:
+    void Resize(const Global::Math::Vector2* size);
+
+public:
     virtual HRESULT Validate();
     virtual void Invalidate();
 
 public:
     void SendFaceInfo();
     HRESULT Draw();
+
+public:
+    INLINE void SetValidateCallback(void(*callback)(void* arg), void* arg){ ins_validateCallback = callback; ins_validateCallbackArg = arg; }
 };

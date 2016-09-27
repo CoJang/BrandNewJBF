@@ -55,11 +55,13 @@ namespace JBF{
                         return E_FAIL;
                     }
 
+                    Manager::Stage::Validate();
                     for (auto i : ins_resTableVRAM)i->Validate();
                 }
                 else{ // need recreate
                     if (FAILED(ins_resetDevice()))return ins_validate(D3DERR_DEVICENOTRESET);
 
+                    Manager::Stage::Validate();
                     for (auto i : ins_resTableVRAM)i->Validate();
                     for (auto i : ins_resTableManaged)i->Validate();
                 }
@@ -68,9 +70,11 @@ namespace JBF{
             }
             static INLINE void ins_invalidate(HRESULT res){
                 if (res == D3DERR_DEVICENOTRESET){ // need reset
+                    Manager::Stage::Invalidate();
                     for (auto i : ins_resTableVRAM)i->Invalidate();
                 }
                 else{ // need recreate
+                    Manager::Stage::Invalidate();
                     for (auto i : ins_resTableVRAM)i->Invalidate();
                     for (auto i : ins_resTableManaged)i->Invalidate();
 
@@ -203,11 +207,14 @@ namespace JBF{
             INLINE HRESULT GetTexture(DWORD Stage, IDirect3DBaseTexture9** ppTexture){ return ins_device->GetTexture(Stage, ppTexture); }
             INLINE HRESULT SetTexture(DWORD Stage, IDirect3DBaseTexture9* pTexture){ return ins_device->SetTexture(Stage, pTexture); }
 
-            INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial){ return ins_device->GetMaterial(pMaterial); }
-            INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial){ return ins_device->SetMaterial(pMaterial); }
-
             INLINE HRESULT GetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD* pValue){ return ins_device->GetTextureStageState(Stage, Type, pValue); }
             INLINE HRESULT SetTextureStageState(DWORD Stage, D3DTEXTURESTAGESTATETYPE Type, DWORD Value){ return ins_device->SetTextureStageState(Stage, Type, Value); }
+
+            INLINE HRESULT GetSamplerState(DWORD Sampler, D3DSAMPLERSTATETYPE Type, DWORD* pValue){ return ins_device->GetSamplerState(Sampler, Type, pValue); }
+            INLINE HRESULT SetSamplerState(DWORD Sampler, D3DSAMPLERSTATETYPE Type, DWORD Value){ return ins_device->SetSamplerState(Sampler, Type, Value); }
+
+            INLINE HRESULT GetMaterial(D3DMATERIAL9* pMaterial){ return ins_device->GetMaterial(pMaterial); }
+            INLINE HRESULT SetMaterial(const D3DMATERIAL9* pMaterial){ return ins_device->SetMaterial(pMaterial); }
 
             INLINE HRESULT GetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9** ppRenderTarget){ return ins_device->GetRenderTarget(RenderTargetIndex, ppRenderTarget); }
             INLINE HRESULT SetRenderTarget(DWORD RenderTargetIndex, IDirect3DSurface9* pRenderTarget){ return ins_device->SetRenderTarget(RenderTargetIndex, pRenderTarget); }

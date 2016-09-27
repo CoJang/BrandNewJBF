@@ -1,9 +1,9 @@
 ﻿#include"pch.h"
 #include"Object.h"
 
-#include"ArchiveTable.h"
+#include"Public/Public.h"
 
-#define _SHADER_NAME _T("Basic_wrap.fxo")
+#define _SHADER_NAME _T("Basic.fxo")
 #define SHADER_NAME Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(_SHADER_NAME, tstrlen(_SHADER_NAME)
 
 ObjTest::ObjTest(ARCHIVE_HASHSIZE sprite){

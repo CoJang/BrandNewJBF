@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp">
@@ -22,10 +21,29 @@
     <ClCompile Include="Stage\StageTitle.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderTable.cpp" />
+    <ClCompile Include="Public\ArchiveTable.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
+    <ClCompile Include="Public\ShaderTable.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
+    <ClCompile Include="Public\GlobalObject.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjBackground.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\StageTitleAllocate.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\StageTitleDraw.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\StageTitleUtility.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArchiveTable.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Object\ObjCamera.h">
       <Filter>Object</Filter>
@@ -51,7 +69,21 @@
     <ClInclude Include="Stage\StageTitle.h">
       <Filter>Stage</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderTable.h" />
+    <ClInclude Include="Public\Public.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\ArchiveTable.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\ShaderTable.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\GlobalObject.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjBackground.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -66,14 +98,11 @@
     <Filter Include="Base">
       <UniqueIdentifier>{1340b1a7-9953-43b4-9937-f4b88192c9f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{35a43d0a-a571-486b-82fc-fccc7de25c72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\Basic_wrap.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\Basic_clamp.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="Shader\Bright.fx">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -84,6 +113,18 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\CubicDistortion.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Basic.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RGBZero.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\LightExtract.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\LightCombine.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

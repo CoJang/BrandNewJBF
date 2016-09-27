@@ -17,6 +17,14 @@ BasePlane::~BasePlane(){ Invalidate(); }
 BasePlane* BasePlane::Create(const Global::Math::Vector2* size){
     auto _new = new BasePlane();
 
+    _new->Resize(size);
+    if (FAILED(_new->Validate()))return nullptr;
+
+    return _new;
+}
+void BasePlane::Release(){ delete this; }
+
+void BasePlane::Resize(const Global::Math::Vector2* size){
     /*
     v0---v1
     |\    |
@@ -26,20 +34,17 @@ BasePlane* BasePlane::Create(const Global::Math::Vector2* size){
     |    \|
     v3---v2
     */
-    _new->ins_vertRaw[0] = { { 0.f, 0.f, 0.f }, { 0.f, 0.f } };
-    _new->ins_vertRaw[1] = { { size->x, 0.f, 0.f }, { 1.f, 0.f } };
-    _new->ins_vertRaw[2] = { { size->x, -size->y, 0.f }, { 1.f, 1.f } };
-    _new->ins_vertRaw[3] = { { 0.f, -size->y, 0.f }, { 0.f, 1.f } };
-
-    if (FAILED(_new->Validate()))return nullptr;
-
-    return _new;
+    ins_vertRaw[0] = { { 0.f, 0.f, 0.f },{ 0.f, 0.f } };
+    ins_vertRaw[1] = { { size->x, 0.f, 0.f },{ 1.f, 0.f } };
+    ins_vertRaw[2] = { { size->x, -size->y, 0.f },{ 1.f, 1.f } };
+    ins_vertRaw[3] = { { 0.f, -size->y, 0.f },{ 0.f, 1.f } };
 }
-void BasePlane::Release(){ delete this; }
 
 HRESULT BasePlane::Validate(){
     void* buf;
     HRESULT hr;
+
+    ins_validateCallback(ins_validateCallbackArg);
 
     {
         hr = Core::Graphic::CreateVertexBuffer(

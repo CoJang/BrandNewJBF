@@ -1,7 +1,7 @@
 ﻿#include"pch.h"
 
 #include"JBF/JBFramework.h"
-#include"ArchiveTable.h"
+#include"Public.h"
 
 JBF::Global::Archive::Decrypter arcSprites;
 JBF::Global::Archive::Decrypter arcShaders;

@@ -1,9 +1,7 @@
 ﻿#include"pch.h"
 #include"JBF/JBFramework.h"
 
-#include"ArchiveTable.h"
-#include"ShaderTable.h"
-
+#include"Public/Public.h"
 #include"Stage/Stage.h"
 
 using namespace JBF;
@@ -13,9 +11,13 @@ static void GameBegin(){
     ArchiveLoad();
     ShaderLoad();
 
-    Manager::Stage::ChangeStage(&stgTest);
+    GlobalObjectInit();
+
+    Manager::Stage::ChangeStage(&stgTitle);
 }
 static void GameEnd(){
+    GlobalObjectCleanup();
+
     ShaderCleanup();
     ArchiveCleanup();
 }
