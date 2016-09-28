@@ -30,11 +30,17 @@ private:
     CfgParseINI cfgINIReader;
 
 private:
+    D3DLIGHT9 envLight;
+
+private:
     ObjCamera* objCamera;
     ObjFont* objFont;
 
+private:
     ObjGrid* objGrid;
     ObjAxis* objAxis;
+
 private:
     ObjPlane* objPlane;
+    ObjDwarf* objDwarf;
 };

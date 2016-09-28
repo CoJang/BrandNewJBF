@@ -49,18 +49,18 @@ void ObjPlane::ins_trsRotatePropeller(ObjPlane* _this){
     static const float angleY = 0.5f;
     Matrix mTmp0, mTmp1;
 
-    MatrixRotationX(&mTmp0, angleX * (PIf / 180.f));
+    MatrixRotationX(&mTmp0, angleX * DEG2RADf);
 
-    MatrixRotationY(&mTmp1, angleY * (PIf / 180.f));
+    MatrixRotationY(&mTmp1, angleY * DEG2RADf);
     mTmp0 *= mTmp1;
 
     MatrixRotationZ(&mTmp1, _this->ins_fPropRotate);
     mTmp0 *= mTmp1;
 
-    MatrixRotationY(&mTmp1, -angleY * (PIf / 180.f));
+    MatrixRotationY(&mTmp1, -angleY * DEG2RADf);
     mTmp0 *= mTmp1;
 
-    MatrixRotationX(&mTmp1, -angleX * (PIf / 180.f));
+    MatrixRotationX(&mTmp1, -angleX * DEG2RADf);
     mTmp0 *= mTmp1;
 
     mTmp0 *= _this->ins_mWorld;

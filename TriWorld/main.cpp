@@ -7,7 +7,7 @@ using namespace JBF;
 #include"Stage/StageTest.h"
 extern StageTest stgTest;
 
-static const Global::Math::Point<WORD> clientSize = { 1366, 768 };
+static const Global::Math::Point<WORD> clientSize = { 320, 240 };
 static void GameBegin(){
     ArchiveLoad();
 

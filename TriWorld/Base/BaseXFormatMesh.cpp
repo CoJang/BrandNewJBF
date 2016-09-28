@@ -44,6 +44,9 @@ HRESULT BaseXFormatMesh::Validate(){
             {
                 ins_mtrlTable[i].Diffuse.a = ins_mtrlTable[i].Diffuse.a <= 0.f ? 1.f : ins_mtrlTable[i].Diffuse.a;
                 ins_mtrlTable[i].Ambient = ins_mtrlTable[i].Diffuse;
+
+                ins_mtrlTable[i].Specular = D3DXCOLOR(1, 1, 1, 1);
+                ins_mtrlTable[i].Power = 30;
             }
         }
 

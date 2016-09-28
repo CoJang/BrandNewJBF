@@ -179,6 +179,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ObjAxis.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp" />
+    <ClCompile Include="Object\ObjDwarf.cpp" />
     <ClCompile Include="Object\ObjFont.cpp" />
     <ClCompile Include="Object\ObjGrid.cpp" />
     <ClCompile Include="Object\ObjPlane.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Config\Config.h" />
     <ClInclude Include="Object\ObjAxis.h" />
     <ClInclude Include="Object\ObjCamera.h" />
+    <ClInclude Include="Object\ObjDwarf.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\ObjFont.h" />
     <ClInclude Include="Object\ObjGrid.h" />

@@ -8,3 +8,4 @@
 #include"ObjGrid.h"
 
 #include"ObjPlane.h"
+#include"ObjDwarf.h"

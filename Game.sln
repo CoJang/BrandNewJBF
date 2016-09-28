@@ -33,11 +33,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawContent", "RawContent", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TRI_Models", "TRI_Models", "{F4399F44-1BC9-4A5F-9880-F740108BAD73}"
 	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Models\Dwarf.x = RawContent\TRI_Models\Dwarf.x
 		RawContent\TRI_Models\JN-4(s).x = RawContent\TRI_Models\JN-4(s).x
 		RawContent\TRI_Models\JN-4.x = RawContent\TRI_Models\JN-4.x
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TRI_Textures", "TRI_Textures", "{3A69451F-40F4-4080-9DA0-CD6A3519215F}"
+	ProjectSection(SolutionItems) = preProject
+		RawContent\TRI_Textures\Armor.bmp = RawContent\TRI_Textures\Armor.bmp
+		RawContent\TRI_Textures\Armor.dds = RawContent\TRI_Textures\Armor.dds
+		RawContent\TRI_Textures\Armor_bumpmap.dds = RawContent\TRI_Textures\Armor_bumpmap.dds
+		RawContent\TRI_Textures\Armor_spec.BMP = RawContent\TRI_Textures\Armor_spec.BMP
+		RawContent\TRI_Textures\Body.dds = RawContent\TRI_Textures\Body.dds
+		RawContent\TRI_Textures\Body_bumpmap.dds = RawContent\TRI_Textures\Body_bumpmap.dds
+		RawContent\TRI_Textures\Body_spec.BMP = RawContent\TRI_Textures\Body_spec.BMP
+		RawContent\TRI_Textures\DwarfHead.dds = RawContent\TRI_Textures\DwarfHead.dds
+		RawContent\TRI_Textures\DwarfHead_bumpmap.dds = RawContent\TRI_Textures\DwarfHead_bumpmap.dds
+		RawContent\TRI_Textures\DwarfHead_spec.BMP = RawContent\TRI_Textures\DwarfHead_spec.BMP
+		RawContent\TRI_Textures\Headgear.dds = RawContent\TRI_Textures\Headgear.dds
+		RawContent\TRI_Textures\Headgear_bumpmap.dds = RawContent\TRI_Textures\Headgear_bumpmap.dds
+		RawContent\TRI_Textures\Headgear_spec.BMP = RawContent\TRI_Textures\Headgear_spec.BMP
+		RawContent\TRI_Textures\Helmet.dds = RawContent\TRI_Textures\Helmet.dds
+		RawContent\TRI_Textures\Helmet_bumpmap.dds = RawContent\TRI_Textures\Helmet_bumpmap.dds
+		RawContent\TRI_Textures\Helmet_spec.BMP = RawContent\TRI_Textures\Helmet_spec.BMP
+		RawContent\TRI_Textures\Pack.dds = RawContent\TRI_Textures\Pack.dds
+		RawContent\TRI_Textures\Pack_bumpmap.dds = RawContent\TRI_Textures\Pack_bumpmap.dds
+		RawContent\TRI_Textures\Pack_spec.BMP = RawContent\TRI_Textures\Pack_spec.BMP
+		RawContent\TRI_Textures\Weapons.dds = RawContent\TRI_Textures\Weapons.dds
+		RawContent\TRI_Textures\Weapons_bumpmap.dds = RawContent\TRI_Textures\Weapons_bumpmap.dds
+		RawContent\TRI_Textures\Weapons_spec.BMP = RawContent\TRI_Textures\Weapons_spec.BMP
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JN-4", "JN-4", "{A4315EC1-91BC-47BA-80C5-988725AF14F2}"
 	ProjectSection(SolutionItems) = preProject
