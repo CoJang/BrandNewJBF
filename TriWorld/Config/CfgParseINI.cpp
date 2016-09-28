@@ -15,6 +15,16 @@ static TCHAR* _strRemoveSpace(TCHAR* str){
     for (;;){
         if (*str == _T(' '))++str;
         else if (*str == _T('\t'))++str;
+        else if (*str == _T('\r'))++str;
+        else break;
+    }
+    return str;
+}
+static TCHAR* _strRemoveSpaceBackward(TCHAR* str){
+    for (;;){
+        if (*str == _T(' '))--str;
+        else if (*str == _T('\t'))--str;
+        else if (*str == _T('\r'))--str;
         else break;
     }
     return str;
@@ -56,6 +66,7 @@ bool CfgParseINI::Read(const TCHAR* fileName){
     TCHAR tmpStr[4096];
 
     TCHAR* curLine;
+    TCHAR* curLineEnd;
     size_t lineLen;
     size_t tmpLen0, tmpLen1;
 
@@ -103,11 +114,10 @@ bool CfgParseINI::Read(const TCHAR* fileName){
 
                 curLine = _strRemoveSpace(curLine);
 
-                tmpLen0 = _strReadUntilChar(curLine, _T(';'), lineLen - (curLine - rawLine));
-                if (tmpLen0 == -1){
-                    Global::MsgBox(nullptr, _T("Error"), MB_ICONERROR | MB_OK, _T("Error to read on %s.\nCannot find end of line.\nLine: %u"), fileName, i + 1);
-                    continue;
-                }
+                tmpLen0 = tstrlen(curLine);
+                curLineEnd = _strRemoveSpaceBackward(&curLine[tmpLen0 - 1]);
+                *++curLineEnd = 0;
+                tmpLen0 = curLineEnd - curLine;
 
                 if (*curLine == _T('\"')){ // supposed to string
                     if (curLine[tmpLen0 - 1] != _T('\"')){
@@ -119,10 +129,10 @@ bool CfgParseINI::Read(const TCHAR* fileName){
                     tstrncpy_s(valNew.string, &curLine[1], tmpLen0 - 2);
                     valNew.string[tmpLen0 - 2] = 0;
                 }
-                else if(_strIsNumber(curLine, tmpLen0 - 1)){ // supposed to number
+                else if(_strIsNumber(curLine, tmpLen0)){ // supposed to number
                     valNew.type = Type::NUMBER;
-                    tstrncpy_s(tmpStr, curLine, tmpLen0 - 1);
-                    tmpStr[tmpLen0 - 1] = 0;
+                    tstrncpy_s(tmpStr, curLine, tmpLen0);
+                    tmpStr[tmpLen0] = 0;
 
                     valNew.interger = _ttoi(tmpStr);
                     valNew.flotingPoint = _ttof(tmpStr);

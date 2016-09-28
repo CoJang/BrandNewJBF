@@ -78,6 +78,26 @@ void StageTitle::ins_initFace(){
         inf.width = Core::Graphic::GetDisplayInfo()->Width;
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
 
+        for (size_t i = 0; i < _countof(ins_faceLightMask); ++i){
+            ins_faceLightMask[i] = Object::EmptyTexture::Create(&inf);
+            ins_faceLightMask[i]->SetValidateCallback(
+                [](void* arg)->void{
+                    auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
+                    self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
+                    self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                },
+                ins_faceLightMask[i]
+            );
+        }
+    }
+    {
+        inf.pool = D3DPOOL_DEFAULT;
+        inf.usage = D3DUSAGE_RENDERTARGET;
+        inf.format = D3DFMT_R8G8B8;
+        inf.mipLevels = 1;
+        inf.width = Core::Graphic::GetDisplayInfo()->Width;
+        inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
         for (size_t i = 0; i < _countof(ins_faceLight); ++i){
             ins_faceLight[i] = Object::EmptyTexture::Create(&inf);
             ins_faceLight[i]->SetValidateCallback(
@@ -140,6 +160,7 @@ void StageTitle::ins_releaseMatrix(){
 void StageTitle::ins_releaseFace(){
     RELEASE(ins_faceObject);
     RELEASE(ins_faceGame);
+    for (size_t i = 0; i < _countof(ins_faceLightMask); ++i)RELEASE(ins_faceLightMask[i]);
     for (size_t i = 0; i < _countof(ins_faceLight); ++i)RELEASE(ins_faceLight[i]);
     for (size_t i = 0; i < _countof(ins_faceTemp); ++i)RELEASE(ins_faceTemp[i]);
 }

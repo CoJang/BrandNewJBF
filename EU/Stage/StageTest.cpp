@@ -20,8 +20,8 @@ void StageTest::Init(){
 
     cfgBrightPassLevel = 0.04f;
 
-    Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+    Core::Graphic::SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
 
     Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
     Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);

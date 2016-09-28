@@ -33,19 +33,20 @@ public:
 private:
     void ins_drawBackground(const Matrix* matVP);
     void ins_drawBackgroundLightMask(const Matrix* matVP);
+    void ins_drawBackgroundLight(const Matrix* matVP);
 
     void ins_drawObject(const Matrix* matVP);
 
     void ins_drawForeground(const Matrix* matVP);
     void ins_drawForegroundLightMask(const Matrix* matVP);
-
-    void ins_drawLight(const Matrix* matVP);
+    void ins_drawForegroundLight(const Matrix* matVP);
 
 private:
     void ins_drawTextureOriginal(const Matrix* matWVP, const Object::EmptyTexture* texture);
     void ins_drawTextureRGBZero(const Matrix* matWVP, const Object::EmptyTexture* texture);
 
     void ins_drawTextureLightExtract(const Matrix* matWVP, const Object::EmptyTexture* texLight, const Object::EmptyTexture* texMask);
+    void ins_drawTextureLightCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBackLight, const Object::EmptyTexture* texFrontLight);
 
     void ins_drawTextureUpDownFilter(const Matrix* matWVP, const Object::EmptyTexture* texture);
 
@@ -60,6 +61,7 @@ private:
 private:
     Object::EmptyTexture* ins_faceObject;
     Object::EmptyTexture* ins_faceGame;
+    Object::EmptyTexture* ins_faceLightMask[2];
     Object::EmptyTexture* ins_faceLight[3];
     Object::EmptyTexture* ins_faceTemp[2];
 

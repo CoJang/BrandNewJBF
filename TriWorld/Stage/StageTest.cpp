@@ -1,6 +1,8 @@
 ﻿#include"pch.h"
 #include"StageTest.h"
-#include"ArchiveTable.h"
+#include"Public/Public.h"
+
+#define RES_FILENAME(str) JBF::Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(str, tstrlen(str))
 
 using namespace JBF;
 using namespace JBF::Global::Alloc;
@@ -9,16 +11,34 @@ using namespace JBF::Core;
 StageTest stgTest;
 
 void StageTest::Init(){
+    Global::Math::Point<WORD> clientSize;
     ARCHIVE_HASHSIZE namePlane;
 
     {
         CfgParseINI::Value val;
 
         if (cfgINIReader.Read(_T("./tri_setting.ini"))){
+            if (cfgINIReader.Get(_T("ScreenX"), &val)){
+                if (val.type == CfgParseINI::NUMBER){
+                    clientSize.x = val.interger;
+                }
+            }
+            if (cfgINIReader.Get(_T("ScreenY"), &val)){
+                if (val.type == CfgParseINI::NUMBER){
+                    clientSize.y = val.interger;
+                }
+            }
+
             if (cfgINIReader.Get(_T("PlaneFile"), &val)){
-                if(val.type == CfgParseINI::STRING)namePlane = Global::Hash::X65599Generator<ARCHIVE_HASHSIZE, TCHAR>(val.string, tstrlen(val.string));
+                if (val.type == CfgParseINI::STRING){
+                    namePlane = RES_FILENAME(val.string);
+                }
             }
         }
+    }
+
+    {
+        Graphic::Resize(&clientSize);
     }
 
     {

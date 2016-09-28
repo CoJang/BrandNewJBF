@@ -3,8 +3,8 @@
 #include"JBF/JBFramework.h"
 
 
-extern JBF::Global::Archive::Decrypter arcSprites;
-extern JBF::Global::Archive::Decrypter arcShaders;
+extern JBF::Global::Archive::Decrypter arcModels;
+extern JBF::Global::Archive::Decrypter arcTextures;
 
 
 extern void ArchiveLoad();

@@ -1,6 +1,5 @@
 ﻿#include"pch.h"
 
-#include"JBF/JBFramework.h"
 #include"Public.h"
 
 JBF::Global::Archive::Decrypter arcSprites;

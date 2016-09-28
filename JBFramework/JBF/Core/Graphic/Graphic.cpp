@@ -42,24 +42,24 @@ namespace JBF{
                 return hr;
             }
             static void ins_releaseDevice(){
-                if(ins_d3d)RELEASE(ins_d3d);
+                if (ins_device)RELEASE(ins_device);
             }
 
             static INLINE HRESULT ins_validate(HRESULT res){
                 HRESULT hr;
 
                 if (res == D3DERR_DEVICENOTRESET){ // need reset
-                    hr = ins_createDevice();
-                    if (FAILED(hr)){
-                        ASSERT_HRESULT(hr, _T("Failed to creaet device."));
-                        return E_FAIL;
-                    }
+                    if (FAILED(ins_resetDevice()))return ins_validate(D3DERR_DEVICELOST);
 
                     Manager::Stage::Validate();
                     for (auto i : ins_resTableVRAM)i->Validate();
                 }
                 else{ // need recreate
-                    if (FAILED(ins_resetDevice()))return ins_validate(D3DERR_DEVICENOTRESET);
+                    hr = ins_createDevice();
+                    if (FAILED(hr)){
+                        ASSERT_HRESULT(hr, _T("Failed to creaet device."));
+                        return E_FAIL;
+                    }
 
                     Manager::Stage::Validate();
                     for (auto i : ins_resTableVRAM)i->Validate();
@@ -142,6 +142,7 @@ namespace JBF{
             }
             void Release(){
                 ins_releaseDevice();
+                if (ins_d3d)RELEASE(ins_d3d);
             }
 
             HRESULT CheckState(){
@@ -173,6 +174,37 @@ namespace JBF{
                         return;
                     }
                 }
+            }
+
+            HRESULT Resize(const Global::Math::Point<WORD>* size){
+                DWORD style = GetWindowLong(GetHandle(), GWL_STYLE);
+                RECT rc = { 0, 0, size->x, size->y };
+
+                ins_invalidate(D3DERR_DEVICELOST);
+
+                {
+                    ins_displayInfo.Width = size->x;
+                    ins_displayInfo.Height = size->y;
+                }
+
+                {
+                    AdjustWindowRect(&rc, style, FALSE);
+                    {
+                        rc.right -= rc.left;
+                        rc.left = (GetSystemMetrics(SM_CXSCREEN) - (rc.right - rc.left)) >> 1;
+                        rc.bottom -= rc.top;
+                        rc.top = (GetSystemMetrics(SM_CYSCREEN) - (rc.bottom - rc.top)) >> 1;
+                    }
+
+                    MoveWindow(GetHandle(), rc.left, rc.top, rc.right, rc.bottom, TRUE);
+                }
+
+                {
+                    ins_d3dpp.BackBufferWidth = ins_displayInfo.Width;
+                    ins_d3dpp.BackBufferHeight = ins_displayInfo.Height;
+                }
+
+                return ins_validate(D3DERR_DEVICELOST);
             }
 
             INLINE IDirect3DDevice9* GetDevice(){ return ins_device; }

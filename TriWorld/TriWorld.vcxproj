@@ -173,7 +173,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="Base\BaseMesh.cpp" />
     <ClCompile Include="Base\BaseXFormatMesh.cpp" />
     <ClCompile Include="Config\CfgParseINI.cpp" />
@@ -189,10 +188,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Public\ArchiveTable.cpp" />
     <ClCompile Include="Stage\StageTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArchiveTable.h" />
     <ClInclude Include="Base\BaseMesh.h" />
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Base\BaseXFormatMesh.h" />
@@ -205,6 +204,8 @@
     <ClInclude Include="Object\ObjGrid.h" />
     <ClInclude Include="Object\ObjPlane.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Public\ArchiveTable.h" />
+    <ClInclude Include="Public\Public.h" />
     <ClInclude Include="Stage\StageTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

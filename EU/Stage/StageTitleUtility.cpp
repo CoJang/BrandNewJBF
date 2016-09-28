@@ -73,6 +73,44 @@ void StageTitle::ins_drawTextureLightExtract(const Matrix* matWVP, const Object:
 
     shadLightExtract->IteratePass(0, _drawCallback, ins_sprFrame);
 }
+void StageTitle::ins_drawTextureLightCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBackLight, const Object::EmptyTexture* texFrontLight){
+    shadLightCombine->SetMatrix("matWVP", matWVP);
+
+    {
+        Core::Graphic::SetTexture(0, texBase->GetTexture());
+
+        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+    }
+    {
+        Core::Graphic::SetTexture(1, texBackLight->GetTexture());
+
+        Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+    }
+    {
+        Core::Graphic::SetTexture(2, texFrontLight->GetTexture());
+
+        Core::Graphic::SetSamplerState(2, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MINFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+    }
+
+    ins_sprFrame->SendFaceInfo();
+
+    shadLightCombine->IteratePass(0, _drawCallback, ins_sprFrame);
+}
 
 void StageTitle::ins_drawTextureUpDownFilter(const Matrix* matWVP, const Object::EmptyTexture* texture){
     shadBasic->SetMatrix("matWVP", matWVP);

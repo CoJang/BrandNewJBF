@@ -12,6 +12,8 @@ namespace JBF{
             extern HRESULT CheckState();
             extern void Present();
 
+            extern HRESULT Resize(const Global::Math::Point<WORD>* size);
+
             extern INLINE IDirect3DDevice9* GetDevice();
             extern INLINE D3DDISPLAYMODE* GetDisplayInfo();
 

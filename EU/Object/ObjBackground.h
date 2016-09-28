@@ -22,7 +22,6 @@ public:
     void Release();
 
 public:
-    INLINE BasePlane* GetFrame()const{ return ins_sprFrame; }
-    INLINE Object::ExternalTexture* GetBaseTexture()const{ return ins_texBase; }
-    INLINE Object::ExternalTexture* GetLightMaskTexture()const{ return ins_texLightMask; }
+    void DrawBase(const Matrix* matVP);
+    void DrawLightMask(const Matrix* matVP);
 };

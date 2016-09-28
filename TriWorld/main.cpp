@@ -1,6 +1,6 @@
 ﻿#include"pch.h"
 #include"JBF/JBFramework.h"
-#include"ArchiveTable.h"
+#include"Public/Public.h"
 
 using namespace JBF;
 
@@ -9,13 +9,11 @@ extern StageTest stgTest;
 
 static const Global::Math::Point<WORD> clientSize = { 1366, 768 };
 static void GameBegin(){
-    arcModels.OpenFile(_T("./Content/TRI_Models.jba"));
-    arcTextures.OpenFile(_T("./Content/TRI_Textures.jba"));
+    ArchiveLoad();
 
     Manager::Stage::ChangeStage(&stgTest);
 }
 static void GameEnd(){
-    arcModels.CloseFile();
-    arcTextures.CloseFile();
+    ArchiveCleanup();
 }
 CREATE_MAIN(_T("TriWorld"), GameBegin, GameEnd, nullptr, &clientSize);

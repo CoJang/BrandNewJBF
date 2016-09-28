@@ -13,6 +13,14 @@ void StageTitle::Init(){
 }
 HRESULT StageTitle::Validate(){
     ins_initMatrix();
+
+    Core::Graphic::SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    Core::Graphic::SetRenderState(D3DRS_LIGHTING, FALSE);
+
+    Core::Graphic::SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    Core::Graphic::SetRenderState(D3DRS_ZENABLE, FALSE);
+
+    return S_OK;
 }
 
 void StageTitle::Cleanup(){
@@ -56,34 +64,62 @@ void StageTitle::Draw(){
         Core::Graphic::SetRenderTarget(0, ins_faceGame->GetSurface(0));
 
         ins_drawBackground(matVP);
-        ins_drawTextureOriginal(&ins_matFrame, ins_faceObject);
+        {
+            Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+            Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+            Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+            ins_drawTextureOriginal(&ins_matFrame, ins_faceObject);
+        }
         ins_drawForeground(matVP);
     }
 
-    { // Light mask draw
-        Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+    { // Background light mask draw
+        Core::Graphic::SetRenderTarget(0, ins_faceLightMask[0]->GetSurface(0));
 
         ins_drawBackgroundLightMask(matVP);
         ins_drawTextureRGBZero(&ins_matFrame, ins_faceObject);
+    }
+    { // Foreground light mask draw
+        Core::Graphic::SetRenderTarget(0, ins_faceLightMask[1]->GetSurface(0));
+
         ins_drawForegroundLightMask(matVP);
     }
 
-    { // Light draw
+    { // Background light draw
+        Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+
+        ins_drawBackgroundLight(matVP);
+    }
+    { // Foreground light draw
         Core::Graphic::SetRenderTarget(0, ins_faceLight[1]->GetSurface(0));
 
-        ins_drawLight(matVP);
+        ins_drawForegroundLight(matVP);
     }
 
-    { // Extract lighted region
+    { // Extract lighted background region
         Core::Graphic::SetRenderTarget(0, ins_faceLight[2]->GetSurface(0));
 
-        ins_drawTextureLightExtract(&ins_matFrame, ins_faceLight[1], ins_faceLight[0]);
+        ins_drawTextureLightExtract(&ins_matFrame, ins_faceLight[0], ins_faceLightMask[0]);
+    }
+    { // Extract lighted foreground region
+        Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+
+        ins_drawTextureLightExtract(&ins_matFrame, ins_faceLight[1], ins_faceLightMask[1]);
+    }
+    {
+        // lighted background region was moved to index 0
+        // lighted foreground region was moved to index 1
+
+        std::swap(ins_faceLight[0], ins_faceLight[1]);
+        std::swap(ins_faceLight[2], ins_faceLight[0]);
     }
 
     { // Apply light on game scene
-        Core::Graphic::SetRenderTarget(0, ins_faceTemp[0]->GetSurface(0));
+        //Core::Graphic::SetRenderTarget(0, ins_faceTemp[0]->GetSurface(0));
+        Core::Graphic::SetRenderTarget(0, surfOrg);
 
-
+        ins_drawTextureLightCombine(&ins_matFrame, ins_faceGame, ins_faceLight[0], ins_faceLight[1]);
     }
 
     Core::Graphic::GetDevice()->EndScene();

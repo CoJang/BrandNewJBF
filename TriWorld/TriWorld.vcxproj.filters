@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ArchiveTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Object\ObjAxis.cpp">
@@ -31,9 +30,11 @@
     <ClCompile Include="Config\CfgParseINI.cpp">
       <Filter>Config</Filter>
     </ClCompile>
+    <ClCompile Include="Public\ArchiveTable.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArchiveTable.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Object\ObjAxis.h">
       <Filter>Object</Filter>
@@ -71,6 +72,12 @@
     <ClInclude Include="Config\CfgParseINI.h">
       <Filter>Config</Filter>
     </ClInclude>
+    <ClInclude Include="Public\ArchiveTable.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Public.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -84,6 +91,9 @@
     </Filter>
     <Filter Include="Config">
       <UniqueIdentifier>{ec3ddabc-a523-47ff-804a-4c5e58ed0ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{03519b88-42c8-4273-8648-139c52ebad92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

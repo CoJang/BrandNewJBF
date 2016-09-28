@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include"JBF/JBFramework.h"
+
+
 class ObjCamera;
 extern ObjCamera* objCamera;
 

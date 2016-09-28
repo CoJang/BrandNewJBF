@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class JBF::Object::Shader;
+#include"JBF/JBFramework.h"
 
 
 extern JBF::Object::Shader* shadBasic;

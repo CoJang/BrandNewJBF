@@ -3,8 +3,8 @@
 extern float4x4 matWVP : WVP;
 
 sampler sampBase : register(s0);
-sampler sampMask : register(s1);
-sampler sampLight : register(s2);
+sampler sampBackgroundLight : register(s1);
+sampler sampForegroundLight : register(s2);
 ///////////////////////////////////////////
 
 // Inner structure(s) definition
@@ -34,15 +34,13 @@ VS_OUTPUT vert(VS_INPUT _in){
     return _out;
 }
 float4 frag(float2 uv : TEXCOORD0) : COLOR0{
-    float3 col = tex2D(sampMain, uv);
+    float3 col = tex2D(sampBase, uv);
+    float3 light = max(tex2D(sampBackgroundLight, uv), tex2D(sampForegroundLight, uv));
 
-    float4 light = tex2D(sampLight, uv);
-    float3 mask = tex2D(sampMask, uv);
+    col += light;
+    col = saturate(col);
 
-    light -= mask.r;
-    light = saturate(light);
-
-    return extractBright(col);
+    return float4(col, 1);
 }
 ///////////////////////////////////////////
 
