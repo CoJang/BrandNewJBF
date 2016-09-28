@@ -24,7 +24,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[]){
 
         if (CacheCorrectionCheck(cur))continue;
 
-        if (!MakeArchive(archivePath, cur, ARCHIVE_XORBYTE))tprintf_s(_T("Failed to make cache \"%s\".\n"), cur->cachePath.c_str());
+        if (!MakeArchive(archivePath, cur, ARCHIVE_XORBYTE))tprintf_s(_T("Failed to make \"%s\".\n"), cur->cachePath.c_str());
 
         if (!MakeCache(cur))tprintf_s(_T("Failed to make cache \"%s\".\n"), cur->cachePath.c_str());
     }

@@ -14,7 +14,7 @@ public:
         Type type;
         int interger;
         float flotingPoint;
-        TCHAR string[1024];
+        TCHAR string[2048];
     };
 
 private:

@@ -180,6 +180,8 @@ namespace JBF{
                 DWORD style = GetWindowLong(GetHandle(), GWL_STYLE);
                 RECT rc = { 0, 0, size->x, size->y };
 
+                if (ins_displayInfo.Width == size->x && ins_displayInfo.Height == size->y)return S_OK;
+
                 ins_invalidate(D3DERR_DEVICELOST);
 
                 {
