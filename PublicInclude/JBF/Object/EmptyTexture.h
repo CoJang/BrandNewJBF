@@ -40,8 +40,9 @@ namespace JBF{
 
         public:
             INLINE IDirect3DSurface9* GetSurface(UINT level){ return ins_surfaceTable[level]; }
-            INLINE INFO* GetInfo(){ return &ins_info; }
+            INLINE const INFO* GetInfo()const{ return &ins_info; }
         public:
+            INLINE void SetInfo(INFO* inf){ memcpy_s(&ins_info, sizeof ins_info, inf, sizeof ins_info); }
             INLINE void SetValidateCallback(void(*callback)(void* arg), void* arg){ ins_validateCallback = callback; ins_validateCallbackArg = arg; }
         };
     };

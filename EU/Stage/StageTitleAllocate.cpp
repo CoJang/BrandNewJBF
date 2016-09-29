@@ -44,8 +44,13 @@ void StageTitle::ins_initFace(){
         ins_faceObject->SetValidateCallback(
             [](void* arg)->void{
                 auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
-                self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                Object::EmptyTexture::INFO inf;
+
+                memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
+                inf.width = Core::Graphic::GetDisplayInfo()->Width;
+                inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+                self->SetInfo(&inf);
             },
             ins_faceObject
         );
@@ -63,8 +68,13 @@ void StageTitle::ins_initFace(){
         ins_faceGame->SetValidateCallback(
             [](void* arg)->void{
                 auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
-                self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                Object::EmptyTexture::INFO inf;
+
+                memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
+                inf.width = Core::Graphic::GetDisplayInfo()->Width;
+                inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+                self->SetInfo(&inf);
             },
             ins_faceGame
         );
@@ -83,8 +93,13 @@ void StageTitle::ins_initFace(){
             ins_faceLightMask[i]->SetValidateCallback(
                 [](void* arg)->void{
                     auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                    self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
-                    self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                    Object::EmptyTexture::INFO inf;
+
+                    memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
+                    inf.width = Core::Graphic::GetDisplayInfo()->Width;
+                    inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+                    self->SetInfo(&inf);
                 },
                 ins_faceLightMask[i]
             );
@@ -103,8 +118,13 @@ void StageTitle::ins_initFace(){
             ins_faceLight[i]->SetValidateCallback(
                 [](void* arg)->void{
                     auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                    self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
-                    self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                    Object::EmptyTexture::INFO inf;
+
+                    memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
+                    inf.width = Core::Graphic::GetDisplayInfo()->Width;
+                    inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+                    self->SetInfo(&inf);
                 },
                 ins_faceLight[i]
             );
@@ -124,8 +144,13 @@ void StageTitle::ins_initFace(){
             ins_faceTemp[i]->SetValidateCallback(
                 [](void* arg)->void{
                     auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                    self->GetInfo()->width = Core::Graphic::GetDisplayInfo()->Width;
-                    self->GetInfo()->height = Core::Graphic::GetDisplayInfo()->Height;
+                    Object::EmptyTexture::INFO inf;
+
+                    memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
+                    inf.width = Core::Graphic::GetDisplayInfo()->Width;
+                    inf.height = Core::Graphic::GetDisplayInfo()->Height;
+
+                    self->SetInfo(&inf);
                 },
                 ins_faceTemp[i]
             );

@@ -18,9 +18,9 @@ void StageTitle::ins_drawTextureOriginal(const Matrix* matWVP, const Object::Emp
     Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
     Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-    Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-    Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-    Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+    Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+    Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
     ins_sprFrame->SendFaceInfo();
 
@@ -35,9 +35,9 @@ void StageTitle::ins_drawTextureRGBZero(const Matrix* matWVP, const Object::Empt
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
 
     ins_sprFrame->SendFaceInfo();
@@ -54,9 +54,9 @@ void StageTitle::ins_drawTextureLightExtract(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
     {
         Core::Graphic::SetTexture(1, texLight->GetTexture());
@@ -64,9 +64,9 @@ void StageTitle::ins_drawTextureLightExtract(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
 
     ins_sprFrame->SendFaceInfo();
@@ -82,9 +82,9 @@ void StageTitle::ins_drawTextureLightCombine(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
     {
         Core::Graphic::SetTexture(1, texBackLight->GetTexture());
@@ -92,9 +92,9 @@ void StageTitle::ins_drawTextureLightCombine(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(1, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
     {
         Core::Graphic::SetTexture(2, texFrontLight->GetTexture());
@@ -102,9 +102,9 @@ void StageTitle::ins_drawTextureLightCombine(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(2, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(2, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(2, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-        Core::Graphic::SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+        Core::Graphic::SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }
 
     ins_sprFrame->SendFaceInfo();
@@ -121,7 +121,7 @@ void StageTitle::ins_drawTextureUpDownFilter(const Matrix* matWVP, const Object:
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
         Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
         Core::Graphic::SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
     }

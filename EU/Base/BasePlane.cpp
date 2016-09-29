@@ -44,7 +44,7 @@ HRESULT BasePlane::Validate(){
     void* buf;
     HRESULT hr;
 
-    ins_validateCallback(ins_validateCallbackArg);
+    if(ins_validateCallback)ins_validateCallback(ins_validateCallbackArg);
 
     {
         hr = Core::Graphic::CreateVertexBuffer(

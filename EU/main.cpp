@@ -6,7 +6,7 @@
 
 using namespace JBF;
 
-static const Global::Math::Point<WORD> clientSize = { 720, 480 };
+static const Global::Math::Point<WORD> clientSize = { 1920, 1080 };
 static void GameBegin(){
     ArchiveLoad();
     ShaderLoad();
