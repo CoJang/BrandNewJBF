@@ -6,27 +6,35 @@ namespace JBF{
         namespace SystemTimer{
             // Inner variable(s) definition
             ///////////////////////////////////////////
-            static decltype(GetCurrentTick()) ins_tickTable[2];
+            static double ins_frequency;
+
+            static LARGE_INTEGER ins_tickTable[2];
             static decltype(&(*ins_tickTable)) ins_oldTick, ins_curTick;
 
-            static float ins_timeDelta;
+            static double ins_timeDelta;
             ///////////////////////////////////////////
 
-            INLINE std::chrono::steady_clock::time_point GetCurrentTick(){ return std::chrono::steady_clock::now(); }
-
             void Init(){
+                LARGE_INTEGER tmp;
+
+                QueryPerformanceFrequency(&tmp);
+                ins_frequency = 1. / tmp.QuadPart;
+
                 ins_oldTick = &ins_tickTable[0];
                 ins_curTick = &ins_tickTable[1];
 
-                *ins_oldTick = GetCurrentTick();
+                QueryPerformanceCounter(ins_oldTick);
             }
             void Update(){
-                *ins_curTick = GetCurrentTick();
-                ins_timeDelta = std::chrono::duration<decltype(ins_timeDelta), std::milli>((*ins_curTick) - (*ins_oldTick)).count() * 0.001f;
+                QueryPerformanceCounter(ins_curTick);
+
+                ins_timeDelta = (ins_curTick->QuadPart - ins_oldTick->QuadPart);
+                ins_timeDelta *= ins_frequency;
+
                 std::swap(ins_curTick, ins_oldTick);
             }
 
-            INLINE float GetTimeDelta(){ return ins_timeDelta; }
+            INLINE float GetTimeDelta(){ return (float)ins_timeDelta; }
         };
     };
 };

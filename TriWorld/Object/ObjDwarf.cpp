@@ -146,13 +146,39 @@ void ObjDwarf::Init(Global::Archive::Decrypter* arcModel, Global::Archive::Decry
 
 void ObjDwarf::Update(float delta){
     static const float fMoveSpeed = 5;
+    static const float fRotateSpeed = 1;
 
-    Vector3* vPos = (Vector3*)&ins_mWorld._41;
+    static const Matrix mScale = Matrix(
+        5, 0, 0, 0,
+        0, 5, 0, 0,
+        0, 0, 5, 0,
+        0, 0, 0, 1
+    );
 
-    if (Core::Input::KeyDown(Core::Input::DK_W))vPos->z += delta * fMoveSpeed;
-    else if (Core::Input::KeyDown(Core::Input::DK_S))vPos->z -= delta * fMoveSpeed;
-    if (Core::Input::KeyDown(Core::Input::DK_D))vPos->x += delta * fMoveSpeed;
-    else if (Core::Input::KeyDown(Core::Input::DK_A))vPos->x -= delta * fMoveSpeed;
+    static Vector3 vPos = Vector3(0, 0, 0);
+    Matrix mTrans;
+
+    static float fAngle = 0;
+    Matrix mRotate;
+
+    if (Core::Input::KeyDown(Core::Input::DK_E)){
+        fAngle += delta * fRotateSpeed;
+        if (fAngle > PIf * 2)fAngle = 0;
+    }
+    else if (Core::Input::KeyDown(Core::Input::DK_Q)){
+        fAngle -= delta * fRotateSpeed;
+        if (fAngle < 0)fAngle = PIf * 2;
+    }
+
+    if (Core::Input::KeyDown(Core::Input::DK_S))vPos.z += delta * fMoveSpeed;
+    else if (Core::Input::KeyDown(Core::Input::DK_W))vPos.z -= delta * fMoveSpeed;
+    if (Core::Input::KeyDown(Core::Input::DK_D))vPos.x += delta * fMoveSpeed;
+    else if (Core::Input::KeyDown(Core::Input::DK_A))vPos.x -= delta * fMoveSpeed;
+
+    MatrixRotationY(&mRotate, fAngle);
+    MatrixTranslation(&mTrans, &vPos);
+
+    ins_mWorld = mScale * mRotate * mTrans;
 }
 
 struct _CALLBACK_ARG{
