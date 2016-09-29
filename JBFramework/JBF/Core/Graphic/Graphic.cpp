@@ -235,6 +235,12 @@ namespace JBF{
             INLINE HRESULT GetVertexDeclaration(IDirect3DVertexDeclaration9** ppDecl){ return ins_device->GetVertexDeclaration(ppDecl); }
             INLINE HRESULT SetVertexDeclaration(IDirect3DVertexDeclaration9* pDecl){ return ins_device->SetVertexDeclaration(pDecl); }
 
+            INLINE HRESULT GetVertexShader(IDirect3DVertexShader9** ppShader){ return ins_device->GetVertexShader(ppShader); }
+            INLINE HRESULT SetVertexShader(IDirect3DVertexShader9* pShader){ return ins_device->SetVertexShader(pShader); }
+
+            INLINE HRESULT GetPixelShader(IDirect3DPixelShader9** ppShader){ return ins_device->GetPixelShader(ppShader); }
+            INLINE HRESULT SetPixelShader(IDirect3DPixelShader9* pShader){ return ins_device->SetPixelShader(pShader); }
+
             INLINE HRESULT GetIndices(IDirect3DIndexBuffer9** ppIndexData){ return ins_device->GetIndices(ppIndexData); }
             INLINE HRESULT SetIndices(IDirect3DIndexBuffer9* pIndexData){ return ins_device->SetIndices(pIndexData); }
 

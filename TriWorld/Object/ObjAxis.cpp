@@ -122,6 +122,9 @@ void ObjAxis::Draw(){
     Core::Graphic::SetTexture(1, nullptr);
     Core::Graphic::SetTexture(2, nullptr);
 
+    Core::Graphic::SetVertexShader(nullptr);
+    Core::Graphic::SetPixelShader(nullptr);
+
     Core::Graphic::SetFVF(FORMAT_VERTEX::FVF);
     Core::Graphic::SetStreamSource(0, ins_vBuf, 0, sizeof FORMAT_VERTEX);
 

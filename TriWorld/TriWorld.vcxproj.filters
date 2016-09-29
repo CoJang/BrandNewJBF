@@ -36,6 +36,9 @@
     <ClCompile Include="Object\ObjDwarf.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Public\ShaderTable.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -84,6 +87,9 @@
     <ClInclude Include="Object\ObjDwarf.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Public\ShaderTable.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -101,5 +107,13 @@
     <Filter Include="Public">
       <UniqueIdentifier>{03519b88-42c8-4273-8648-139c52ebad92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9b021c9c-0191-4f6b-93de-ff8f0931d7e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\light.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

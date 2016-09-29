@@ -48,7 +48,7 @@ namespace JBF{
                 return _new;
             }
         public:
-            void Release(){
+            virtual void Release(){
                 auto itr = ins_table.find(ins_file);
 
                 if (itr == ins_table.end())return;

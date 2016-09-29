@@ -40,6 +40,12 @@ namespace JBF{
             extern INLINE HRESULT GetVertexDeclaration(IDirect3DVertexDeclaration9** ppDecl);
             extern INLINE HRESULT SetVertexDeclaration(IDirect3DVertexDeclaration9* pDecl);
 
+            extern INLINE HRESULT GetVertexShader(IDirect3DVertexShader9** ppShader);
+            extern INLINE HRESULT SetVertexShader(IDirect3DVertexShader9* pShader);
+
+            extern INLINE HRESULT GetPixelShader(IDirect3DPixelShader9** ppShader);
+            extern INLINE HRESULT SetPixelShader(IDirect3DPixelShader9* pShader);
+
             extern INLINE HRESULT GetIndices(IDirect3DIndexBuffer9** ppIndexData);
             extern INLINE HRESULT SetIndices(IDirect3DIndexBuffer9* pIndexData);
 

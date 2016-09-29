@@ -56,10 +56,11 @@ void StageTest::Init(){
 
         envLight.Type = D3DLIGHT_DIRECTIONAL;
 
-        envLight.Diffuse = D3DXCOLOR(1, 1, 1, 1);
+        envLight.Diffuse = D3DXCOLOR(0.8, 0.8, 0.8, 1);
+        envLight.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
         envLight.Specular = D3DXCOLOR(1, 1, 1, 1);
 
-        envLight.Range = 10000.f;
+        envLight.Range = 1000.f;
     }
 
     { // Variable init
@@ -99,6 +100,9 @@ void StageTest::Cleanup(){
 }
 
 void StageTest::Update(float delta){
+    static const float fHeroSpeed = 5.f;
+    static Vector3 vHeroPos = { 0, 0, 0 };
+
     { // Control update
 #ifdef _DEBUG
         {
@@ -112,28 +116,37 @@ void StageTest::Update(float delta){
         }
 #endif
 
+        if (Core::Input::KeyDown(Core::Input::DK_W))vHeroPos.z += delta * fHeroSpeed;
+        else if (Core::Input::KeyDown(Core::Input::DK_S))vHeroPos.z -= delta * fHeroSpeed;
+        if (Core::Input::KeyDown(Core::Input::DK_D))vHeroPos.x += delta * fHeroSpeed;
+        else if (Core::Input::KeyDown(Core::Input::DK_A))vHeroPos.x -= delta * fHeroSpeed;
+
         if (Core::Input::KeyPressed(Core::Input::DK_F2))bGridSwitch ^= true;
         if (Core::Input::KeyPressed(Core::Input::DK_F3))bAxisSwitch ^= true;
     }
 
     { // Camera update
-        static const Vector3 vCamLookAt(0.f, 5.f, 0.f);
+        Vector3 vCamLookAt(vHeroPos.x, 5.f, vHeroPos.z);
 
         objCamera->Update(&vCamLookAt);
     }
 
     { // Environment update
         static float fLightRotation = PIf * 2.f;
-        Vector3 vLightDir = Vector3(Sin(fLightRotation), -1, Cos(fLightRotation));
+        Vector3 vLight = Vector3(Sin(fLightRotation), -1, Cos(fLightRotation));
 
-        fLightRotation -= delta * 0.6f;
+        fLightRotation -= delta * 1.f;
         if (fLightRotation < 0.f)fLightRotation = PIf * 2.f;
 
-        vLightDir.normalize();
-        envLight.Direction = { vLightDir.x, vLightDir.y, vLightDir.z };
+        vLight.normalize();
+        //envLight.Direction = { vLight.x, vLight.y, vLight.z };
 
-        Core::Graphic::GetDevice()->SetLight(0, &envLight);
-        Core::Graphic::GetDevice()->LightEnable(0, TRUE);
+        {
+            shadLight->SetVector("l_d", (const Vector4*)&envLight.Diffuse);
+            shadLight->SetVector("l_a", (const Vector4*)&envLight.Ambient);
+            shadLight->SetVector("l_s", (const Vector4*)&envLight.Specular);
+            shadLight->SetVector("l_r", (const Vector4*)&vLight);
+        }
     }
 
     { // Guide object update
@@ -148,13 +161,11 @@ void StageTest::Update(float delta){
         objPlane->TurnAround(&vPlaneCenter, fPlaneTurnRad, fPlaneSpeed);
         objPlane->Update(delta);
 
+        objDwarf->SetPosition(&vHeroPos);
         objDwarf->Update(delta);
     }
 }
 void StageTest::Draw(){
-    Graphic::SetRenderState(D3DRS_LIGHTING, TRUE);
-    Graphic::SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f));
-
     if (FAILED(Graphic::GetDevice()->BeginScene()))return;
     Graphic::GetDevice()->Clear(
         0,
@@ -168,8 +179,8 @@ void StageTest::Draw(){
     if (bGridSwitch)objGrid->Draw();
 
     {
-        objPlane->Draw();
-        objDwarf->Draw();
+        objPlane->Draw(shadLight);
+        objDwarf->Draw(shadLight);
     }
 
     if (bAxisSwitch)objAxis->Draw();

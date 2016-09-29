@@ -12,6 +12,9 @@ protected:
     ARCHIVE_HASHSIZE ins_fileName;
 
 protected:
+    Object::ExternalTexture* ins_texWhite;
+
+protected:
     BaseXFormatMesh();
     virtual ~BaseXFormatMesh();
 

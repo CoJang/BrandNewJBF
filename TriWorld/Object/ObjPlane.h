@@ -38,7 +38,7 @@ public:
 
 public:
     void Update(float delta);
-    void Draw();
+    void Draw(Object::Shader* shader);
 
 public:
     void TurnAround(const Vector3* pCenter, const float fRad, const float fSpeed);

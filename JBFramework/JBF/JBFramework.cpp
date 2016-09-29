@@ -23,12 +23,8 @@ namespace JBF{
         Object::ExternalTexture::InitTable();
 
         Core::SystemTimer::Init();
-
-        Manager::Stage::Init();
     }
     static void ins_cleanupApp(){
-        Manager::Stage::Release();
-
         Object::ExternalTexture::ReleaseTable();
         Object::Shader::ReleaseTable();
 
@@ -140,6 +136,7 @@ namespace JBF{
         ASSERT(ins_mainHandle != nullptr, _T("Failed to create window."));
 
         ins_initApp(size);
+        Manager::Stage::Init();
         if (appStartup)appStartup();
 
         ShowWindow(ins_mainHandle, SW_SHOWDEFAULT);
@@ -154,6 +151,7 @@ namespace JBF{
             if (msg.message == WM_QUIT)break;
         } while (ins_updateApp());
 
+        Manager::Stage::Release();
         if (appEndup)appEndup();
         ins_cleanupApp();
 

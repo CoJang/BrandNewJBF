@@ -5,6 +5,7 @@
 
 extern JBF::Global::Archive::Decrypter arcModels;
 extern JBF::Global::Archive::Decrypter arcTextures;
+extern JBF::Global::Archive::Decrypter arcShaders;
 
 
 extern void ArchiveLoad();
