@@ -100,7 +100,6 @@ void StageTest::Cleanup(){
 }
 
 void StageTest::Update(float delta){
-    static const float fHeroSpeed = 5.f;
     static Vector3 vHeroPos = { 0, 0, 0 };
 
     { // Control update
@@ -115,11 +114,6 @@ void StageTest::Update(float delta){
             }
         }
 #endif
-
-        if (Core::Input::KeyDown(Core::Input::DK_W))vHeroPos.z += delta * fHeroSpeed;
-        else if (Core::Input::KeyDown(Core::Input::DK_S))vHeroPos.z -= delta * fHeroSpeed;
-        if (Core::Input::KeyDown(Core::Input::DK_D))vHeroPos.x += delta * fHeroSpeed;
-        else if (Core::Input::KeyDown(Core::Input::DK_A))vHeroPos.x -= delta * fHeroSpeed;
 
         if (Core::Input::KeyPressed(Core::Input::DK_F2))bGridSwitch ^= true;
         if (Core::Input::KeyPressed(Core::Input::DK_F3))bAxisSwitch ^= true;
@@ -161,7 +155,7 @@ void StageTest::Update(float delta){
         objPlane->TurnAround(&vPlaneCenter, fPlaneTurnRad, fPlaneSpeed);
         objPlane->Update(delta);
 
-        objDwarf->SetPosition(&vHeroPos);
+        vHeroPos = *objDwarf->GetPosition();
         objDwarf->Update(delta);
     }
 }

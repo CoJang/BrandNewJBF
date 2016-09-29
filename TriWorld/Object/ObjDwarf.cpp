@@ -145,7 +145,14 @@ void ObjDwarf::Init(Global::Archive::Decrypter* arcModel, Global::Archive::Decry
 }
 
 void ObjDwarf::Update(float delta){
+    static const float fMoveSpeed = 5;
 
+    Vector3* vPos = (Vector3*)&ins_mWorld._41;
+
+    if (Core::Input::KeyDown(Core::Input::DK_W))vPos->z += delta * fMoveSpeed;
+    else if (Core::Input::KeyDown(Core::Input::DK_S))vPos->z -= delta * fMoveSpeed;
+    if (Core::Input::KeyDown(Core::Input::DK_D))vPos->x += delta * fMoveSpeed;
+    else if (Core::Input::KeyDown(Core::Input::DK_A))vPos->x -= delta * fMoveSpeed;
 }
 
 struct _CALLBACK_ARG{
