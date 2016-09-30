@@ -13,9 +13,9 @@ namespace JBF{
             static const float PIf = 3.1415926535897932384626433832795f;
 
             static const double RAD2DEGd = 180. / PId;
-            static const double RAD2DEGf = 180.f / PIf;
+            static const float RAD2DEGf = 180.f / PIf;
             static const double DEG2RADd = PId / 180.;
-            static const double DEG2RADf = PIf / 180.f;
+            static const float DEG2RADf = PIf / 180.f;
         };
     };
 };
