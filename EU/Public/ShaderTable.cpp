@@ -14,7 +14,7 @@ JBF::Object::Shader* shadLightCombine;
 
 JBF::Object::Shader* shadBright;
 JBF::Object::Shader* shadBlur;
-JBF::Object::Shader* shadCombine;
+JBF::Object::Shader* shadBloomCombine;
 
 JBF::Object::Shader* shadDistortion;
 
@@ -28,7 +28,7 @@ void ShaderLoad(){
 
     if (!(shadBright = JBF::Object::Shader::Read(&arcShaders, SHADER_FILENAME(_T("Bright.fxo")))))return;
     if (!(shadBlur = JBF::Object::Shader::Read(&arcShaders, SHADER_FILENAME(_T("Blur.fxo")))))return;
-    if (!(shadCombine = JBF::Object::Shader::Read(&arcShaders, SHADER_FILENAME(_T("Combine.fxo")))))return;
+    if (!(shadBloomCombine = JBF::Object::Shader::Read(&arcShaders, SHADER_FILENAME(_T("BloomCombine.fxo")))))return;
 
     if (!(shadDistortion = JBF::Object::Shader::Read(&arcShaders, SHADER_FILENAME(_T("CubicDistortion.fxo")))))return;
 }
@@ -41,7 +41,7 @@ void ShaderCleanup(){
 
     RELEASE(shadBright);
     RELEASE(shadBlur);
-    RELEASE(shadCombine);
+    RELEASE(shadBloomCombine);
 
     RELEASE(shadDistortion);
 }

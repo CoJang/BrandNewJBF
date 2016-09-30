@@ -6,20 +6,17 @@
 using namespace JBF;
 using namespace JBF::Global::Math;
 
-class ObjBackground{
+class ObjBackground : BaseObject{
 private:
-    BasePlane* ins_sprFrame;
-
-    Object::ExternalTexture* ins_texBase;
     Object::ExternalTexture* ins_texLightMask;
 
 private:
     ObjBackground();
-    ~ObjBackground();
+    virtual ~ObjBackground();
 
 public:
     static ObjBackground* Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask);
-    void Release();
+    virtual void Release();
 
 public:
     void DrawBase(const Matrix* matVP);

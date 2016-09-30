@@ -36,7 +36,8 @@ float4 frag(float2 uv : TEXCOORD0) : COLOR0{
     float3 light = tex2D(sampLight, uv);
     float3 mask = tex2D(sampMask, uv);
 
-    light -= mask.r;
+    light += pow(max(light, 0), 4) * mask.b;
+    light -= mask.r * (1 - mask.b);
     light = saturate(light);
 
     return float4(light, 1);

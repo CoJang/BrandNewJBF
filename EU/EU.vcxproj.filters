@@ -42,6 +42,12 @@
     <ClCompile Include="Stage\StageTitleUtility.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Object\ObjLight.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\BaseObject.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -84,6 +90,12 @@
     <ClInclude Include="Object\ObjBackground.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Object\ObjLight.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\BaseObject.h">
+      <Filter>Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -109,9 +121,6 @@
     <FxCompile Include="Shader\Blur.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\Combine.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="Shader\CubicDistortion.fx">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -125,6 +134,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\LightCombine.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BloomCombine.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

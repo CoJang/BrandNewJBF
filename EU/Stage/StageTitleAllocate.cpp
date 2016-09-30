@@ -35,7 +35,7 @@ void StageTitle::ins_initFace(){
     {
         inf.pool = D3DPOOL_DEFAULT;
         inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = D3DFMT_A8B8G8R8;
+        inf.format = D3DFMT_A8R8G8B8;
         inf.mipLevels = 1;
         inf.width = Core::Graphic::GetDisplayInfo()->Width;
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
@@ -130,42 +130,16 @@ void StageTitle::ins_initFace(){
             );
         }
     }
-
-    {
-        inf.pool = D3DPOOL_DEFAULT;
-        inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = D3DFMT_X8B8G8R8;
-        inf.mipLevels = 1;
-        inf.width = Core::Graphic::GetDisplayInfo()->Width;
-        inf.height = Core::Graphic::GetDisplayInfo()->Height;
-
-        for (size_t i = 0; i < _countof(ins_faceTemp); ++i){
-            ins_faceTemp[i] = Object::EmptyTexture::Create(&inf);
-            ins_faceTemp[i]->SetValidateCallback(
-                [](void* arg)->void{
-                    auto self = reinterpret_cast<Object::EmptyTexture*>(arg);
-                    Object::EmptyTexture::INFO inf;
-
-                    memcpy_s(&inf, sizeof inf, self->GetInfo(), sizeof inf);
-                    inf.width = Core::Graphic::GetDisplayInfo()->Width;
-                    inf.height = Core::Graphic::GetDisplayInfo()->Height;
-
-                    self->SetInfo(&inf);
-                },
-                ins_faceTemp[i]
-            );
-        }
-    }
 }
 void StageTitle::ins_initFrame(){
     Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
 
-    ins_sprFrame = BasePlane::Create(&size);
+    ins_sprFrame = BasePlane::Create(&size, &Vector2(-0.5f, -0.5f));
     ins_sprFrame->SetValidateCallback(
         [](void* arg)->void{
             Vector2 size = Vector2(Core::Graphic::GetDisplayInfo()->Width, Core::Graphic::GetDisplayInfo()->Height);
             auto self = reinterpret_cast<BasePlane*>(arg);
-            self->Resize(&size);
+            self->Resize(&size, &Vector2(-0.5f, -0.5f));
         },
         ins_sprFrame
     );
@@ -177,6 +151,9 @@ void StageTitle::ins_initObject(){
         RES_FILENAME(_T("Background/title.png")),
         RES_FILENAME(_T("Background/title_mask.png"))
     );
+    ins_objBackLight = ObjLight::Create(
+        RES_FILENAME(_T("Light/title_backLight.png"))
+    );
 }
 
 void StageTitle::ins_releaseMatrix(){
@@ -187,7 +164,6 @@ void StageTitle::ins_releaseFace(){
     RELEASE(ins_faceGame);
     for (size_t i = 0; i < _countof(ins_faceLightMask); ++i)RELEASE(ins_faceLightMask[i]);
     for (size_t i = 0; i < _countof(ins_faceLight); ++i)RELEASE(ins_faceLight[i]);
-    for (size_t i = 0; i < _countof(ins_faceTemp); ++i)RELEASE(ins_faceTemp[i]);
 }
 void StageTitle::ins_releaseFrame(){
     RELEASE(ins_sprFrame);

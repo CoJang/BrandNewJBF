@@ -49,6 +49,13 @@ private:
     void ins_drawTextureLightCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBackLight, const Object::EmptyTexture* texFrontLight);
 
     void ins_drawTextureUpDownFilter(const Matrix* matWVP, const Object::EmptyTexture* texture);
+    
+    void ins_drawTextureBrighRegion(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBackLight, const Object::EmptyTexture* texFrontLight);
+
+    void ins_drawTextureBlurHorz(const Matrix* matWVP, const Object::EmptyTexture* texture);
+    void ins_drawTextureBlurVert(const Matrix* matWVP, const Object::EmptyTexture* texture);
+
+    void ins_drawTextureBloomCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom);
 
 private:
     Matrix ins_matFrame;
@@ -63,8 +70,8 @@ private:
     Object::EmptyTexture* ins_faceGame;
     Object::EmptyTexture* ins_faceLightMask[2];
     Object::EmptyTexture* ins_faceLight[3];
-    Object::EmptyTexture* ins_faceTemp[2];
 
 private:
     ObjBackground* ins_objBackground;
+    ObjLight* ins_objBackLight;
 };

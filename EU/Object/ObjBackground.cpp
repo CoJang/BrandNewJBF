@@ -3,7 +3,7 @@
 #include"Public/Public.h"
 #include"Object.h"
 
-ObjBackground::ObjBackground() : ins_texBase(nullptr), ins_texLightMask(nullptr), ins_sprFrame(nullptr){}
+ObjBackground::ObjBackground() : ins_texLightMask(nullptr){}
 ObjBackground::~ObjBackground(){}
 
 ObjBackground* ObjBackground::Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask){
@@ -17,7 +17,7 @@ ObjBackground* ObjBackground::Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE 
         planSize.x = _new->ins_texBase->GetInfo()->Width;
         planSize.y = _new->ins_texBase->GetInfo()->Height;
 
-        if(!(_new->ins_sprFrame = BasePlane::Create(&planSize)))goto FAILED_FUNC;
+        if(!(_new->ins_sprFrame = BasePlane::Create(&planSize,&Vector2(-0.5f, -0.5f))))goto FAILED_FUNC;
     }
 
     if (!(_new->ins_texLightMask = Object::ExternalTexture::Read(&arcSprites, texLightMask)))goto FAILED_FUNC;
@@ -29,11 +29,9 @@ FAILED_FUNC:
     return nullptr;
 }
 void ObjBackground::Release(){
-    if(ins_texBase)RELEASE(ins_texBase);
     if(ins_texLightMask)RELEASE(ins_texLightMask);
 
-    if(ins_sprFrame)RELEASE(ins_sprFrame);
-
+    BaseObject::Release();
     delete this;
 }
 

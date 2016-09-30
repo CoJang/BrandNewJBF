@@ -11,7 +11,7 @@ extern JBF::Object::Shader* shadLightCombine;
 
 extern JBF::Object::Shader* shadBright;
 extern JBF::Object::Shader* shadBlur;
-extern JBF::Object::Shader* shadCombine;
+extern JBF::Object::Shader* shadBloomCombine;
 
 extern JBF::Object::Shader* shadDistortion;
 

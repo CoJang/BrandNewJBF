@@ -235,14 +235,14 @@ void StageTest::ins_drawTextureBlurVert(const Matrix* matWVP, const Object::Empt
     shadBlur->IteratePass("main_v", 0, _drawCallback, sprFrame);
 }
 void StageTest::ins_drawTextureCombine(const Matrix* matWVP, const Object::EmptyTexture* texBase, const Object::EmptyTexture* texBloom){
-    shadCombine->SetMatrix("matWVP", matWVP);
+    shadBloomCombine->SetMatrix("matWVP", matWVP);
 
     Core::Graphic::SetTexture(0, texBase->GetTexture());
     Core::Graphic::SetTexture(1, texBloom->GetTexture());
 
     sprFrame->SendFaceInfo();
 
-    shadCombine->IteratePass(0, _drawCallback, sprFrame);
+    shadBloomCombine->IteratePass(0, _drawCallback, sprFrame);
 }
 void StageTest::ins_drawTextureDistortion(const Matrix* matWVP, const Object::EmptyTexture* texture){
     shadDistortion->SetMatrix("matWVP", matWVP);

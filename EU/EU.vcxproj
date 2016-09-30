@@ -173,10 +173,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\BaseObject.cpp" />
     <ClCompile Include="Base\BasePlane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ObjBackground.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp" />
+    <ClCompile Include="Object\ObjLight.cpp" />
     <ClCompile Include="Object\ObjTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -196,10 +198,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Base\BaseObject.h" />
     <ClInclude Include="Base\BasePlane.h" />
     <ClInclude Include="Object\ObjBackground.h" />
     <ClInclude Include="Object\ObjCamera.h" />
     <ClInclude Include="Object\Object.h" />
+    <ClInclude Include="Object\ObjLight.h" />
     <ClInclude Include="Object\ObjTest.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Public\ArchiveTable.h" />
@@ -273,7 +277,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">2.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Shader\Combine.fx">
+    <FxCompile Include="Shader\BloomCombine.fx">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)RawContent\EU_Shaders\%(Filename).fxo</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)RawContent\EU_Shaders\%(Filename).fxo</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)RawContent\EU_Shaders\%(Filename).fxo</ObjectFileOutput>

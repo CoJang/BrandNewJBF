@@ -14,17 +14,17 @@ const BasePlane::INDEX BasePlane::ins_indRaw[] = {
 BasePlane::BasePlane() : Base::DXResource(RESTYPE_MANAGE), ins_vertBuf(nullptr), ins_indBuf(nullptr), ins_vertDecl(nullptr){}
 BasePlane::~BasePlane(){ Invalidate(); }
 
-BasePlane* BasePlane::Create(const Global::Math::Vector2* size){
+BasePlane* BasePlane::Create(const Global::Math::Vector2* size, const Global::Math::Vector2* offset){
     auto _new = new BasePlane();
 
-    _new->Resize(size);
+    _new->Resize(size, offset);
     if (FAILED(_new->Validate()))return nullptr;
 
     return _new;
 }
 void BasePlane::Release(){ delete this; }
 
-void BasePlane::Resize(const Global::Math::Vector2* size){
+void BasePlane::Resize(const Global::Math::Vector2* size, const Global::Math::Vector2* offset){
     /*
     v0---v1
     |\    |
@@ -34,10 +34,10 @@ void BasePlane::Resize(const Global::Math::Vector2* size){
     |    \|
     v3---v2
     */
-    ins_vertRaw[0] = { { 0.f, 0.f, 0.f },{ 0.f, 0.f } };
-    ins_vertRaw[1] = { { size->x, 0.f, 0.f },{ 1.f, 0.f } };
-    ins_vertRaw[2] = { { size->x, -size->y, 0.f },{ 1.f, 1.f } };
-    ins_vertRaw[3] = { { 0.f, -size->y, 0.f },{ 0.f, 1.f } };
+    ins_vertRaw[0] = { { offset->x, offset->y, 0.f },{ 0.f, 0.f } };
+    ins_vertRaw[1] = { { size->x + offset->x, offset->y, 0.f },{ 1.f, 0.f } };
+    ins_vertRaw[2] = { { size->x + offset->x, -size->y + offset->y, 0.f },{ 1.f, 1.f } };
+    ins_vertRaw[3] = { { offset->x, -size->y + offset->y, 0.f },{ 0.f, 1.f } };
 }
 
 HRESULT BasePlane::Validate(){

@@ -37,11 +37,13 @@ private:
     virtual ~BasePlane();
 
 public:
-    static BasePlane* Create(const Global::Math::Vector2* size);
+    static BasePlane* Create(const Global::Math::Vector2* size, const Global::Math::Vector2* offset);
+    static INLINE BasePlane* Create(const Global::Math::Vector2* size){ return Create(size, &Global::Math::Vector2(0, 0)); }
     void Release();
 
 public:
-    void Resize(const Global::Math::Vector2* size);
+    void Resize(const Global::Math::Vector2* size, const Global::Math::Vector2* offset);
+    INLINE void Resize(const Global::Math::Vector2* size){ Resize(size, &Global::Math::Vector2(0, 0)); }
 
 public:
     virtual HRESULT Validate();
