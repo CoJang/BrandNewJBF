@@ -27,25 +27,23 @@ FAILED_FUNC:
     RELEASE(_new);
     return nullptr;
 }
-void ObjLight::Release(){
-    BaseObject::Release();
-    Global::Alloc::DeleteCustomAligned(this);
+
+void ObjLight::Update(float delta, const Matrix* matVP){
+    ins_matWVP = ins_matWorld * (*matVP);
 }
 
 static HRESULT _draw_callback(void* rawObj){
     auto obj = (BasePlane*)rawObj;
     return obj->Draw();
 }
-void ObjLight::DrawBase(const Matrix* matVP){
-    Matrix matWVP = ins_matWorld * (*matVP);
-
-    shadBasic->SetMatrix("matWVP", &matWVP);
+void ObjLight::DrawBase(){
+    shadBasic->SetMatrix("matWVP", &ins_matWVP);
 
     {
         Core::Graphic::SetTexture(0, ins_texBase->GetTexture());
 
-        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+        Core::Graphic::SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
         Core::Graphic::SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
         Core::Graphic::SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);

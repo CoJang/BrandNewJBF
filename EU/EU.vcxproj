@@ -178,6 +178,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\ObjBackground.cpp" />
     <ClCompile Include="Object\ObjCamera.cpp" />
+    <ClCompile Include="Object\ObjForeground.cpp" />
     <ClCompile Include="Object\ObjLight.cpp" />
     <ClCompile Include="Object\ObjTest.cpp" />
     <ClCompile Include="pch.cpp">
@@ -203,6 +204,7 @@
     <ClInclude Include="Object\ObjBackground.h" />
     <ClInclude Include="Object\ObjCamera.h" />
     <ClInclude Include="Object\Object.h" />
+    <ClInclude Include="Object\ObjForeground.h" />
     <ClInclude Include="Object\ObjLight.h" />
     <ClInclude Include="Object\ObjTest.h" />
     <ClInclude Include="pch.h" />

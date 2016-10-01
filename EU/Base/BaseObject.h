@@ -14,6 +14,9 @@ protected:
     Object::ExternalTexture* ins_texBase;
 
 protected:
+    Matrix ins_matWVP;
+
+protected:
     BaseObject();
     virtual ~BaseObject();
 
@@ -21,5 +24,11 @@ public:
     virtual void Release();
 
 public:
-    virtual void DrawBase(const Matrix* matVP) = 0;
+    virtual void Update(float delta, const Matrix* matVP);
+
+public:
+    virtual void DrawBase() = 0;
+
+public:
+    template<class T> friend void Global::Alloc::DeleteCustomAligned(T*);
 };

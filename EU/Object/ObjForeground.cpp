@@ -3,11 +3,11 @@
 #include"Public/Public.h"
 #include"Object.h"
 
-ObjBackground::ObjBackground() : ins_texLightMask(nullptr){}
-ObjBackground::~ObjBackground(){}
+ObjForeground::ObjForeground() : ins_texLightMask(nullptr), ins_matWorld(Matrix::constIdentity){}
+ObjForeground::~ObjForeground(){}
 
-ObjBackground* ObjBackground::Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask){
-    auto _new = Global::Alloc::NewCustomAligned<ObjBackground>(32);
+ObjForeground* ObjForeground::Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask){
+    auto _new = Global::Alloc::NewCustomAligned<ObjForeground>(32);
 
     if (!(_new->ins_texBase = Object::ExternalTexture::Read(&arcSprites, texBase)))goto FAILED_FUNC;
 
@@ -17,7 +17,7 @@ ObjBackground* ObjBackground::Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE 
         planSize.x = _new->ins_texBase->GetInfo()->Width;
         planSize.y = _new->ins_texBase->GetInfo()->Height;
 
-        if(!(_new->ins_sprFrame = BasePlane::Create(&planSize,&Vector2(-0.5f, -0.5f))))goto FAILED_FUNC;
+        if (!(_new->ins_sprFrame = BasePlane::Create(&planSize, &Vector2(-0.5f, -0.5f))))goto FAILED_FUNC;
     }
 
     if (!(_new->ins_texLightMask = Object::ExternalTexture::Read(&arcSprites, texLightMask)))goto FAILED_FUNC;
@@ -28,17 +28,26 @@ FAILED_FUNC:
     RELEASE(_new);
     return nullptr;
 }
-void ObjBackground::Release(){
-    if(ins_texLightMask)RELEASE(ins_texLightMask);
+void ObjForeground::Release(){
+    if (ins_texLightMask)RELEASE(ins_texLightMask);
 
     BaseObject::Release();
+}
+
+void ObjForeground::SetPosition(const Vector3* pos){
+    *(Vector3*)&ins_matWorld._41 = *pos;
+    ins_matWorld._44 = 1;
+}
+
+void ObjForeground::Update(float delta, const Matrix* matVP){
+    ins_matWVP = ins_matWorld * (*matVP);
 }
 
 static HRESULT _draw_callback(void* rawObj){
     auto obj = (BasePlane*)rawObj;
     return obj->Draw();
 }
-void ObjBackground::DrawBase(){
+void ObjForeground::DrawBase(){
     shadBasic->SetMatrix("matWVP", &ins_matWVP);
 
     {
@@ -56,7 +65,7 @@ void ObjBackground::DrawBase(){
 
     shadBasic->IteratePass(0, _draw_callback, ins_sprFrame);
 }
-void ObjBackground::DrawLightMask(){
+void ObjForeground::DrawLightMask(){
     shadBasic->SetMatrix("matWVP", &ins_matWVP);
 
     {

@@ -48,6 +48,9 @@
     <ClCompile Include="Base\BaseObject.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Object\ObjForeground.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -96,6 +99,9 @@
     <ClInclude Include="Base\BaseObject.h">
       <Filter>Base</Filter>
     </ClInclude>
+    <ClInclude Include="Object\ObjForeground.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -127,9 +133,6 @@
     <FxCompile Include="Shader\Basic.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\RGBZero.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="Shader\LightExtract.fx">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -137,6 +140,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\BloomCombine.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RGBZero.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+#include<forward_list>
 #include"JBF/JBFramework.h"
 
+#include"Base/Base.h"
 #include"Object/Object.h"
 
 using namespace JBF;
@@ -72,6 +74,14 @@ private:
     Object::EmptyTexture* ins_faceLight[3];
 
 private:
+    std::forward_list<BaseObject*> ins_objTable;
+
     ObjBackground* ins_objBackground;
+    ObjForeground* ins_objSofa;
+
     ObjLight* ins_objBackLight;
+    ObjLight* ins_objFrontLight;
+
+
+    ObjLight* ins_objPlayer;
 };

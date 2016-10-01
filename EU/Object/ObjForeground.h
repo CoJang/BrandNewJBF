@@ -6,17 +6,26 @@
 using namespace JBF;
 using namespace JBF::Global::Math;
 
-class ObjBackground : public BaseObject{
+class ObjForeground : public BaseObject{
 private:
     Object::ExternalTexture* ins_texLightMask;
 
 private:
-    ObjBackground();
-    virtual ~ObjBackground();
+    Matrix ins_matWorld;
+
+private:
+    ObjForeground();
+    virtual ~ObjForeground();
 
 public:
-    static ObjBackground* Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask);
+    static ObjForeground* Create(ARCHIVE_HASHSIZE texBase, ARCHIVE_HASHSIZE texLightMask);
     virtual void Release();
+
+public:
+    void SetPosition(const Vector3* pos);
+
+public:
+    virtual void Update(float delta, const Matrix* matVP);
 
 public:
     void DrawBase();

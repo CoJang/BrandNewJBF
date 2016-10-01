@@ -17,10 +17,6 @@ struct VS_OUTPUT{
     float4 pos : POSITION;
     float2 uv : TEXCOORD0;
 };
-
-struct PS_INPUT{
-    float2 uv : TEXCOORD0;
-};
 ///////////////////////////////////////////
 
 // Shader function(s) definition

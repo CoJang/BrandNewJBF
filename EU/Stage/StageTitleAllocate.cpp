@@ -59,7 +59,7 @@ void StageTitle::ins_initFace(){
     {
         inf.pool = D3DPOOL_DEFAULT;
         inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = D3DFMT_R8G8B8;
+        inf.format = D3DFMT_X8R8G8B8;
         inf.mipLevels = 1;
         inf.width = Core::Graphic::GetDisplayInfo()->Width;
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
@@ -83,7 +83,7 @@ void StageTitle::ins_initFace(){
     {
         inf.pool = D3DPOOL_DEFAULT;
         inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = D3DFMT_R8G8B8;
+        inf.format = D3DFMT_X8R8G8B8;
         inf.mipLevels = 1;
         inf.width = Core::Graphic::GetDisplayInfo()->Width;
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
@@ -108,7 +108,7 @@ void StageTitle::ins_initFace(){
     {
         inf.pool = D3DPOOL_DEFAULT;
         inf.usage = D3DUSAGE_RENDERTARGET;
-        inf.format = D3DFMT_R8G8B8;
+        inf.format = D3DFMT_X8R8G8B8;
         inf.mipLevels = 1;
         inf.width = Core::Graphic::GetDisplayInfo()->Width;
         inf.height = Core::Graphic::GetDisplayInfo()->Height;
@@ -148,12 +148,32 @@ void StageTitle::ins_initObject(){
     objCamera->Init();
 
     ins_objBackground = ObjBackground::Create(
-        RES_FILENAME(_T("Background/title.png")),
-        RES_FILENAME(_T("Background/title_mask.png"))
+        RES_FILENAME(_T("Background/Title/background.png")),
+        RES_FILENAME(_T("Background/Title/background_mask.png"))
     );
+    ins_objTable.emplace_front(ins_objBackground);
+
+    ins_objSofa = ObjForeground::Create(
+        RES_FILENAME(_T("Foreground/Title/sofa.png")),
+        RES_FILENAME(_T("Foreground/Title/sofa_mask.png"))
+    );
+    ins_objSofa->SetPosition(&Vector3(645, -631, 0));
+    ins_objTable.emplace_front(ins_objSofa);
+
     ins_objBackLight = ObjLight::Create(
-        RES_FILENAME(_T("Light/title_backLight.png"))
+        RES_FILENAME(_T("Light/Title/backLight.png"))
     );
+    ins_objTable.emplace_front(ins_objBackLight);
+    ins_objFrontLight = ObjLight::Create(
+        RES_FILENAME(_T("Light/Title/frontLight.png"))
+    );
+    ins_objTable.emplace_front(ins_objFrontLight);
+
+
+    ins_objPlayer = ObjLight::Create(
+        RES_FILENAME(_T("Actor/Normal/dummy.png"))
+    );
+    ins_objTable.emplace_front(ins_objPlayer);
 }
 
 void StageTitle::ins_releaseMatrix(){
@@ -169,5 +189,5 @@ void StageTitle::ins_releaseFrame(){
     RELEASE(ins_sprFrame);
 }
 void StageTitle::ins_releaseObject(){
-    RELEASE(ins_objBackground);
+    for (auto i : ins_objTable)RELEASE(i);
 }

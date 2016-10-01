@@ -35,7 +35,13 @@ void StageTitle::Invalidate(){
 }
 
 void StageTitle::Update(float delta){
+    static Vector3 vPos = Vector3(0, -365, 0);
 
+    if (Core::Input::KeyDown(Core::Input::DK_A))vPos.x -= delta * 150.f;
+    else if (Core::Input::KeyDown(Core::Input::DK_D))vPos.x += delta * 150.f;
+    ins_objPlayer->SetPosition(&vPos);
+
+    for (auto i : ins_objTable)i->Update(delta, objCamera->GetVPMatrix());
 }
 
 void StageTitle::Draw(){
@@ -63,30 +69,30 @@ void StageTitle::Draw(){
             Core::Graphic::SetRenderTarget(0, ins_faceObject->GetSurface(0));
 
             {
-Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+                Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-ins_drawObject(matVP);
+                ins_drawObject(matVP);
+                ins_drawForeground(matVP);
             }
         }
 
         { // Ingame draw
-        Core::Graphic::SetRenderTarget(0, ins_faceGame->GetSurface(0));
+            Core::Graphic::SetRenderTarget(0, ins_faceGame->GetSurface(0));
 
-        {
-            Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+            {
+                Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-            ins_drawBackground(matVP);
-        }
-        {
-            Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-            Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-            Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+                ins_drawBackground(matVP);
+            }
+            {
+                Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-            ins_drawTextureOriginal(&ins_matFrame, ins_faceObject);
-            ins_drawForeground(matVP);
-        }
+                ins_drawTextureOriginal(&ins_matFrame, ins_faceObject);
+            }
         }
 
         { // Background light mask draw
@@ -96,13 +102,6 @@ ins_drawObject(matVP);
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
                 ins_drawBackgroundLightMask(matVP);
-            }
-            {
-                Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-                Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-                Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-                ins_drawTextureRGBZero(&ins_matFrame, ins_faceObject);
             }
         }
         { // Foreground light mask draw
@@ -122,6 +121,13 @@ ins_drawObject(matVP);
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
                 ins_drawBackgroundLight(matVP);
+            }
+            { // Extract upper layer drew object
+                Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+                Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+                ins_drawTextureRGBZero(&ins_matFrame, ins_faceObject);
             }
         }
         { // Foreground light draw
