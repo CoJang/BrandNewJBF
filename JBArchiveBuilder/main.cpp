@@ -1,6 +1,28 @@
-﻿#include"main.h"
+﻿#include<Shlwapi.h>
+#include"main.h"
+
+#pragma comment(lib, "Shlwapi.lib")
 
 std::forward_list<ARCHIVE_FORMAT*> ArchiveList;
+
+BOOL ins_createDirectory(LPCTSTR lpszPath){
+    TCHAR szPathBuffer[4096];
+
+    size_t len = _tcslen(lpszPath);
+
+    for (size_t i = 0; i < len; i++){
+        szPathBuffer[i] = lpszPath[i];
+        if (szPathBuffer[i] == _T('\\') || szPathBuffer[i] == _T('/')){
+            szPathBuffer[i + 1] = 0;
+            if (!PathFileExists(szPathBuffer)){
+                if (!CreateDirectory(szPathBuffer, nullptr)){
+                    if (GetLastError() != ERROR_ALREADY_EXISTS)return FALSE;
+                }
+            }
+        }
+    }
+    return TRUE;
+}
 
 void release(){
     while (!ArchiveList.empty()){
@@ -12,6 +34,8 @@ void release(){
 int _tmain(int argc, TCHAR* argv[], TCHAR* envp[]){
     std::basic_string<TCHAR> contentPath = _T("..\\RawContent");
     std::basic_string<TCHAR> archivePath = _T(".\\Content");
+
+    ins_createDirectory((archivePath + _T('\\')).c_str());
 
     if (!SearchDirectory(contentPath)){
         tprintf_s(_T("Failed to search directory \"%s\".\n"), contentPath.c_str());
@@ -30,19 +54,5 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[]){
     }
 
 END_FUNC:
-    release();
-    {
-        std::basic_string<TCHAR> appName = _T("Game.exe");
-        std::basic_string<TCHAR> curPath = argv[0];
-        curPath = curPath.substr(0, curPath.rfind(_T('\\')));
-        ShellExecute(
-            nullptr,
-            _T("open"),
-            (curPath + _T('\\') + appName).c_str(),
-            nullptr,
-            nullptr,
-            SW_SHOW
-        );
-    }
     return 0;
 }
