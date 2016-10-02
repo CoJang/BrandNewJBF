@@ -12,10 +12,12 @@ namespace JBF{
             extern HRESULT CheckState();
             extern void Present();
 
-            extern HRESULT Resize(const Global::Math::Point<WORD>* size);
+            extern HRESULT Resize(const Global::Math::Point<WORD>* size, const BOOL* windowed);
 
             extern INLINE IDirect3DDevice9* GetDevice();
             extern INLINE D3DDISPLAYMODE* GetDisplayInfo();
+
+            extern INLINE BOOL ISWindowed();
 
             extern INLINE HRESULT CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle);
             extern INLINE HRESULT CreateIndexBuffer(UINT Length, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DIndexBuffer9** ppIndexBuffer, HANDLE* pSharedHandle);

@@ -4,37 +4,31 @@
 namespace JBF{
     namespace Core{
         namespace SystemTimer{
+            using namespace std;
+            using namespace std::chrono;
+
             // Inner variable(s) definition
             ///////////////////////////////////////////
-            static double ins_frequency;
-
-            static LARGE_INTEGER ins_tickTable[2];
-            static decltype(&(*ins_tickTable)) ins_oldTick, ins_curTick;
+            static steady_clock::time_point ins_tickTable[2];
+            static steady_clock::time_point *ins_oldTick, *ins_curTick;
 
             static double ins_timeDelta;
             ///////////////////////////////////////////
 
             void Init(){
-                LARGE_INTEGER tmp;
-
-                QueryPerformanceFrequency(&tmp);
-                ins_frequency = 1. / tmp.QuadPart;
-
                 ins_oldTick = &ins_tickTable[0];
                 ins_curTick = &ins_tickTable[1];
 
-                QueryPerformanceCounter(ins_oldTick);
+                *ins_oldTick = steady_clock::now();
             }
+
             void Update(){
-                QueryPerformanceCounter(ins_curTick);
-
-                ins_timeDelta = (ins_curTick->QuadPart - ins_oldTick->QuadPart);
-                ins_timeDelta *= ins_frequency;
-
+                *ins_curTick = steady_clock::now();
+                ins_timeDelta = duration<decltype(ins_timeDelta), micro>((*ins_curTick) - (*ins_oldTick)).count() * 0.000001;
                 std::swap(ins_curTick, ins_oldTick);
             }
 
-            INLINE float GetTimeDelta(){ return (float)ins_timeDelta; }
+            INLINE float GetTimeDelta(){ return ins_timeDelta; }
         };
     };
 };

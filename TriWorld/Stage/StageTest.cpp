@@ -45,7 +45,7 @@ void StageTest::Init(){
     }
 
     { // Graphic setting
-        Graphic::Resize(&clientSize);
+        Graphic::Resize(&clientSize, nullptr);
 
         Graphic::GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         Graphic::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);

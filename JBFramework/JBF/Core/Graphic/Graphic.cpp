@@ -176,34 +176,49 @@ namespace JBF{
                 }
             }
 
-            HRESULT Resize(const Global::Math::Point<WORD>* size){
+            HRESULT Resize(const Global::Math::Point<WORD>* size, const BOOL* windowed){
                 DWORD style = GetWindowLong(GetHandle(), GWL_STYLE);
-                RECT rc = { 0, 0, size->x, size->y };
+                RECT rc;
 
-                if (ins_displayInfo.Width == size->x && ins_displayInfo.Height == size->y)return S_OK;
+                if (size == nullptr && windowed == nullptr)return S_OK;
+                if (size && (ins_displayInfo.Width == size->x && ins_displayInfo.Height == size->y))return S_OK;
 
                 ins_invalidate(D3DERR_DEVICELOST);
 
-                {
-                    ins_displayInfo.Width = size->x;
-                    ins_displayInfo.Height = size->y;
-                }
-
-                {
-                    AdjustWindowRect(&rc, style, FALSE);
+                if (size){
+                    rc = { 0, 0, size->x, size->y };
                     {
-                        rc.right -= rc.left;
-                        rc.left = (GetSystemMetrics(SM_CXSCREEN) - (rc.right - rc.left)) >> 1;
-                        rc.bottom -= rc.top;
-                        rc.top = (GetSystemMetrics(SM_CYSCREEN) - (rc.bottom - rc.top)) >> 1;
+                        ins_displayInfo.Width = size->x;
+                        ins_displayInfo.Height = size->y;
                     }
 
-                    MoveWindow(GetHandle(), rc.left, rc.top, rc.right, rc.bottom, TRUE);
+                    {
+                        AdjustWindowRect(&rc, style, FALSE);
+                        {
+                            rc.right -= rc.left;
+                            rc.left = (GetSystemMetrics(SM_CXSCREEN) - (rc.right - rc.left)) >> 1;
+                            rc.bottom -= rc.top;
+                            rc.top = (GetSystemMetrics(SM_CYSCREEN) - (rc.bottom - rc.top)) >> 1;
+                        }
+
+                        MoveWindow(GetHandle(), rc.left, rc.top, rc.right, rc.bottom, TRUE);
+                    }
+
+                    {
+                        ins_d3dpp.BackBufferWidth = ins_displayInfo.Width;
+                        ins_d3dpp.BackBufferHeight = ins_displayInfo.Height;
+                    }
                 }
 
-                {
-                    ins_d3dpp.BackBufferWidth = ins_displayInfo.Width;
-                    ins_d3dpp.BackBufferHeight = ins_displayInfo.Height;
+                if (windowed){
+                    if ((*windowed) == FALSE){
+                        ins_d3dpp.Windowed = FALSE;
+                        ins_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+                    }
+                    else{
+                        ins_d3dpp.Windowed = TRUE;
+                        ins_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+                    }
                 }
 
                 return ins_validate(D3DERR_DEVICELOST);
@@ -211,6 +226,8 @@ namespace JBF{
 
             INLINE IDirect3DDevice9* GetDevice(){ return ins_device; }
             INLINE D3DDISPLAYMODE* GetDisplayInfo(){ return &ins_displayInfo; }
+
+            INLINE BOOL ISWindowed(){ return ins_d3dpp.Windowed; }
 
             INLINE HRESULT CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle){ return ins_device->CreateVertexBuffer(Length, Usage, FVF, Pool, ppVertexBuffer, pSharedHandle); }
             INLINE HRESULT CreateIndexBuffer(UINT Length, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DIndexBuffer9** ppIndexBuffer, HANDLE* pSharedHandle){ return ins_device->CreateIndexBuffer(Length, Usage, Format, Pool, ppIndexBuffer, pSharedHandle); }
