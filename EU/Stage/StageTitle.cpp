@@ -5,6 +5,24 @@
 
 
 void StageTitle::Init(){
+    //BOOL windowed = FALSE;
+    //Core::Graphic::Resize(nullptr, &windowed);
+
+    { // test
+        RECT rc = { 0, 0, 1366, 768 };
+        {
+            AdjustWindowRect(&rc, GetWindowLong(GetHandle(), GWL_STYLE), FALSE);
+            {
+                rc.right -= rc.left;
+                rc.left = (GetSystemMetrics(SM_CXSCREEN) - (rc.right - rc.left)) >> 1;
+                rc.bottom -= rc.top;
+                rc.top = (GetSystemMetrics(SM_CYSCREEN) - (rc.bottom - rc.top)) >> 1;
+            }
+
+            MoveWindow(GetHandle(), rc.left, rc.top, rc.right, rc.bottom, TRUE);
+        }
+    }
+
     ins_initFace();
     ins_initFrame();
     ins_initObject();
@@ -37,6 +55,18 @@ void StageTitle::Invalidate(){
 void StageTitle::Update(float delta){
     static Vector3 vPos = Vector3(0, -365, 0);
 
+#ifdef _DEBUG
+    {
+        static float timeElasped = 0.f;
+        timeElasped += delta;
+        if (timeElasped > 1.f){
+            timeElasped = 0.f;
+
+            LOGGING_NORMAL(_T("FPS: %.1f"), 1 / delta);
+        }
+    }
+#endif
+
     if (Core::Input::KeyDown(Core::Input::DK_A))vPos.x -= delta * 150.f;
     else if (Core::Input::KeyDown(Core::Input::DK_D))vPos.x += delta * 150.f;
     ins_objPlayer->SetPosition(&vPos);
@@ -45,14 +75,17 @@ void StageTitle::Update(float delta){
 }
 
 void StageTitle::Draw(){
+    HRESULT hr;
     IDirect3DSurface9* surfOrg;
     const Matrix* matVP = objCamera->GetVPMatrix();
 
     Object::EmptyTexture* faceCombinedGame;
     Object::EmptyTexture* faceTemp[2];
 
-    if (FAILED(Core::Graphic::GetDevice()->BeginScene()))return;
-    Core::Graphic::GetDevice()->Clear(
+    hr = Core::Graphic::GetDevice()->BeginScene();
+    if (FAILED(hr))return;
+
+    hr = Core::Graphic::GetDevice()->Clear(
         0,
         nullptr,
         D3DCLEAR_TARGET,
@@ -60,13 +93,18 @@ void StageTitle::Draw(){
         1.f,
         0
     );
+    if (FAILED(hr))return;
 
-    Core::Graphic::GetRenderTarget(0, &surfOrg);
+    hr = Core::Graphic::GetRenderTarget(0, &surfOrg);
+    if (FAILED(hr))return;
 
     { // Combine game scene with masked light
         { // Object draw
-            Core::Graphic::GetDevice()->ColorFill(ins_faceObject->GetSurface(0), nullptr, 0);
-            Core::Graphic::SetRenderTarget(0, ins_faceObject->GetSurface(0));
+            hr = Core::Graphic::GetDevice()->ColorFill(ins_faceObject->GetSurface(0), nullptr, 0);
+            if (FAILED(hr))return;
+
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceObject->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -79,7 +117,8 @@ void StageTitle::Draw(){
         }
 
         { // Ingame draw
-            Core::Graphic::SetRenderTarget(0, ins_faceGame->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceGame->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -96,7 +135,8 @@ void StageTitle::Draw(){
         }
 
         { // Background light mask draw
-            Core::Graphic::SetRenderTarget(0, ins_faceLightMask[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLightMask[0]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -105,7 +145,8 @@ void StageTitle::Draw(){
             }
         }
         { // Foreground light mask draw
-            Core::Graphic::SetRenderTarget(0, ins_faceLightMask[1]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLightMask[1]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -115,7 +156,8 @@ void StageTitle::Draw(){
         }
 
         { // Background light draw
-            Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -131,7 +173,8 @@ void StageTitle::Draw(){
             }
         }
         { // Foreground light draw
-            Core::Graphic::SetRenderTarget(0, ins_faceLight[1]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLight[1]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -141,7 +184,8 @@ void StageTitle::Draw(){
         }
 
         { // Extract lighted background region
-            Core::Graphic::SetRenderTarget(0, ins_faceLight[2]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLight[2]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -150,7 +194,8 @@ void StageTitle::Draw(){
             }
         }
         { // Extract lighted foreground region
-            Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceLight[0]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -160,7 +205,8 @@ void StageTitle::Draw(){
         }
 
         { // Apply light on game scene
-            Core::Graphic::SetRenderTarget(0, ins_faceObject->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, ins_faceObject->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -171,7 +217,8 @@ void StageTitle::Draw(){
     }
 
     { // temp
-        Core::Graphic::SetRenderTarget(0, surfOrg);
+        hr = Core::Graphic::SetRenderTarget(0, surfOrg);
+        if (FAILED(hr))return;
 
         {
             Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -179,7 +226,9 @@ void StageTitle::Draw(){
             ins_drawTextureOriginal(&ins_matFrame, ins_faceObject);
         }
 
-        Core::Graphic::GetDevice()->EndScene();
+        hr = Core::Graphic::GetDevice()->EndScene();
+        if (FAILED(hr))return;
+
         return;
     }
 
@@ -194,7 +243,9 @@ void StageTitle::Draw(){
         }
 
         { // Extrace bright region
-            Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            if (FAILED(hr))return;
+
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
@@ -203,8 +254,11 @@ void StageTitle::Draw(){
         }
 
         { // Downfiltering
-            Core::Graphic::GetDevice()->ColorFill(faceTemp[1]->GetSurface(0), nullptr, 0);
-            Core::Graphic::SetRenderTarget(0, faceTemp[1]->GetSurface(0));
+            hr = Core::Graphic::GetDevice()->ColorFill(faceTemp[1]->GetSurface(0), nullptr, 0);
+            if (FAILED(hr))return;
+
+            hr = Core::Graphic::SetRenderTarget(0, faceTemp[1]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -214,7 +268,8 @@ void StageTitle::Draw(){
         }
 
         { // Apply horz blur
-            Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -223,7 +278,8 @@ void StageTitle::Draw(){
             }
         }
         { // Apply vert blur
-            Core::Graphic::SetRenderTarget(0, faceTemp[1]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, faceTemp[1]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -233,7 +289,8 @@ void StageTitle::Draw(){
         }
 
         { // Upfiltering
-            Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            hr = Core::Graphic::SetRenderTarget(0, faceTemp[0]->GetSurface(0));
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -243,7 +300,8 @@ void StageTitle::Draw(){
         }
 
         { // combine base and bright
-            Core::Graphic::SetRenderTarget(0, surfOrg);
+            hr = Core::Graphic::SetRenderTarget(0, surfOrg);
+            if (FAILED(hr))return;
 
             {
                 Core::Graphic::SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -253,5 +311,6 @@ void StageTitle::Draw(){
         }
     }
 
-    Core::Graphic::GetDevice()->EndScene();
+    hr = Core::Graphic::GetDevice()->EndScene();
+    if (FAILED(hr))return;
 }
